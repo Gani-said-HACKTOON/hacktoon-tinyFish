@@ -8,5 +8,7 @@ RUN apt update -y && apt upgrade -y
 
 RUN  pip install -r  requirements.txt
 
-EXPOSE 3000
+EXPOSE 8000
+
+CMD ["uvicorn", "main:app"]
 

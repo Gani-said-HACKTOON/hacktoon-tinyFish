@@ -2,9 +2,9 @@ services:
   agent:
     build: ./agent
     ports:
-      - "3000:3000"
+      - "8000:8000"
 
   backend:
     build: ./backend
     ports:
-      - "8000:8000"
+      - "3000:3000"

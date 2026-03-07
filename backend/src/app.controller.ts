@@ -6,8 +6,13 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    console.log("hai")
+  getHello(): string {      
     return this.appService.getHello();
   }
+
+  @Get("/hei")
+  whatever(): string{
+    return this.appService.idk();
+  }
 }
+
