@@ -21,7 +21,7 @@ importers:
         version: 11.1.16(@nestjs/common@11.1.16(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.16)
       database:
         specifier: workspace:2.0
-        version: link:../database
+        version: link:../packages/database
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -102,7 +102,7 @@ importers:
         specifier: ^8.20.0
         version: 8.56.1(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
 
-  database:
+  packages/database:
     devDependencies:
       '@prisma/client':
         specifier: ^7.4.2
