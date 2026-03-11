@@ -9,10 +9,5 @@ export class AppController {
   getHello(): string {      
     return this.appService.getHello();
   }
-
-  @Get("/hei")
-  whatever(): string{
-    return this.appService.idk();
-  }
 }
 

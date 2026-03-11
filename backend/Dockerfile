@@ -6,11 +6,15 @@ RUN npm install -g pnpm
 
 WORKDIR /backend-build
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+COPY backend .
+
+COPY packages .
 
 RUN apt update -y && apt upgrade -y 
 
-RUN pnpm install
+RUN pnpm install --force
 
 COPY . .
 
