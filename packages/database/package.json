@@ -1,9 +1,10 @@
 {
-  "name": "database",
+  "name": "@hackathon/database",
   "version": "1.0.0",
   "description": "",
-  "private" : true ,
+  "private": true,
   "main": "index.ts",
+  "type" : "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +15,12 @@
   "devDependencies": {
     "@prisma/client": "^7.4.2",
     "@types/node": "^22.19.15",
+    "@types/pg": "^8.18.0",
     "dotenv": "^17.3.1",
     "prisma": "^7.4.2"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.5.0",
+    "pg": "^8.20.0"
   }
 }
