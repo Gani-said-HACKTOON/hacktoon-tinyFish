@@ -10,7 +10,11 @@ export class AuthController{
     
     @Post("registration")
     Registration(@Body() createUser: CreateUserDto){
-        this.authService.createUser(createUser);
+        this.authService.createUser({
+            username: createUser.username,
+            email: createUser.email,
+            password: createUser.password
+        });
         return "success full created"
     }
     
