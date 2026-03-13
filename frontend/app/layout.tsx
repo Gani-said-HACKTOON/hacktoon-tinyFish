@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/navbar"
+import style from "./style/layout.module.css"
 
 export const metadata: Metadata = {
   title: "Dreelio",
@@ -14,7 +15,7 @@ export default function RootLayout({
 }) {
   return(
     <html>
-      <body>
+      <body className={style.body}>
         <Navbar />
         <main>{children}</main>
       </body>
