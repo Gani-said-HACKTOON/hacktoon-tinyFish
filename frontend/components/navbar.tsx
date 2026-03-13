@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 
+// list yg keluar pas hamburger di pencet
 const navLinks = [
   { label: "Features", href: "#features" },
   { label: "Benefits", href: "#benefits" },
@@ -10,7 +11,7 @@ const navLinks = [
   { label: "Contact Us", href: "#contact" },
 ];
 
-// animasi navbar saat di scrolling
+// animasi navbar saat di scroll
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
