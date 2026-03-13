@@ -6,11 +6,11 @@ export default function Home() {
       <div className="max-w-6xl w-full px-6 justify-center flex flex-col items-center">
         
         <h1 className="text-4xl font-bold">
-          Susah bgt ajgggg
+          Lorem ipsum dolor sit amet consectetur.
         </h1>
 
         <p className="mt-4 text-gray-600">
-        claude kaga guna sama sekali bangke
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, voluptas dolor!
         </p>
 
       </div>
