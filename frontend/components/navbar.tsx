@@ -24,6 +24,7 @@ export default function Navbar(){
                 )
 
                 }
+                <p className="text-purple-500">hello worldd</p>
         </nav>
     )
 }

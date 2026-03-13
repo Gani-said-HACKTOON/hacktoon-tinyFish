@@ -7,14 +7,16 @@ export const metadata: Metadata = {
   description: "For Your Needed",
 };
 
-// navbar
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return(
-    <html>
+    <html lang="en">
+      <head>
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
       <body className={style.body}>
         <Navbar />
         <main>{children}</main>
