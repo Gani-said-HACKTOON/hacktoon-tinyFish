@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 dotenv.config({
-    path: path.resolve(__dirname,"../database/.env")
+    path: path.resolve(__dirname,".env")
 })
 
 const adapter = new PrismaPg({

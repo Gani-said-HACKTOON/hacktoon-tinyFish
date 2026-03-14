@@ -1,6 +1,8 @@
 import { Controller, Post, Body, Res } from '@nestjs/common'
-import { AuthService } from './auth.service';
-import { CreateUserDto } from './dto/create-user.dto';  
+import { AuthService, type HttpRes, type HttpErr } from './auth.service';
+import { CreateUserDto } from './dto/create-user.dto';      
+import { login_with_email } from './dto/login-user.dto';
+import { type Response } from "express";
 
 
 @Controller("/auth")
@@ -9,21 +11,32 @@ export class AuthController{
 
     
     @Post("registration")
-    Registration(@Body() createUser: CreateUserDto){
+    async Registration(@Res() res: Response, @Body() createUser: CreateUserDto){
         this.authService.createUser({
             username: createUser.username,
             email: createUser.email,
             password: createUser.password
-        });
-        return "success full created"
+        })
+        .then((serverresponse: HttpRes)=>res.status(serverresponse.status).json({
+            message: serverresponse.message
+        }))
+        .catch((servererr: HttpErr)=>res.status(servererr.status).json({
+            message: servererr.message
+        }))
     }
     
-    @Post("test1")
-    Test1(@Res() res: Response){
-        return res
-    }
-    
-    comparePassword(userPass: string, dbPass: string): boolean{
-        return userPass === dbPass
+    @Post("loginwithemail")
+    async loginWithEmail(@Res() res: Response, @Body() loginData: login_with_email){
+        this.authService.emailLogin({
+            email: loginData.email,
+            password: loginData.password
+        })
+        .then((serverresponse: HttpRes)=>res.status(serverresponse.status).json({
+            message: serverresponse.message
+        }))
+        .catch((servererr: HttpErr)=> res.status(servererr.status).json({
+            message: servererr.message
+        }))
+        
     }
 }
