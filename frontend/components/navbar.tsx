@@ -95,7 +95,7 @@ export default function Navbar() {
               className="block w-full text-center bg-gray-900 text-white font-semibold rounded-full overflow-hidden relative group h-13">
               <span className="flex flex-col transition-transform duration-300 ease-in-out group-hover:-translate-y-1/2">
                 <span className="flex items-center justify-center h-13">Try Dreelio free</span>
-                <span className="flex items-center justify-center h-13">Try Dreelio free</span>
+                {/* <span className="flex items-center justify-center h-13">Try Dreelio free</span> */}
               </span>
             </a>
           </div>
