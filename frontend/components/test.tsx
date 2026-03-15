@@ -140,7 +140,7 @@ export default function Navbar() {
               Dreelio
             </a>
 
-            {/* Center links — hanya gap yang beranimasi, bukan font/padding */}
+            {/* list tengah */}
             <ul
               className="flex items-center mx-auto list-none"
               style={{

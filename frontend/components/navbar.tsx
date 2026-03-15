@@ -129,9 +129,38 @@ export default function Navbar() {
             transition:      TRANS_NAV,
           }}
         >
-        <div/>
+          <div className="flex items-center">
+            {/* Logo */}
+            <a href="/" className="flex items-center gap-2 font-bold text-gray-900 select-none shrink-0 text-xl">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2C8 2 5 5.5 5 9c0 2.5 1.2 4.7 3 6.1V20a1 1 0 001 1h6a1 1 0 001-1v-4.9c1.8-1.4 3-3.6 3-6.1 0-3.5-3-7-7-7z" fill="currentColor" />
+              </svg>
+              Dreelio
+            </a>
 
-      <nav/>
+            {/* list tengah */}
+            <ul
+              className="flex items-center mx-auto list-none"
+              style={{
+                gap: "30px",
+                transition: "gap 350ms cubic-bezier(0.4,0,0.2,1)"
+              }}
+            >
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="font-medium text-lg text-gray-800 hover:text-gray-500 transition-colors whitespace-nowrap"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+      </nav>
     </>
   );
 }
