@@ -1,11 +1,13 @@
 import Navbar from "@/components/navbar";
+import TryButton from "@/components/tryButton";
+import CustomButton from "@/components/customButton";
 import { features } from "process";
 
 
 
 export default function Home() {
   return (
-     <section className="flex justify-center mt-20 py-20 md:py-28 lg:py-35">
+     <section className="flex justify-center mt-10 py-20 md:py-28 lg:py-35">
       <div className="max-w-6xl w-full px-6 flex flex-col items-center justify-center md:px-10 lg:px-12">
         
         <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold flex justify-center text-center ">
@@ -16,13 +18,9 @@ export default function Home() {
           All-in-one platform to help businesses automatically comply with regulations by using AI to monitor, detect, and prevent policy violations.
         </p>
 
-        <button className="bg-black text-gray-200 rounded-3xl mt-6 text-base md:text-lg w-full md:w-72 h-12">
-          Try dreelio free
-        </button>
+        <TryButton className="w-full lg:min-w-50 mt-4"/>
 
-        <button className="bg-gray-100 rounded-3xl mt-2 text-base md:text-lg w-full md:w-72 h-12">
-          see features
-        </button>
+        <CustomButton label="see features" className="w-full lg:w-50 bg-white/20 backdrop-blur-4xl hover:bg-white/30 " />
 
         <div className="image mt-10 md:mt-14 lg:mt-16">
           
