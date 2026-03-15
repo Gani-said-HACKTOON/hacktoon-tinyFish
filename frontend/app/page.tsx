@@ -20,7 +20,7 @@ export default function Home() {
 
         <TryButton className="w-full lg:min-w-50 mt-4"/>
 
-        <CustomButton label="see features" className="w-full lg:w-50 bg-white/20 backdrop-blur-4xl hover:bg-white/30 " />
+        <CustomButton label="see features" className="w-full lg:w-50 bg-white/20 backdrop-blur-4xl hover:bg-white/30 mt-40" />
 
         <div className="image mt-10 md:mt-14 lg:mt-16">
           

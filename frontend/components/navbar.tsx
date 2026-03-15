@@ -13,13 +13,22 @@ const navLinks = [
 ];
 
 // variabel buat animasi dekstop
-const TRANS_NAV = [
-  "max-width 350ms cubic-bezier(0.34,1.2,0.64,1)",
-  "margin-top 350ms cubic-bezier(0.4,0,0.2,1)",
-  "padding 350ms cubic-bezier(0.4,0,0.2,1)",
-  "background-color 350ms cubic-bezier(0.4,0,0.2,1)",
-  "border-radius 350ms cubic-bezier(0.4,0,0.2,1)",
-  "box-shadow 350ms cubic-bezier(0.4,0,0.2,1)",
+const TRANS_SHRINK = [
+  "max-width 360ms cubic-bezier(0.34,1.25,0.2,1)",
+  "margin-top 360ms cubic-bezier(0.4,0,0.2,1)",
+  "padding 360ms cubic-bezier(0.4,0,0.2,1)",
+  "background-color 360ms ease",
+  "border-radius 360ms cubic-bezier(0.34,0,0.2,1)",
+  "box-shadow 360ms ease",
+].join(", ");
+
+const TRANS_EXPAND = [
+  "max-width 300ms cubic-bezier(0.34,1.2,0.64,1)",
+  "margin-top 300ms cubic-bezier(0.34,1.2,0.64,1)",
+  "padding 300ms cubic-bezier(0.34,1.2,0.64,1)",
+  "background-color 300ms cubic-bezier(0.34,1.2,0.64,1)",
+  "border-radius 300ms cubic-bezier(0.34,1.2,0.64,1)",
+  "box-shadow 300ms cubic-bezier(0.34,1.2,0.64,1)",
 ].join(", ");
 
 // animasi navbar saat di scroll
@@ -126,7 +135,7 @@ export default function Navbar() {
             WebkitBackdropFilter: scrolled ? "blur(6px)"              : "blur(0px)",
             borderRadius:    scrolled ? "45px"                         : "45px",
             boxShadow:       scrolled ? "0 4px 28px rgba(0,0,0,0.11)"  : "0 0 0 rgba(0,0,0,0)",
-            transition:      TRANS_NAV,
+            transition: scrolled ? TRANS_SHRINK : TRANS_EXPAND
           }}
         >
           <div className="flex items-center">
@@ -157,6 +166,11 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
+            <a
+              href="#try"
+              onClick={() => setMenuOpen(false)}>
+              <TryButton className="min-w-40"/>
+            </a>
           </div>
         </div>
 
