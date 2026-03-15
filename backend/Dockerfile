@@ -1,34 +1,52 @@
 # build
+FROM node:22-slim AS builder
 
-FROM node:22-slim as builder
+ARG DATABASE_URL
 
-RUN npm install -g pnpm
+RUN apt update -y && apt upgrade -y && apt install openssl -y 
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /backend-build
 
+RUN mkdir backend packages
+
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-COPY backend .
+COPY ./backend ./backend
 
-COPY packages .
+COPY ./packages ./packages
 
-RUN apt update -y && apt upgrade -y 
+RUN pnpm install --frozen-lockfile
 
-RUN pnpm install --force
+RUN echo "${DATABASE_URL}" > ./packages/database/.env
 
-COPY . .
+RUN pnpm --prefix=/backend-build/packages/database prisma generate
 
-RUN pnpm build
+RUN pnpm --filter backend build
 
 # deploy 
 FROM node:22-slim
 
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 WORKDIR /backend-deploy 
 
-COPY --from=builder /backend-build/dist ./dist
+RUN mkdir -p packages/database backend
 
-COPY package.json .
+# depedencies
+COPY ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./
+COPY ./backend/package.json ./backend/package.json
+COPY ./packages/database/package.json ./packages/database/package.json
 
-RUN pnpm install --only=production
+# app 
+COPY --from=builder /backend-build/backend/dist ./backend/dist
+COPY --from=builder /backend-build/packages ./packages
 
-CMD ["node", "./dist/main.js"]
+RUN pnpm install --prod --frozen-lockfile
+
+EXPOSE 3000
+
+ENV NODE_ENV=production
+
+# CMD ["node", "backend/dist/main"]
