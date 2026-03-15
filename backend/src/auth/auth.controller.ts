@@ -26,7 +26,7 @@ export class AuthController{
     }
     
     @Post("loginwithemail")
-    async loginWithEmail(@Res() res: Response, @Body() loginData: login_with_email){
+    async loginWithEmail(@Res({passthrough:  true}) res: Response, @Body() loginData: login_with_email){
         this.authService.emailLogin({
             email: loginData.email,
             password: loginData.password
