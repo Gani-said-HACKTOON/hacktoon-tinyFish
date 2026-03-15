@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import TryButton from "./tryButton";
 
 // list yg keluar pas hamburger di pencet
 const navLinks = [
@@ -88,17 +89,11 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <div className="px-4 pb-4 pt-1">
             <a
               href="#try"
-              onClick={() => setMenuOpen(false)}
-              className="block w-full text-center bg-gray-900 text-white font-semibold rounded-full overflow-hidden relative group h-13">
-              <span className="flex flex-col transition-transform duration-300 ease-in-out group-hover:-translate-y-1/2">
-                <span className="flex items-center justify-center h-13">Try Dreelio free</span>
-                {/* <span className="flex items-center justify-center h-13">Try Dreelio free</span> */}
-              </span>
+              onClick={() => setMenuOpen(false)}>
+              <TryButton className="w-full mx-3"/>
             </a>
-          </div>
         </div>
       </nav>
     </>
