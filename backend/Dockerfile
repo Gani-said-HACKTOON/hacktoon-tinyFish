@@ -7,7 +7,7 @@ RUN apt update -y && apt upgrade -y && apt install openssl -y
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-WORKDIR /backend-build
+WORKDIR /backend-app
 
 RUN mkdir backend packages
 
@@ -21,7 +21,7 @@ RUN pnpm install --frozen-lockfile
 
 RUN echo "${DATABASE_URL}" > ./packages/database/.env
 
-RUN pnpm --prefix=/backend-build/packages/database prisma generate
+RUN pnpm --prefix=./packages/database prisma generate
 
 RUN pnpm --filter backend build
 
@@ -30,7 +30,7 @@ FROM node:22-slim
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-WORKDIR /backend-deploy 
+WORKDIR /backend-app
 
 RUN mkdir -p packages/database backend
 
@@ -40,13 +40,13 @@ COPY ./backend/package.json ./backend/package.json
 COPY ./packages/database/package.json ./packages/database/package.json
 
 # app 
-COPY --from=builder /backend-build/backend/dist ./backend/dist
-COPY --from=builder /backend-build/packages ./packages
-
-RUN pnpm install --prod --frozen-lockfile
+COPY --from=builder /backend-app/backend/dist ./backend/dist
+COPY --from=builder /backend-app/packages ./packages
 
 EXPOSE 3000
 
+RUN pnpm install --prod --frozen-lockfile
+
 ENV NODE_ENV=production
 
-# CMD ["node", "backend/dist/main"]
+CMD ["node", "backend/dist/main"]
