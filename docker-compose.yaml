@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   agent:
     build: ./agent
@@ -28,4 +26,4 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./testfs:/var/lib/pgsql/data
+      - ${pathtodatabase}:/var/lib/postgresql:Z

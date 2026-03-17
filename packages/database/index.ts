@@ -11,6 +11,9 @@ dotenv.config({
     path: path.resolve(__dirname,".env")
 })
 
+
+console.log(process.env.DATABASE_URL)
+
 const adapter = new PrismaPg({
     connectionString: process.env.DATABASE_URL
 })

@@ -1,18 +1,10 @@
-import { Injectable } from "@nestjs/common"
-import { prisma } from "@hackathon/database" 
+import { Injectable, UnauthorizedException, NotFoundException, ConflictException, InternalServerErrorException } from "@nestjs/common"
+import { prisma } from "@hackathon/database"
+import { Prisma } from "@hackathon/database/generated/prisma/client"
 import bcrypt from 'bcrypt';
 
 interface HttpRes{
-    message: string,
-    status: number
-}
-
-class HttpErr extends Error{
-    status: number
-    constructor(message: string, status: number){
-        super(message)
-        this.status = status
-    }
+    message: string
 }
 
 @Injectable()
@@ -31,12 +23,17 @@ class AuthService{
                     data: data
             })
             return {
-                message: "create account has been succesful",
-                status: 201
+                message: "create account has been succesful"
             };
 
         }catch(err){
-            throw new HttpErr("error",500)
+            if (err instanceof Prisma.PrismaClientKnownRequestError){
+                if (err.code === "P2002"){
+                    throw new ConflictException("Email already exists")
+                }
+            }
+
+            throw new InternalServerErrorException(err)
         }
     }
 
@@ -50,16 +47,15 @@ class AuthService{
         })
 
         if (!dbData){
-            throw new HttpErr("Email not found", 404);
+            throw new NotFoundException("Email not found");
         }
 
         if(! await this.#comparePassword(loginData.password, dbData.password)){
-            throw new HttpErr("Invalid Password",401);
+            throw new  UnauthorizedException("Invalid Password");
         }
 
         return {
-            message: "login succesfull",
-            status: 200
+            message: "login succesful"
         }
 
     }
@@ -69,4 +65,4 @@ class AuthService{
     }
 }
 
-export {AuthService, type HttpRes, type HttpErr}
+export {AuthService, type HttpRes}

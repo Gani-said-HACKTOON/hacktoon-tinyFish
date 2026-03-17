@@ -1,0 +1,5 @@
+services:
+  backend:
+    environment:
+      - NODE_ENV=production
+    command: ["node","backend/dist/main"]
