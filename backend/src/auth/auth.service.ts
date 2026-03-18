@@ -2,13 +2,21 @@ import { Injectable, UnauthorizedException, NotFoundException, ConflictException
 import { prisma } from "@hackathon/database"
 import { Prisma } from "@hackathon/database/generated/prisma/client"
 import bcrypt from 'bcrypt';
+import { JwtService } from "@nestjs/jwt";
+import { type Response } from "express";
 
 interface HttpRes{
     message: string
 }
 
+interface HttpAuth{
+    access_token: string
+}
+
 @Injectable()
 class AuthService{
+    constructor(private JwtServ: JwtService){}
+
     async createUser(data: {
         username: string,
         email: string,
@@ -33,7 +41,7 @@ class AuthService{
                 }
             }
 
-            throw new InternalServerErrorException(err)
+            throw new InternalServerErrorException()
         }
     }
 
@@ -41,7 +49,7 @@ class AuthService{
     async emailLogin(loginData:{
         email: string
         password: string
-    }): Promise<HttpRes>{
+    }, response_handler: Response): Promise<HttpAuth>{
         const dbData = await prisma.user.findUnique({
             where : { email: loginData.email}
         })
@@ -54,9 +62,16 @@ class AuthService{
             throw new  UnauthorizedException("Invalid Password");
         }
 
-        return {
-            message: "login succesful"
+        // response_handler.cookie()
+
+        const payload = {
+            email: dbData.email,
+            sub: dbData.id
         }
+        
+       return {
+            access_token: await this.JwtServ.signAsync(payload )
+       } 
 
     }
 
@@ -65,4 +80,4 @@ class AuthService{
     }
 }
 
-export {AuthService, type HttpRes}
+export {AuthService, type HttpRes, type HttpAuth }

@@ -58,4 +58,5 @@ async def main_runtime():
         subprocess.run(["docker","stop",_CONTAINER_NAME])
         print("All tasks has stopped !!")
     
-asyncio.run(main_runtime())
+if __name__ == "__main__":
+    asyncio.run(main_runtime()) 
