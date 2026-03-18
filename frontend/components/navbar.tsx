@@ -13,6 +13,7 @@ const navLinks = [
 ];
 
 // variabel buat animasi dekstop
+// menyusut
 const TRANS_SHRINK = [
   "max-width 360ms cubic-bezier(0.34,1.25,0.2,1)",
   "margin-top 360ms cubic-bezier(0.4,0,0.2,1)",
@@ -22,6 +23,7 @@ const TRANS_SHRINK = [
   "box-shadow 360ms ease",
 ].join(", ");
 
+// melebar
 const TRANS_EXPAND = [
   "max-width 300ms cubic-bezier(0.34,1.2,0.64,1)",
   "margin-top 300ms cubic-bezier(0.34,1.2,0.64,1)",
@@ -76,7 +78,7 @@ export default function Navbar() {
                   style={{
                     transformOrigin: "3px 6px",
                     transform: menuOpen ? "rotate(45deg) scaleX(1)" : "rotate(0deg)",
-                    transition: "transform 120ms ",
+                    transition: "transform 120ms",
                   }}
                 />
                 <line
