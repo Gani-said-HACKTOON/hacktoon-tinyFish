@@ -15,7 +15,7 @@ export default function CustomButton({ label = "try dreelio free", className = "
           <span
             className="absolute inset-x-0 flex items-center justify-center
               text-[15px] font-medium tracking-wide text-gray-900
-              transition-all duration-350 ease-[cubic-bezier(0.65,0,0.35,1)]
+              transition-all duration-250 ease-[cubic-bezier(0.65,0,0.35,1)]
               translate-y-0 opacity-100
               group-hover:-translate-y-full group-hover:opacity-0"
           >
@@ -24,7 +24,7 @@ export default function CustomButton({ label = "try dreelio free", className = "
           <span
             className="absolute inset-x-0 flex items-center justify-center
               text-[15px] font-medium tracking-wide text-gray-900
-              transition-all duration-350 ease-[cubic-bezier(0.65,0,0.35,1)]
+              transition-all duration-250 ease-[cubic-bezier(0.65,0,0.35,1)]
               translate-y-full opacity-0
               group-hover:translate-y-0 group-hover:opacity-100"
           >

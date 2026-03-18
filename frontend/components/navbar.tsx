@@ -15,12 +15,12 @@ const navLinks = [
 // variabel buat animasi dekstop
 // menyusut
 const TRANS_SHRINK = [
-  "max-width 360ms cubic-bezier(0.34,1.25,0.2,1)",
-  "margin-top 360ms cubic-bezier(0.4,0,0.2,1)",
-  "padding 360ms cubic-bezier(0.4,0,0.2,1)",
-  "background-color 360ms ease",
-  "border-radius 360ms cubic-bezier(0.34,0,0.2,1)",
-  "box-shadow 360ms ease",
+  "max-width 550ms cubic-bezier(0.34,1.25,0.2,1)",
+  "margin-top 550ms cubic-bezier(0.4,0,0.2,1)",
+  "padding 550ms cubic-bezier(0.4,0,0.2,1)",
+  "background-color 550ms ease",
+  "border-radius 550ms cubic-bezier(0.34,0,0.2,1)",
+  "box-shadow 550ms ease",
 ].join(", ");
 
 // melebar
@@ -153,15 +153,15 @@ export default function Navbar() {
             <ul
               className="flex items-center mx-auto list-none"
               style={{
-                gap: "30px",
-                transition: "gap 350ms cubic-bezier(0.4,0,0.2,1)"
+                gap: scrolled? "10px" : "15px",
+                transition: "gap 360ms cubic-bezier(0.34,1.2,0.64,1)"
               }}
             >
               {navLinks.map((link) => (
-                <li key={link.label}>
+                <li key={link.label} className="">
                   <a
                     href={link.href}
-                    className="font-medium text-lg text-gray-800 hover:text-gray-500 transition-colors whitespace-nowrap"
+                    className="font-normal text-lg text-black whitespace-nowrap rounded-[45px] hover:bg-white/40 pt-1.5 pb-2.5 px-2"
                   >
                     {link.label}
                   </a>
