@@ -1,8 +1,8 @@
-import { Controller, Post, Body, Res, HttpCode } from '@nestjs/common'
-import { AuthService, type HttpRes } from './auth.service';
+import { Controller, Post, Body, HttpCode , Res, Req } from '@nestjs/common'
+import { AuthService } from './auth.service';
+import { type Response, type Request } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';      
 import { login_with_email } from './dto/login-user.dto';
-import { type Response } from "express";
 
 
 @Controller("/auth")
@@ -22,10 +22,15 @@ export class AuthController{
     
     @Post("loginwithemail")
     @HttpCode(200)
-    loginWithEmail(@Body() loginData: login_with_email){
+    loginWithEmail(@Res({passthrough: true}) res: Response,  @Body() loginData: login_with_email){  
         return this.authService.emailLogin({
             email: loginData.email,
             password: loginData.password
-        })
+        },res)
+    }
+
+    @Post("refresh")
+    refresh(@Req() req: Request){
+
     }
 }
