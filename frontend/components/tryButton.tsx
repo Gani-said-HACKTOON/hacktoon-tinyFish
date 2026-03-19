@@ -4,7 +4,7 @@ interface TryButtonProps {
 
 export default function TryButton({ className = "" }: TryButtonProps) {
   return (
-    <div className="flex justify-center items-center w-full"> 
+    <div className="flex justify-center items-center"> 
       <button
         className={`group relative inline-flex items-center justify-center
           px-2 py-3 h-14 rounded-[45px]

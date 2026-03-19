@@ -17,11 +17,11 @@ export default function Home() {
         <p className="mt-4 text-base md:text-lg lg:text-xl text-gray-700 font-semibold flex justify-center text-center max-w-2xl">
           All-in-one platform to help businesses automatically comply with regulations by using AI to monitor, detect, and prevent policy violations.
         </p>
+      <div className="w-full flex column justify-center items-center lg:gap-2">
+        <TryButton className="w-full lg:w-45 mt-4"/>
 
-        <TryButton className="w-full lg:min-w-50 mt-4"/>
-
-        <CustomButton label="see features" className="w-full lg:w-50 bg-white/20 backdrop-blur-4xl hover:bg-white/30 mt-40" />
-
+        <CustomButton label="see features" className="w-full lg:w-45 mt-4 bg-white/20 backdrop-blur-4xl hover:bg-white/30 " />
+      </div>
         <div className="image mt-10 md:mt-14 lg:mt-16">
           
         </div>

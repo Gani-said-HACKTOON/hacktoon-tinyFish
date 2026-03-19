@@ -3,12 +3,12 @@ interface CustomButtonProps {
   className?: string;
 }
 
-export default function CustomButton({ label = "try dreelio free", className = "" }: CustomButtonProps) {
+export default function CustomButton({ label = "whatever", className = "" }: CustomButtonProps) {
   return (
-    <div className="flex justify-center items-center w-full">
+    <div className="flex justify-center items-center">
       <button
         className={`group relative inline-flex items-center justify-center
-          px-8 py-3 h-13 rounded-[45px]
+          px-2 py-3 h-14 rounded-[45px]
           overflow-hidden cursor-pointer ${className}`}
       >
         <div className="relative w-full h-[1.4em] overflow-hidden flex items-center justify-center">
