@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/navbar"
 import style from "./style/layout.module.css"
-
+import ContactUs from "../pages/contactUs"
 import "./globals.css";
 
 export const metadata: Metadata = {
