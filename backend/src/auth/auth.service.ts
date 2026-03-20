@@ -1,16 +1,17 @@
 import { Injectable, UnauthorizedException, NotFoundException, ConflictException, InternalServerErrorException } from "@nestjs/common"
 import { prisma } from "@hackathon/database"
-import { Prisma } from "@hackathon/database/generated/prisma/client"
+import { Prisma, User as userTypeDB } from "@hackathon/database/generated/prisma/client"
 import bcrypt from 'bcrypt';
+import ms  from 'ms';
 import { JwtService } from "@nestjs/jwt";
-import { type Response } from "express";
 
 interface HttpRes{
     message: string
 }
 
 interface HttpAuth{
-    access_token: string
+    access_token: string,
+    refresh_token: string
 }
 
 @Injectable()
@@ -49,7 +50,7 @@ class AuthService{
     async emailLogin(loginData:{
         email: string
         password: string
-    }, response_handler: Response): Promise<HttpAuth>{
+    }): Promise<HttpAuth>{
         const dbData = await prisma.user.findUnique({
             where : { email: loginData.email}
         })
@@ -62,17 +63,46 @@ class AuthService{
             throw new  UnauthorizedException("Invalid Password");
         }
 
-        // response_handler.cookie()
+       return this.generateToken(dbData)
 
-        const payload = {
-            email: dbData.email,
-            sub: dbData.id
+    }
+
+    async generateToken(userData: userTypeDB): Promise<HttpAuth>{
+           const access_token_payload = {
+            email: userData.email,
+            sub: userData.id
+        }
+
+        return {
+            access_token: await this.JwtServ.signAsync(access_token_payload),
+            refresh_token: await this.generateRefreshToken(userData)
         }
         
-       return {
-            access_token: await this.JwtServ.signAsync(payload )
-       } 
+    }
 
+    async generateRefreshToken(userData: userTypeDB): Promise<string>{
+        const createdAt = Date.now() 
+        const expiresIn = "7d"
+        const expiredAt = createdAt + ms(expiresIn)
+
+        const refresh_token_payload = {
+            sub: userData.id
+        }
+
+        const refresh_token = await this.JwtServ.signAsync(refresh_token_payload,{
+            expiresIn: expiresIn
+        })
+
+        await prisma.refresh_token.create({
+            data: {
+                user_id: userData.id,
+                token: await bcrypt.hash(refresh_token,10),
+                expired_at: new Date(expiredAt),
+                created_at: new Date(createdAt)    
+            }
+        })
+
+        return refresh_token
     }
 
     async #comparePassword(inputPassword: string, dbPassword: string){
