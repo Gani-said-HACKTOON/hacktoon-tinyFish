@@ -1,8 +1,9 @@
-import { Controller, Post, Body, HttpCode , Res, Req } from '@nestjs/common'
-import { AuthService } from './auth.service';
+import { Controller, Get, Post, Body, HttpCode , Res, Req, UseGuards } from '@nestjs/common'
+import { AuthService, HttpAuth } from './auth.service';
 import { type Response, type Request } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';      
 import { login_with_email } from './dto/login-user.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @Controller("/auth")
@@ -20,17 +21,29 @@ export class AuthController{
         })
     }
     
+    @UseGuards(AuthGuard('login'))
     @Post("loginwithemail")
     @HttpCode(200)
-    loginWithEmail(@Res({passthrough: true}) res: Response,  @Body() loginData: login_with_email){  
-        return this.authService.emailLogin({
-            email: loginData.email,
-            password: loginData.password
-        },res)
+    loginWithEmail(@Res({passthrough: true}) res: Response, @Req() req: Request){  
+        const user = req.user as HttpAuth
+        res.cookie('refresh_token', user.refresh_token, {
+            httpOnly: true,
+        })
+
+        return {
+            access_token: user.access_token
+        }
+
     }
 
     @Post("refresh")
     refresh(@Req() req: Request){
+
+    }
+
+    @UseGuards(AuthGuard("jwt"))
+    @Get("profile")
+    profile(@Req() req: Request){
 
     }
 }

@@ -23,11 +23,16 @@ async def task(command: list[str]):
         stderr=asyncio.subprocess.PIPE
     )
 
-    while 1:
+    while True:
         each_line = await proc.stdout.readline()
         if not each_line:
             break
-        print(each_line.decode().strip()) 
+        print(each_line.decode().strip())
+
+    # capture any stderr left after process exits
+    stderr = await proc.stderr.read()
+    if stderr:
+        print("[ERROR]", stderr.decode().strip())
 
 async def main_runtime():
     tasks = [
