@@ -95,7 +95,7 @@ export default function Navbar() {
         </div>
 
         <div
-          className={`mx-3 mt-2 bg-white/50 backdrop-blur-[6px] rounded-[45px] shadow-md overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          className={`mx-3 mt-2 pb-5 bg-white/50 backdrop-blur-[6px] rounded-[45px] shadow-md overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
             }`}
         >
           <ul className="py-2">
@@ -104,7 +104,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block text-center py-3.5 text-gray-800 text-base font-medium mx-2 my-1 rounded-[45px] border border-transparent bg-transparent backdrop-blur-0 transition-all duration-200 hover:border-gray-400/30 hover:backdrop-opacity-40">
+                  className="block text-center py-2.25 text-gray-800 text-base font-medium mx-2 my-1 rounded-[45px] border border-transparent bg-transparent backdrop-blur-0 transition-all duration-200 hover:border-gray-400/30 hover:backdrop-opacity-40">
                   {link.label}
                 </a>
               </li>

@@ -16,16 +16,6 @@
 @keyframes fadeInBlur {
   0% {
     opacity: 0;
-    filter: blur(10px);
-  }
-  100% {
-    opacity: 1;
-    filter: blur(0px);
-  }
-}
-@keyframes fadeInBlur {
-  0% {
-    opacity: 0;
     transform: translateY(10px);
     filter: blur(8px);
   }
