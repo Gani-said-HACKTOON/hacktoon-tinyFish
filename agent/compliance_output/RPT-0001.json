@@ -1,0 +1,105 @@
+{
+  "report_id": "RPT-0001",
+  "regulation": {
+    "nama": "PT Clouddhost",
+    "industri": "Penyedia layanan server",
+    "negara": "Indonesia",
+    "regulasi": [
+      "UU ITE",
+      "PP PSTE",
+      "UU PDP",
+      "ISO 27001"
+    ],
+    "aktivitas": "Penyimpanan dan pengelolaan data pelanggan di server lokal",
+    "nilai": "500000000",
+    "pihak_terlibat": "Pelanggan korporat, tim ops internal",
+    "lintas_batas": "ni",
+    "pihak_ketiga": "no",
+    "data_sensitif": "yes",
+    "url": "",
+    "id": "REG-0001",
+    "timestamp": "2026-03-21T20:41:28.407536"
+  },
+  "analysis": {
+    "risk_analysis": {
+      "risk_level": "MEDIUM",
+      "risk_score": 60,
+      "faktor_risiko": [
+        "Pengolahan data sensitif pelanggan korporat",
+        "Nilai aktivitas yang signifikan (500jt) meningkatkan potensi denda administratif",
+        "Kebutuhan audit kepatuhan terhadap standar ISO 27001:2022 terbaru"
+      ],
+      "ringkasan_risiko": "Risiko berada pada level Medium karena data dikelola di server lokal tanpa melibatkan pihak ketiga, yang memitigasi risiko lintas batas. Namun, keterlibatan data sensitif tanpa bukti implementasi DPIA dan DPO di bawah UU PDP yang sudah berlaku penuh menjadi titik kerentanan hukum utama.",
+      "pelanggaran_terdeteksi": [
+        "Pasal 34 UU PDP (Kewajiban Penilaian Dampak Pelindungan Data)",
+        "Pasal 53 UU PDP (Kewajiban Penunjukan Pejabat Pelindungan Data)",
+        "Pasal 15 UU ITE (Kewajiban Penyelenggaraan Sistem yang Aman dan Bertanggung Jawab)"
+      ]
+    },
+    "monitor_regulasi": {
+      "status": "PERUBAHAN_DITEMUKAN",
+      "catatan_monitor": "Regulasi utama ITE telah diperbarui melalui UU No. 1 Tahun 2024 yang memperketat aturan sertifikasi dan tanggung jawab PSE. Masa transisi UU PDP telah berakhir, sehingga seluruh kewajiban perlindungan data sensitif kini wajib dipenuhi sepenuhnya.",
+      "regulasi_berubah": [
+        "UU No. 1 Tahun 2024 (Perubahan Kedua atas UU ITE)"
+      ],
+      "temuan_regulasi_baru": [
+        "UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi (Berlaku Penuh per Oktober 2024)",
+        "PP No. 71 Tahun 2019 (PSTE) - Implementasi Teknis",
+        "Peraturan Lembaga Pengawas PDP (Otoritas PDP)"
+      ]
+    },
+    "compliance_report": {
+      "temuan": [
+        {
+          "nomor": 1,
+          "temuan": "Belum dilakukannya Data Protection Impact Assessment (DPIA) untuk pengelolaan data sensitif pelanggan.",
+          "tingkat": "HIGH",
+          "regulasi_terkait": "UU PDP Pasal 34"
+        },
+        {
+          "nomor": 2,
+          "temuan": "Belum adanya penunjukan resmi Data Protection Officer (DPO) yang terdaftar di Otoritas PDP.",
+          "tingkat": "MEDIUM",
+          "regulasi_terkait": "UU PDP Pasal 53"
+        },
+        {
+          "nomor": 3,
+          "temuan": "Dokumentasi ISO 27001 perlu diperbarui menyesuaikan kontrol pada versi 2022.",
+          "tingkat": "LOW",
+          "regulasi_terkait": "ISO 27001:2022"
+        }
+      ],
+      "rekomendasi": [
+        {
+          "aksi": "Segera menyusun dan mengesahkan dokumen Penilaian Dampak Pelindungan Data (DPIA).",
+          "deadline": "segera",
+          "prioritas": 1,
+          "penanggung_jawab": "Tim Compliance & IT"
+        },
+        {
+          "aksi": "Menunjuk Pejabat Pelindungan Data (DPO) internal atau eksternal yang bersertifikasi.",
+          "deadline": "30 hari",
+          "prioritas": 2,
+          "penanggung_jawab": "Direksi & Legal"
+        },
+        {
+          "aksi": "Melakukan audit keamanan siber independen sesuai standar UU ITE 2024.",
+          "deadline": "90 hari",
+          "prioritas": 3,
+          "penanggung_jawab": "Tim Ops Internal"
+        }
+      ],
+      "status_kepatuhan": "PERLU_PERBAIKAN",
+      "ringkasan_eksekutif": "PT Clouddhost memiliki fundamental kepatuhan yang baik melalui residensi data lokal, namun perlu segera melakukan penyesuaian administratif terhadap UU PDP dan UU ITE terbaru. Prioritas utama adalah legalitas pemrosesan data sensitif melalui DPIA dan DPO untuk menghindari sanksi administratif yang mulai diberlakukan secara ketat pada tahun 2025/2026. Audit berkala terhadap infrastruktur server sangat disarankan untuk menjaga kepercayaan pelanggan korporat."
+    }
+  },
+  "enforcement": {
+    "timestamp": "2026-03-21T20:45:24.369194",
+    "report_id": "RPT-0001",
+    "risk_level": "MEDIUM",
+    "action": "WARNING",
+    "message": "WARNING recorded. Process may continue under close monitoring.",
+    "icon": "🟠"
+  },
+  "generated_at": "2026-03-21T20:45:24.369206"
+}
