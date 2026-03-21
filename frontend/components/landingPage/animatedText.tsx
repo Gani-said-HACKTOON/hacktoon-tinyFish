@@ -15,8 +15,8 @@ export default function AnimatedText({ text, delay = 0, className = "" }: Animat
           style={{
             display: "inline-block",
             overflow: "hidden",
-            paddingBottom: "0.2em",
-            marginBottom: "-0.2em",
+            padding: "0 0.8em 0.8em 0.8em",
+            margin: "0 -0.8em -0.8em -0.8em",
           }}
         >
           <span
