@@ -5,7 +5,6 @@ interface CustomButtonProps {
 
 export default function CustomButton({ label = "whatever", className = "" }: CustomButtonProps) {
   return (
-    <div className="flex justify-center items-center">
       <button
         className={`group relative inline-flex items-center justify-center
           px-2 py-3 h-14 rounded-[45px]
@@ -32,6 +31,5 @@ export default function CustomButton({ label = "whatever", className = "" }: Cus
           </span>
         </div>
       </button>
-    </div>
   );
 }

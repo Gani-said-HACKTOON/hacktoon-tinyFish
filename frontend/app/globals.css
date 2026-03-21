@@ -1,16 +1,41 @@
 @import "tailwindcss";
-@keyframes marquee {
+
+@keyframes wordReveal {
   0% {
-    transform: translateX(100%);
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(8px);
   }
   100% {
-    transform: translateX(-100%);
+    opacity: 1;
+    transform: translateY(0px);
+    filter: blur(0px);
   }
 }
-*{
-    margin: 0;
-    padding: 0;
+
+@keyframes fadeInBlur {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+  }
 }
+@keyframes fadeInBlur {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
 .marquee {
   overflow: hidden;
   white-space: nowrap;
