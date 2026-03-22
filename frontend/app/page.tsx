@@ -1,6 +1,7 @@
 import TryButton from "@/components/tryButton";
 import CustomButton from "@/components/customButton";
 import AnimatedText from "@/components/landingPage/animatedText";
+import PreviewImage from "@/components/previewImage";
 
 export default function Home() {
   return (
@@ -15,12 +16,13 @@ export default function Home() {
           <AnimatedText text="All-in-one platform to help businesses automatically comply with regulations by using AI to monitor, detect, and prevent policy violations." delay={0.05} />
         </p>
 
-        <div
-          className="w-full flex flex-col lg:flex-row justify-center items-center gap-2 mt-4 opacity-0 translate-y-2.5 animate-[fadeInBlur_0.6s_ease_0.7s_forwards]"
-        >
+        <div className="w-full flex flex-col lg:flex-row justify-center items-center gap-2 mt-4 opacity-0 translate-y-2.5 animate-[fadeInBlur_0.6s_ease_0.7s_forwards]">
           <TryButton className="w-full lg:w-45" />
           <CustomButton label="see features" className="w-full lg:w-45 bg-white/20 backdrop-blur-4xl hover:bg-white/30" />
         </div>
+
+        {/* 👇 ADD HERE */}
+        <PreviewImage />
 
       </div>
     </section>
