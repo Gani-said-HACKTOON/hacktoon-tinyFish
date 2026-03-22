@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, HttpCode , Res, Req, UseGuards } from '@ne
 import { AuthService, HttpAuth } from './auth.service';
 import { type Response, type Request } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';      
-import { login_with_email } from './dto/login-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 
@@ -36,12 +35,21 @@ export class AuthController{
 
     }
 
+    @UseGuards(AuthGuard("refresh_token"))
     @Post("refresh")
-    refresh(@Req() req: Request){
+    @HttpCode(200)
+    refresh(@Res({passthrough: true}) res: Response, @Req() req: Request){
+        const user = req.user as HttpAuth
+        res.cookie("refresh_token",user.refresh_token,{
+            httpOnly: true
+        })
 
+        return {
+            access_token: user.access_token
+        }
     }
 
-    @UseGuards(AuthGuard("jwt"))
+    @UseGuards(AuthGuard("access_token"))
     @Get("profile")
     profile(@Req() req: Request){
 

@@ -3,5 +3,8 @@
         "module":"nodenext",
         "moduleResolution": "nodenext",
         "types": ["node"],
+        "allowImportingTsExtensions": true,
+        "rewriteRelativeImportExtensions": true
+        
     }
 }

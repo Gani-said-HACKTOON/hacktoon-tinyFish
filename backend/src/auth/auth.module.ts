@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { loginStrategy } from './local.strategy';
+import { refreshToken } from './jwt.strategy';
 
 @Module({
     imports: [JwtModule.registerAsync({
@@ -16,7 +17,7 @@ import { loginStrategy } from './local.strategy';
     }
     ),PassportModule],
     controllers: [AuthController],
-    providers: [AuthService, loginStrategy],
+    providers: [AuthService, loginStrategy, refreshToken],
 
 })
 export class AuthModule {}
