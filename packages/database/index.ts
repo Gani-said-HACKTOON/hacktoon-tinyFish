@@ -18,3 +18,5 @@ const adapter = new PrismaPg({
 export const prisma = new PrismaClient({
     adapter
 });
+
+export * from './lib/refresh_token.ts'
