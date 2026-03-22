@@ -60,7 +60,7 @@ export default function Navbar() {
         <div className={`mx-3 mt-3 bg-white/30 backdrop-blur-[6px] rounded-[45px] shadow-sm transition-colors duration-80 py-1 ${menuOpen ? "bg-white/50" : "bg-white/30"
           }`}>
           <div className="flex items-center justify-between px-4 py-3">
-            <a href="/" className="flex items-center gap-2 font-bold text-xl text-gray-900 select-none">
+            <a href="/" className="flex items-center gap-2 font-bold text-xl text-white select-none">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M12 2C8 2 5 5.5 5 9c0 2.5 1.2 4.7 3 6.1V20a1 1 0 001 1h6a1 1 0 001-1v-4.9c1.8-1.4 3-3.6 3-6.1 0-3.5-3-7-7-7z" fill="currentColor" />
               </svg>
@@ -142,7 +142,7 @@ export default function Navbar() {
         >
           <div className="flex items-center">
             {/* Logo */}
-            <a href="/" className="flex items-center gap-2 font-bold text-gray-900 select-none shrink-0 text-xl">
+            <a href="/" className="flex items-center gap-2 font-bold text-white select-none shrink-0 text-xl">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M12 2C8 2 5 5.5 5 9c0 2.5 1.2 4.7 3 6.1V20a1 1 0 001 1h6a1 1 0 001-1v-4.9c1.8-1.4 3-3.6 3-6.1 0-3.5-3-7-7-7z" fill="currentColor" />
               </svg>
@@ -161,7 +161,7 @@ export default function Navbar() {
                 <li key={link.label} className="">
                   <a
                     href={link.href}
-                    className="font-normal text-lg text-black whitespace-nowrap rounded-[45px] hover:bg-white/40 pt-1.5 pb-2.5 px-2"
+                    className="font-normal text-lg text-white whitespace-nowrap rounded-[45px] hover:bg-white/40 pt-1.5 pb-2.5 px-2"
                   >
                     {link.label}
                   </a>

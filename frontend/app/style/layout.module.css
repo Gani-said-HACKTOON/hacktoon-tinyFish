@@ -1,12 +1,10 @@
 .body{
-    min-height: 200vh;
+    min-height: 100vh;
     
     background: linear-gradient(
         to bottom,
-        #accced 0%,
-        #b6d8fa 25%,
-        #c1e0ff 50%,
-        #fff8f1 75%,
-        #e9dccd 100%
+        #8FAAC4 ,
+        #E2E2E2 
     );
 }
+
