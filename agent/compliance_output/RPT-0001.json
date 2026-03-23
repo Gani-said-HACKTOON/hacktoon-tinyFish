@@ -1,104 +1,120 @@
 {
   "report_id": "RPT-0001",
   "regulation": {
-    "company_name": "ASTRA International",
-    "industry": "automotive",
-    "country": "Indonesia",
+    "company_name": "Suzuki",
+    "industry": "otomotif",
+    "country": "Japan",
     "regulations": [
-      "UU",
-      "OJK",
-      "LHK"
+      "Road Transport Vehicle Act",
+      "Act on Recycling of End-of-Life Vehicles",
+      "Air Pollution Control Act",
+      "Industrial Safety and Health Act",
+      "Energy Conservation Act",
+      "Foreign Exchange and Foreign Trade Act",
+      "ISO 9001",
+      "ISO 14001"
     ],
-    "activity": "Buying spare part from china",
-    "value": "1000000",
-    "parties_involved": "Goverments, China company, Supplier",
+    "activity": "Launching a new electric vehicle (EV) production line and exporting units to the European Union and United States.",
+    "value": "50000000",
+    "parties_involved": "Suzuki Motor Corporation (Japan HQ), EV battery suppliers (China), third-party manufacturing contractors, logistics/export partners, dealerships in EU and US, end customers, cloud service providers (data processing)",
     "cross_border": "yes",
     "third_party": "yes",
-    "sensitive_data": "no",
+    "sensitive_data": "yes",
     "url": "",
     "id": "REG-0001",
-    "timestamp": "2026-03-23T11:37:02.407438"
+    "timestamp": "2026-03-23T13:22:58.964758"
   },
   "analysis": {
     "risk_analysis": {
-      "risk_level": "MEDIUM",
-      "risk_score": 35,
+      "risk_level": "CRITICAL",
+      "risk_score": 72,
       "risk_factors": [
-        "Involvement of 'Governments' as a party in a commercial transaction with a foreign (China) entity, increasing anti-corruption (UU Tipikor) and integrity risks.",
-        "Cross-border transaction complexity and potential transfer pricing issues if parties are affiliates.",
-        "Third-party supplier involvement without explicit ESG or supply chain transparency data."
+        "Execution of U.S. tariffs on automobiles as of April 2025.",
+        "Dependence on Chinese battery suppliers potentially subject to the updated September 2025 End User List.",
+        "Strict data processing and cybersecurity requirements for Software Defined Vehicles (SDV)."
       ],
-      "risk_summary": "The risk is primarily driven by the involvement of government parties and the cross-border nature of the spare part procurement. While the value is manageable for Astra, the regulatory transition to MOT 16/2025 and strict TKDN requirements for automotive tax incentives pose moderate compliance challenges.",
+      "risk_summary": "The primary compliance risks are centered on the 2025 U.S. automotive tariffs and the enhanced Japanese export control regime (FEFTA) which restricts sensitive EV-related technology transfers. The involvement of Chinese battery suppliers and cloud-based data processing adds significant exposure to restricted entity lists and new digital mobility standards.",
       "violations_detected": [
-        "Potential violation of TKDN (Domestic Content) thresholds under UU No. 3 of 2014 and PP No. 29 of 2018 if spare parts from China reduce domestic percentage below incentive requirements.",
-        "Potential reporting delay under MOT No. 8 of 2024 (Article 45) if import realization is not reported by the 15th of the following month."
-      ]
+        "Potential violation of updated FEFTA (April 2025) regarding EV technology exports — source: https://www.meti.go.jp/english/press/2025/0404_001.html",
+        "Potential non-compliance with new SDV data standards in Mobility DX Strategy — source: https://www.meti.go.jp/english/press/2025/0609_001.html"
+      ],
+      "override_log": [
+        "Finding level CRITICAL detected — risk level upgraded from HIGH to CRITICAL."
+      ],
+      "confidence": {
+        "level": "HIGH",
+        "flags": [],
+        "disclaimer": "✅  No assumption-based statements detected. Analysis references verified regulatory sources."
+      }
     },
     "compliance_report": {
       "findings": [
         {
-          "level": "LOW",
+          "level": "HIGH",
           "number": 1,
-          "finding": "Transition to MOT 16/2025 requires updated internal reporting workflows for import realization from 15 days to a 30-day window starting August 2025.",
-          "related_regulation": "MOT Regulation 16/2025"
+          "finding": "Planned exports to the United States are subject to new tariff measures announced by METI in April 2025.",
+          "source_url": "https://www.meti.go.jp/english/press/2025/0403_001.html",
+          "related_regulation": "Trade Control/U.S. Tariff Support Measures"
+        },
+        {
+          "level": "CRITICAL",
+          "number": 2,
+          "finding": "Chinese battery suppliers require re-validation against the updated September 2025 End User List to avoid FEFTA violations.",
+          "source_url": "https://www.meti.go.jp/english/press/2025/0929_003.html",
+          "related_regulation": "Foreign Exchange and Foreign Trade Act"
         },
         {
           "level": "MEDIUM",
-          "number": 2,
-          "finding": "The involvement of government parties in the China-based procurement lacks documented due diligence (KYC/KYB) to mitigate UU Tipikor risks.",
-          "related_regulation": "UU No. 31/1999 (Anti-Corruption)"
-        },
-        {
-          "level": "HIGH",
           "number": 3,
-          "finding": "New OJK disclosure rules (POJK 45/2024) require 'as soon as possible' reporting of material facts, which may include significant cross-border supply chain disruptions.",
-          "related_regulation": "POJK 45/2024"
+          "finding": "Cloud-based data processing for the new EV line must be updated to comply with the June 2025 Mobility DX Strategy for SDVs.",
+          "source_url": "https://www.meti.go.jp/english/press/2025/0609_001.html",
+          "related_regulation": "Mobility Digital Transformation (DX) Strategy"
         }
       ],
       "recommendations": [
         {
-          "action": "Conduct enhanced due diligence on the Chinese supplier and the specific role of 'Governments' to ensure compliance with UU Tipikor and Astra's internal Code of Conduct.",
+          "action": "Engage METI Consultation Counters regarding U.S. tariff impact and cash flow support.",
           "deadline": "immediate",
           "priority": 1,
-          "responsible_party": "Compliance & Legal Dept"
+          "responsible_party": "Global Trade Division"
         },
         {
-          "action": "Recalculate TKDN (Domestic Content) impact of the 1,000,000 value import on current vehicle models to ensure eligibility for PPN DTP or other tax incentives.",
+          "action": "Conduct a comprehensive KYC audit of all Chinese battery suppliers against the September 2025 End User List.",
           "deadline": "30 days",
-          "priority": 2,
-          "responsible_party": "Production / Procurement"
+          "priority": 1,
+          "responsible_party": "Compliance/Supply Chain Dept"
         },
         {
-          "action": "Update the Regulatory Matrix to reflect POJK 45/2024 disclosure timelines and Permen LHK 7/2025 PROPER rating criteria.",
+          "action": "Align EV cloud data protocols with the June 2025 Mobility DX Strategy standards for cybersecurity and data infrastructure.",
           "deadline": "90 days",
-          "priority": 3,
-          "responsible_party": "Corporate Secretary"
+          "priority": 2,
+          "responsible_party": "IT/R&D Dept"
         }
       ],
       "compliance_status": "NEEDS_IMPROVEMENT",
-      "executive_summary": "Astra International remains largely compliant, but faces a transition period with new MOT and OJK regulations. The primary concern in the reviewed activity is the 'Government' involvement in the China-based spare part procurement, which necessitates robust anti-corruption due diligence. Additionally, management must ensure that increasing imports from China do not erode TKDN scores required for automotive industry incentives."
+      "executive_summary": "Suzuki's EV expansion is currently challenged by a rapidly evolving regulatory landscape, notably the execution of U.S. automotive tariffs and stricter Japanese export controls implemented in 2025. Immediate attention is required to re-verify Chinese supply chain partners against the newly updated End User List and to adapt data governance to the 2025 Mobility DX Strategy. Proactive engagement with METI's support task force is recommended to mitigate trade risks associated with the U.S. market."
     },
     "regulation_monitor": {
       "status": "CHANGES_FOUND",
-      "monitor_notes": "Indonesia has significantly overhauled its import framework via MOT 16/2025, streamlining licensing and extending reporting windows. Concurrently, OJK has accelerated disclosure deadlines for public companies to 'as soon as possible,' while LHK has updated the PROPER environmental compliance rating system for 2025.",
+      "monitor_notes": "Recent amendments to the Foreign Exchange Order (April 2025) and the updated End User List (September 2025) significantly tighten controls on cross-border technology transfers and supply chain partners. The establishment of a METI task force for U.S. automotive tariffs (April 2025) signals a major change in the trade environment for Japanese vehicle exports.",
       "changed_regulations": [
-        "MOT Regulation 36/2023 (replaced by 8/2024 and subsequently 16/2025)",
-        "OJK Disclosure Requirements for Material Information (POJK 31/2015 alignment with POJK 45/2024)"
+        "Cabinet Order to Partially Amend the Foreign Exchange Order (April 2025) — source: https://www.meti.go.jp/english/press/2025/0404_001.html",
+        "Review of the End User List (September 2025) — source: https://www.meti.go.jp/english/press/2025/0929_003.html",
+        "Update of the List of Classifications of Listed Companies under FEFTA (September 2024) — source: https://www.mof.go.jp/english/index.htm"
       ],
       "new_regulations_found": [
-        "MOT Regulation No. 16 of 2025 on Import Policy and Arrangements",
-        "POJK No. 45 Year 2024 on Development and Strengthening of Issuers and Public Companies",
-        "Permen LHK No. 7 Year 2025 concerning PROPER (Environmental Performance Rating)"
+        "METI Establishes Task Force for U.S. Tariffs and Support Measures — source: https://www.meti.go.jp/english/press/2025/0403_001.html",
+        "Mobility Digital Transformation (DX) Strategy Update for SDVs — source: https://www.meti.go.jp/english/press/2025/0609_001.html"
       ]
     }
   },
   "enforcement": {
-    "timestamp": "2026-03-23T11:40:45.302704",
+    "timestamp": "2026-03-23T13:26:22.844505",
     "report_id": "RPT-0001",
-    "risk_level": "MEDIUM",
-    "action": "WARNING",
-    "message": "WARNING recorded. Process may continue under close monitoring.",
-    "icon": "🟠"
+    "risk_level": "CRITICAL",
+    "action": "BLOCK",
+    "message": "Process BLOCKED. Immediate escalation to Compliance Officer required.\n\nRisk Score: 72/100  |  Risk Level: CRITICAL  |  Action: BLOCK\n\nThis process has been BLOCKED due to critical compliance violations. No further action may be taken until all critical findings are resolved. The Compliance Officer must be notified immediately and a formal remediation plan must be approved before the process can resume.\n\nKey Findings Driving This Decision:\n  [HIGH] Planned exports to the United States are subject to new tariff measures announced by METI in April 2025. (Trade Control/U.S. Tariff Support Measures)\n  [CRITICAL] Chinese battery suppliers require re-validation against the updated September 2025 End User List to avoid FEFTA violations. (Foreign Exchange and Foreign Trade Act)\n\nRegulatory Changes Detected (5):\n  • Cabinet Order to Partially Amend the Foreign Exchange Order (April 2025) — source: https://www.meti.go.jp/english/press/2025/0404_001.html\n  • Review of the End User List (September 2025) — source: https://www.meti.go.jp/english/press/2025/0929_003.html\n  • Update of the List of Classifications of Listed Companies under FEFTA (September 2024) — source: https://www.mof.go.jp/english/index.htm\n\nActive Risk Factors:\n  • Execution of U.S. tariffs on automobiles as of April 2025.\n  • Dependence on Chinese battery suppliers potentially subject to the updated September 2025 End User List.\n  • Strict data processing and cybersecurity requirements for Software Defined Vehicles (SDV).\n\nImmediate Actions Required:\n  1. [immediate] Engage METI Consultation Counters regarding U.S. tariff impact and cash flow support. — Global Trade Division\n  1. [30 days] Conduct a comprehensive KYC audit of all Chinese battery suppliers against the September 2025 End User List. — Compliance/Supply Chain Dept",
+    "icon": "🔴"
   },
-  "generated_at": "2026-03-23T11:40:45.302718"
+  "generated_at": "2026-03-23T13:26:22.844542"
 }

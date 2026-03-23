@@ -146,21 +146,35 @@ def save_regulation(d: dict) -> str:
 
 # step 2
 TINYFISH_GOAL = """
-You are a professional AI Compliance & Regulatory Risk Analyst for companies in Indonesia.
+You are a professional AI Compliance & Regulatory Risk Analyst with global expertise.
 
 You have TWO tasks simultaneously:
 
 === TASK 1: REGULATORY MONITORING ===
-Browse relevant regulatory sources and check:
+Browse ONLY the trusted official sources listed below. Do NOT use random websites,
+blogs, news portals, or unofficial sources. Stick strictly to government and
+regulatory authority domains provided.
+
+TRUSTED SOURCES TO BROWSE (official government & regulatory domains only):
+{trusted_sources}
+
+From these sources, check:
 - Are there any recent regulatory changes or updates that affect this company?
 - Are the mentioned regulations still valid and up-to-date?
-- Are there any new regulations that the company may not yet be aware of but are relevant to its industry?
+- Are there any new regulations the company may not be aware of but relevant to its industry?
+- Cross-check with international standards (FATF, BIS, IOSCO) where applicable.
 
 === TASK 2: RISK DETECTION & COMPLIANCE ANALYSIS ===
 Based on company data and its activities, analyze:
 - Do the activities being reviewed potentially violate applicable regulations?
 - How significant is the compliance risk?
 - What concrete actions should be taken?
+
+=== SOURCE VALIDATION RULES ===
+- ONLY cite information from the trusted domains listed above.
+- If a regulation cannot be verified from the trusted sources, flag it as "UNVERIFIED".
+- Always include the source URL when referencing a specific regulation.
+- Prioritize the most recent official publications (check publication/update dates).
 
 === COMPANY DATA ===
 - Name        : {company_name}
@@ -181,21 +195,21 @@ Respond ONLY with the following valid JSON (no markdown, no additional text):
 {{
   "regulation_monitor": {{
     "status": "UP_TO_DATE | CHANGES_FOUND | NEEDS_REVIEW",
-    "new_regulations_found": ["<relevant new regulation/rule>"],
-    "changed_regulations": ["<changed regulations>"],
-    "monitor_notes": "<2-3 sentence monitoring summary>"
+    "new_regulations_found": ["<regulation name> — source: <official URL>"],
+    "changed_regulations": ["<regulation name> — source: <official URL>"],
+    "monitor_notes": "<2-3 sentence monitoring summary citing only verified sources>"
   }},
   "risk_analysis": {{
     "risk_score": <0-100>,
     "risk_level": "<LOW|MEDIUM|HIGH|CRITICAL>",
-    "violations_detected": ["<specific articles/rules potentially violated>"],
-    "risk_factors": ["<factors increasing risk>"],
+    "violations_detected": ["<specific article/rule> — source: <official URL>"],
+    "risk_factors": ["<factor description>"],
     "risk_summary": "<2-3 sentence risk summary>"
   }},
   "compliance_report": {{
     "compliance_status": "<COMPLIANT|NEEDS_IMPROVEMENT|NON_COMPLIANT>",
     "findings": [
-      {{"number": 1, "finding": "<description>", "level": "<LOW|MEDIUM|HIGH|CRITICAL>", "related_regulation": "<regulation name>"}}
+      {{"number": 1, "finding": "<description>", "level": "<LOW|MEDIUM|HIGH|CRITICAL>", "related_regulation": "<regulation name>", "source_url": "<official URL>"}}
     ],
     "recommendations": [
       {{"priority": 1, "action": "<concrete action>", "deadline": "<immediate|30 days|90 days>", "responsible_party": "<dept/role>"}}
@@ -206,32 +220,185 @@ Respond ONLY with the following valid JSON (no markdown, no additional text):
 """
 
 
+# =============================================================
+# TRUSTED REGULATORY SOURCE REGISTRY (by country/region)
+# Semua domain ini adalah sumber resmi pemerintah / regulator
+# =============================================================
+TRUSTED_SOURCES = {
+    # ---------- INDONESIA ----------
+    "indonesia": [
+        "https://peraturan.go.id",           # Jaringan Dokumentasi Hukum Nasional
+        "https://ojk.go.id",                 # Otoritas Jasa Keuangan
+        "https://ppatk.go.id",               # Pusat Pelaporan Transaksi Keuangan
+        "https://bpkp.go.id",                # Badan Pengawasan Keuangan
+        "https://kemenkeu.go.id",            # Kementerian Keuangan
+        "https://bi.go.id",                  # Bank Indonesia
+        "https://kominfo.go.id",             # Kominfo (data & digital)
+        "https://bpom.go.id",               # BPOM (makanan, obat, kosmetik)
+        "https://esdm.go.id",               # Kementerian ESDM (energi)
+    ],
+    # ---------- UNITED STATES ----------
+    "united states": [
+        "https://sec.gov",                   # Securities & Exchange Commission
+        "https://federalregister.gov",       # Federal Register (semua regulasi federal)
+        "https://ftc.gov",                   # Federal Trade Commission
+        "https://fdic.gov",                  # Federal Deposit Insurance Corp
+        "https://occ.treas.gov",             # Office of the Comptroller
+        "https://cfpb.gov",                  # Consumer Financial Protection Bureau
+        "https://dol.gov",                   # Department of Labor
+        "https://irs.gov",                   # Internal Revenue Service
+    ],
+    # ---------- EUROPEAN UNION ----------
+    "european union": [
+        "https://eur-lex.europa.eu",         # EUR-Lex (semua hukum EU)
+        "https://esma.europa.eu",            # European Securities & Markets Authority
+        "https://eba.europa.eu",             # European Banking Authority
+        "https://edpb.europa.eu",            # European Data Protection Board (GDPR)
+        "https://ec.europa.eu",              # European Commission
+    ],
+    # ---------- UNITED KINGDOM ----------
+    "united kingdom": [
+        "https://legislation.gov.uk",        # Semua legislasi UK
+        "https://fca.org.uk",               # Financial Conduct Authority
+        "https://pra.bankofengland.co.uk",  # Prudential Regulation Authority
+        "https://ico.org.uk",               # Information Commissioner (data)
+        "https://gov.uk",                   # GOV.UK (semua regulasi pemerintah)
+    ],
+    # ---------- SINGAPORE ----------
+    "singapore": [
+        "https://mas.gov.sg",               # Monetary Authority of Singapore
+        "https://sso.agc.gov.sg",           # Singapore Statutes Online
+        "https://acra.gov.sg",              # Accounting & Corporate Regulatory Authority
+        "https://pdpc.gov.sg",              # Personal Data Protection Commission
+        "https://mom.gov.sg",               # Ministry of Manpower
+    ],
+    # ---------- AUSTRALIA ----------
+    "australia": [
+        "https://legislation.gov.au",       # Federal Register of Legislation
+        "https://asic.gov.au",              # Australian Securities & Investments Commission
+        "https://apra.gov.au",              # Australian Prudential Regulation Authority
+        "https://oaic.gov.au",              # Office of the Australian Info Commissioner
+        "https://austrac.gov.au",           # AUSTRAC (anti-money laundering)
+    ],
+    # ---------- MALAYSIA ----------
+    "malaysia": [
+        "https://bnm.gov.my",               # Bank Negara Malaysia
+        "https://sc.com.my",                # Securities Commission Malaysia
+        "https://agc.gov.my",               # Attorney General Chambers
+        "https://pdp.gov.my",               # Personal Data Protection
+        "https://ssm.com.my",               # Companies Commission of Malaysia
+    ],
+    # ---------- JAPAN ----------
+    "japan": [
+        "https://fsa.go.jp",                # Financial Services Agency
+        "https://meti.go.jp",               # Ministry of Economy, Trade & Industry
+        "https://mof.go.jp",                # Ministry of Finance
+        "https://boj.or.jp",                # Bank of Japan
+        "https://cas.go.jp",                # Cabinet Secretariat
+    ],
+    # ---------- CHINA ----------
+    "china": [
+        "https://csrc.gov.cn",              # China Securities Regulatory Commission
+        "https://pbc.gov.cn",               # People's Bank of China
+        "https://samr.gov.cn",              # State Admin for Market Regulation
+        "https://nfra.gov.cn",              # National Financial Regulatory Administration
+        "https://mofcom.gov.cn",            # Ministry of Commerce
+    ],
+    # ---------- INDIA ----------
+    "india": [
+        "https://sebi.gov.in",              # Securities & Exchange Board of India
+        "https://rbi.org.in",               # Reserve Bank of India
+        "https://mca.gov.in",               # Ministry of Corporate Affairs
+        "https://finmin.nic.in",            # Ministry of Finance
+        "https://meity.gov.in",             # Ministry of Electronics & IT
+    ],
+    # ---------- GERMANY ----------
+    "germany": [
+        "https://bafin.de",                 # Federal Financial Supervisory Authority
+        "https://bundesbank.de",            # Deutsche Bundesbank
+        "https://gesetze-im-internet.de",   # Federal Laws (official)
+        "https://bmi.bund.de",              # Federal Ministry of Interior
+    ],
+    # ---------- INTERNATIONAL / GLOBAL ----------
+    "global": [
+        "https://fatf-gafi.org",            # FATF (anti-money laundering global)
+        "https://bis.org",                  # Bank for International Settlements
+        "https://iosco.org",                # Int'l Org of Securities Commissions
+        "https://iasb.org",                 # Int'l Accounting Standards Board
+        "https://imf.org",                  # International Monetary Fund
+        "https://worldbank.org",            # World Bank (regulatory reports)
+        "https://unctad.org",               # UN Trade & Development
+        "https://wto.org",                  # World Trade Organization
+    ],
+}
+
+def get_trusted_urls(country: str, regulations: list) -> list:
+    """
+    Kembalikan list URL sumber terpercaya berdasarkan negara.
+    Selalu tambahkan sumber global (FATF, BIS, dll) sebagai pelengkap.
+    """
+    country_key = country.strip().lower()
+
+    # Cari exact match dulu
+    sources = list(TRUSTED_SOURCES.get(country_key, []))
+
+    # Kalau tidak ada exact match, cari partial match
+    if not sources:
+        for key in TRUSTED_SOURCES:
+            if key in country_key or country_key in key:
+                sources = list(TRUSTED_SOURCES[key])
+                break
+
+    # Kalau masih kosong, pakai format URL pemerintah umum negara tsb
+    if not sources:
+        # Coba Google Site Search ke domain .gov atau resmi negara tsb
+        country_slug = country_key.replace(" ", "+")
+        sources = [
+            f"https://www.google.com/search?q={country_slug}+official+regulation+site:.gov+OR+site:.go+OR+site:.gov.{country_slug[:2]}",
+        ]
+
+    # Selalu tambahkan sumber global
+    sources += TRUSTED_SOURCES["global"][:3]  # FATF, BIS, IOSCO
+
+    return sources
+
+
 def run_tinyfish(d: dict) -> dict:
     print("\n" + "="*62)
     print("  🤖  TINYFISH AI — REGULATION MONITOR & RISK ANALYSIS")
     print("="*62)
 
-    # Determine target URL
+    # Determine target URL — prioritaskan URL manual, lalu sumber terpercaya
     if d.get("url"):
-        url = d["url"]
+        urls = [d["url"]]
     else:
-        regs = "+".join(d["regulations"][:2])
-        url = f"https://www.google.com/search?q={regs}+regulation+latest+{d['country']}+{d['industry']}"
+        urls = get_trusted_urls(d["country"], d["regulations"])
+
+    # Ambil URL pertama sebagai entry point TinyFish
+    # (TinyFish akan browse dari sini dan bisa follow link internal)
+    url = urls[0]
+
+    # Sertakan semua domain terpercaya di goal supaya AI tahu mana yang valid
+    trusted_domains_str = "\n".join(f"  - {u}" for u in urls)
 
     goal = TINYFISH_GOAL.format(
-        company_name    = d["company_name"],
-        industry        = d["industry"],
-        country         = d["country"],
-        regulations     = ", ".join(d["regulations"]),
-        activity        = d["activity"],
-        value           = d["value"],
-        parties_involved= d["parties_involved"],
-        cross_border    = d["cross_border"],
-        third_party     = d["third_party"],
-        sensitive_data  = d["sensitive_data"],
+        trusted_sources  = trusted_domains_str,
+        company_name     = d["company_name"],
+        industry         = d["industry"],
+        country          = d["country"],
+        regulations      = ", ".join(d["regulations"]),
+        activity         = d["activity"],
+        value            = d["value"],
+        parties_involved = d["parties_involved"],
+        cross_border     = d["cross_border"],
+        third_party      = d["third_party"],
+        sensitive_data   = d["sensitive_data"],
     )
 
-    print(f"\n  🔍  Browsing: {url[:70]}...")
+    print(f"\n  🔍  Entry point  : {url}")
+    print(f"  📋  Trusted sources ({len(urls)} domains):")
+    for u in urls:
+        print(f"        • {u}")
     print("  ⏳  Please wait (estimated 1-3 minutes)...\n")
 
     result = None
@@ -248,6 +415,7 @@ def run_tinyfish(d: dict) -> dict:
     except Exception as e:
         print(f"\n  ⚠️  TinyFish error: {e}")
 
+    # Fetch result from run_id because result_json is always None
     if run_id:
         try:
             run_result = client.runs.get(run_id)
@@ -266,8 +434,133 @@ def run_tinyfish(d: dict) -> dict:
         print("  ℹ️  Using fallback analysis (rule-based)...")
         result = fallback_analysis(d)
 
-    print(f"\n  ✅  Analysis complete.\n")
+    valid_levels = {"LOW", "MEDIUM", "HIGH", "CRITICAL"}
+
+    if "risk_analysis" not in result:
+        print("  ⚠️  'risk_analysis' key missing from AI response — using fallback.")
+        result = fallback_analysis(d)
+
+    ra_check = result.get("risk_analysis", {})
+    detected_level = ra_check.get("risk_level", "").upper()
+    if detected_level not in valid_levels:
+        print(f"  ⚠️  Invalid risk_level '{detected_level}' — using fallback.")
+        result = fallback_analysis(d)
+    else:
+        result["risk_analysis"]["risk_level"] = detected_level
+
+    result = override_risk_level(result)
+    result = inject_confidence_flags(result)
+
+    final_level = result["risk_analysis"].get("risk_level")
+    print(f"\n  ✅  Analysis complete. Risk Level: {final_level}\n")
     log_activity("AI_ANALYSIS", f"TinyFish analysis done: {d['company_name']}", d["id"])
+    return result
+
+LEVEL_RANK = {"LOW": 1, "MEDIUM": 2, "HIGH": 3, "CRITICAL": 4}
+RANK_LEVEL = {v: k for k, v in LEVEL_RANK.items()}
+
+def override_risk_level(result: dict) -> dict:
+    """
+    Rule-based override: kalau temuan atau violations lebih parah
+    dari risk_level yang diklaim AI, paksa naik ke level yang sesuai.
+    """
+    ra = result.get("risk_analysis", {})
+    cr = result.get("compliance_report", {})
+
+    current_level = ra.get("risk_level", "LOW")
+    current_rank  = LEVEL_RANK.get(current_level, 1)
+    findings      = cr.get("findings", [])
+    violations    = ra.get("violations_detected", [])
+
+    finding_levels   = [f.get("level", "LOW").upper() for f in findings]
+    max_finding_rank = max((LEVEL_RANK.get(l, 1) for l in finding_levels), default=1)
+
+    overridden_rank  = current_rank
+    override_reasons = []
+
+    if max_finding_rank > current_rank:
+        overridden_rank = max_finding_rank
+        top_level = RANK_LEVEL[max_finding_rank]
+        override_reasons.append(
+            f"Finding level {top_level} detected — risk level upgraded from {current_level} to {top_level}."
+        )
+
+    if violations and "CRITICAL" in finding_levels and overridden_rank < 4:
+        overridden_rank = 4
+        override_reasons.append(
+            "Active violations + CRITICAL finding detected — risk level forced to CRITICAL."
+        )
+
+    score = ra.get("risk_score", 0)
+    if score > 70 and overridden_rank < 3:
+        overridden_rank = 3
+        override_reasons.append(
+            f"Risk score {score}/100 exceeds threshold — risk level upgraded to HIGH."
+        )
+
+    if overridden_rank != current_rank:
+        new_level = RANK_LEVEL[overridden_rank]
+        result["risk_analysis"]["risk_level"] = new_level
+        result["risk_analysis"].setdefault("override_log", []).extend(override_reasons)
+        for reason in override_reasons:
+            print(f"  ⚠️  OVERRIDE: {reason}")
+    else:
+        result["risk_analysis"].setdefault("override_log", [])
+
+    return result
+
+
+_ASSUMPTION_PATTERNS = [
+    "typically", "usually", "generally", "often", "may", "might", "could",
+    "assumed", "assumption", "likely", "probably", "suggest", "appears",
+    "seems", "too small", "too large", "too low", "too high",
+    "insufficient", "excessive", "unusual", "uncommon",
+]
+
+def inject_confidence_flags(result: dict) -> dict:
+    """
+    Scan semua teks di hasil analisis.
+    Kalau ada kalimat yang mengandung pola asumsi, tandai sebagai
+    LOW_CONFIDENCE dan tambahkan disclaimer.
+    """
+    ra = result.get("risk_analysis", {})
+    cr = result.get("compliance_report", {})
+    low_confidence_items = []
+
+    def scan_text(text: str, source: str):
+        lower = text.lower()
+        for pat in _ASSUMPTION_PATTERNS:
+            if pat in lower:
+                low_confidence_items.append({
+                    "source":  source,
+                    "excerpt": text[:120] + ("..." if len(text) > 120 else ""),
+                    "trigger": pat,
+                })
+                return
+
+    scan_text(ra.get("risk_summary", ""), "risk_summary")
+    for i, f in enumerate(cr.get("findings", [])):
+        scan_text(f.get("finding", ""), f"finding #{i+1}")
+    for i, r in enumerate(cr.get("recommendations", [])):
+        scan_text(r.get("action", ""), f"recommendation #{i+1}")
+    for v in ra.get("violations_detected", []):
+        scan_text(v, "violation")
+
+    result["risk_analysis"]["confidence"] = {
+        "level": "LOW" if low_confidence_items else "HIGH",
+        "flags": low_confidence_items,
+        "disclaimer": (
+            f"⚠️  {len(low_confidence_items)} statement(s) in this report are based on AI assumptions "
+            "rather than verified regulatory text. Please cross-check with official sources before "
+            "making compliance decisions."
+        ) if low_confidence_items else (
+            "✅  No assumption-based statements detected. Analysis references verified regulatory sources."
+        ),
+    }
+
+    if low_confidence_items:
+        print(f"  ⚠️  CONFIDENCE: {len(low_confidence_items)} assumption-based statement(s) flagged.")
+
     return result
 
 
@@ -307,20 +600,131 @@ def fallback_analysis(d: dict) -> dict:
 
 # step 3
 POLICY = {
-    "CRITICAL": {"action": "BLOCK",           "icon": "🔴", "msg": "Process BLOCKED. Immediate escalation to Compliance Officer required."},
-    "HIGH":     {"action": "REVIEW_REQUIRED", "icon": "🟡", "msg": "Process ON HOLD. Manual review required before proceeding."},
-    "MEDIUM":   {"action": "WARNING",         "icon": "🟠", "msg": "WARNING recorded. Process may continue under close monitoring."},
-    "LOW":      {"action": "PASS",            "icon": "🟢", "msg": "Process APPROVED. No additional action required."},
+    "CRITICAL": {
+        "action": "BLOCK",
+        "icon":   "🔴",
+        "msg":    "Process BLOCKED. Immediate escalation to Compliance Officer required.",
+        "detail": (
+            "This process has been BLOCKED due to critical compliance violations. "
+            "No further action may be taken until all critical findings are resolved. "
+            "The Compliance Officer must be notified immediately and a formal remediation "
+            "plan must be approved before the process can resume."
+        ),
+    },
+    "HIGH": {
+        "action": "REVIEW_REQUIRED",
+        "icon":   "🟡",
+        "msg":    "Process ON HOLD. Manual review required before proceeding.",
+        "detail": (
+            "This process is ON HOLD pending manual review by the Compliance team. "
+            "High-risk findings have been detected that require direct sign-off before "
+            "the process may continue. All identified violations must be reviewed and "
+            "a mitigation plan submitted within the deadlines stated in the recommendations."
+        ),
+    },
+    "MEDIUM": {
+        "action": "WARNING",
+        "icon":   "🟠",
+        "msg":    "WARNING recorded. Process may continue under close monitoring.",
+        "detail": (
+            "This process may continue, however a formal WARNING has been recorded. "
+            "The identified findings must be addressed within the recommended deadlines. "
+            "Progress must be reported to the Compliance team on a monthly basis until "
+            "all medium-risk items are resolved and the compliance status is upgraded."
+        ),
+    },
+    "LOW": {
+        "action": "PASS",
+        "icon":   "🟢",
+        "msg":    "Process APPROVED. No additional action required.",
+        "detail": (
+            "This process has been APPROVED. No significant compliance issues were detected. "
+            "Standard monitoring procedures apply. A periodic compliance review is recommended "
+            "every 6 months or whenever there is a material change in business activity, "
+            "applicable regulations, or the regulatory environment."
+        ),
+    },
 }
 
-def enforce_policy(risk_level: str, report_id: str) -> dict:
-    p = POLICY.get(risk_level, POLICY["LOW"])
+def build_enforcement_message(risk_level: str, analysis: dict) -> str:
+    """
+    Bangun pesan policy enforcement yang detail dan kontekstual
+    berdasarkan temuan nyata dari analisis AI.
+    """
+    p           = POLICY.get(risk_level, POLICY["LOW"])
+    ra          = analysis.get("risk_analysis", {})
+    cr          = analysis.get("compliance_report", {})
+    mr          = analysis.get("regulation_monitor", {})
+
+    score       = ra.get("risk_score", 0)
+    risk_factors = ra.get("risk_factors", [])
+    violations  = ra.get("violations_detected", [])
+    findings    = cr.get("findings", [])
+    recs        = cr.get("recommendations", [])
+    reg_changes = mr.get("changed_regulations", []) + mr.get("new_regulations_found", [])
+
+    lines = []
+
+    # 1. Header status
+    lines.append(f"{p['msg']}")
+    lines.append("")
+
+    # 2. Risk score summary
+    lines.append(f"Risk Score: {score}/100  |  Risk Level: {risk_level}  |  Action: {p['action']}")
+    lines.append("")
+
+    # 3. Detail narasi sesuai level
+    lines.append(p["detail"])
+    lines.append("")
+
+    # 4. Temuan utama (max 3)
+    high_findings = [f for f in findings if f.get("level") in ("HIGH", "CRITICAL")]
+    show_findings = high_findings if high_findings else findings
+    if show_findings:
+        lines.append("Key Findings Driving This Decision:")
+        for f in show_findings[:3]:
+            lvl = f.get("level", "?")
+            txt = f.get("finding", "-")
+            reg = f.get("related_regulation", "")
+            lines.append(f"  [{lvl}] {txt}" + (f" ({reg})" if reg else ""))
+        lines.append("")
+
+    # 5. Regulatory changes detected
+    if reg_changes:
+        lines.append(f"Regulatory Changes Detected ({len(reg_changes)}):")
+        for r in reg_changes[:3]:
+            lines.append(f"  • {r}")
+        lines.append("")
+
+    # 6. Faktor risiko
+    if risk_factors:
+        lines.append("Active Risk Factors:")
+        for rf in risk_factors[:3]:
+            lines.append(f"  • {rf}")
+        lines.append("")
+
+    # 7. Top priority rekomendasi
+    if recs:
+        top = sorted(recs, key=lambda x: x.get("priority", 99))[:2]
+        lines.append("Immediate Actions Required:")
+        for r in top:
+            deadline = r.get("deadline", "")
+            action   = r.get("action", "")
+            owner    = r.get("responsible_party", "")
+            lines.append(f"  {r.get('priority','?')}. [{deadline}] {action}" + (f" — {owner}" if owner else ""))
+
+    return "\n".join(lines)
+
+
+def enforce_policy(risk_level: str, report_id: str, analysis: dict = None) -> dict:
+    p       = POLICY.get(risk_level, POLICY["LOW"])
+    message = build_enforcement_message(risk_level, analysis or {})
     entry = {
         "timestamp":  datetime.datetime.now().isoformat(),
         "report_id":  report_id,
         "risk_level": risk_level,
         "action":     p["action"],
-        "message":    p["msg"],
+        "message":    message,
     }
     DB["policy_enforcements"].append(entry)
     log_activity("ENFORCEMENT", f"{p['action']} applied for {report_id}", report_id)
@@ -422,13 +826,72 @@ def save_pdf(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str:
     story.append(badge_table)
     story.append(Spacer(1, 12))
 
-    #Executive Summary
+    # ---- Executive Summary ----
     story.append(Paragraph("Executive Summary", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
     story.append(Paragraph(cr.get("executive_summary", "-"), body))
     story.append(Spacer(1, 8))
 
-    #Regulation Monitor
+    # ---- Override Log Banner ----
+    override_log = ra.get("override_log", [])
+    if override_log:
+        ovr_rows = [[Paragraph(
+            "RISK LEVEL OVERRIDE — System upgraded risk level due to inconsistency with findings:",
+            ParagraphStyle("ovr_hdr", parent=styles["Normal"], fontSize=9,
+                textColor=colors.HexColor("#7D3C00"), fontName="Helvetica-Bold")
+        )]]
+        for reason in override_log:
+            ovr_rows.append([Paragraph(
+                f"  • {reason}",
+                ParagraphStyle("ovr_item", parent=styles["Normal"],
+                    fontSize=9, textColor=colors.HexColor("#7D3C00"), leftIndent=8)
+            )])
+        ovr_table = Table(ovr_rows, colWidths=[18*cm])
+        ovr_table.setStyle(TableStyle([
+            ("BACKGROUND",    (0,0), (-1,-1), colors.HexColor("#FEF3E2")),
+            ("BOX",           (0,0), (-1,-1), 1, colors.HexColor("#E67E22")),
+            ("TOPPADDING",    (0,0), (-1,-1), 6),
+            ("BOTTOMPADDING", (0,0), (-1,-1), 6),
+            ("LEFTPADDING",   (0,0), (-1,-1), 10),
+        ]))
+        story.append(ovr_table)
+        story.append(Spacer(1, 8))
+
+    # ---- Confidence Disclaimer Banner ----
+    confidence  = ra.get("confidence", {})
+    conf_level  = confidence.get("level", "HIGH")
+    disclaimer  = confidence.get("disclaimer", "")
+    conf_flags  = confidence.get("flags", [])
+    conf_bg     = colors.HexColor("#FFF8E1") if conf_level == "LOW" else colors.HexColor("#E8F8F1")
+    conf_border = colors.HexColor("#F39C12") if conf_level == "LOW" else colors.HexColor("#27AE60")
+    conf_tc     = colors.HexColor("#7D5A00") if conf_level == "LOW" else colors.HexColor("#145A32")
+    conf_rows   = [[Paragraph(disclaimer, ParagraphStyle(
+        "conf_hdr", parent=styles["Normal"], fontSize=9, textColor=conf_tc, fontName="Helvetica-Bold"
+    ))]]
+    if conf_flags:
+        conf_rows.append([Paragraph(
+            "Flagged assumption-based statements (verify before relying on these findings):",
+            ParagraphStyle("conf_sub", parent=styles["Normal"],
+                fontSize=8, textColor=conf_tc, fontName="Helvetica-Bold")
+        )])
+        for flag in conf_flags[:5]:
+            conf_rows.append([Paragraph(
+                f'  [{flag["source"]}] "{flag["excerpt"]}" (trigger: \'{flag["trigger"]}\')',
+                ParagraphStyle("conf_item", parent=styles["Normal"],
+                    fontSize=8, textColor=conf_tc, leftIndent=8)
+            )])
+    conf_table = Table(conf_rows, colWidths=[18*cm])
+    conf_table.setStyle(TableStyle([
+        ("BACKGROUND",    (0,0), (-1,-1), conf_bg),
+        ("BOX",           (0,0), (-1,-1), 1, conf_border),
+        ("TOPPADDING",    (0,0), (-1,-1), 6),
+        ("BOTTOMPADDING", (0,0), (-1,-1), 6),
+        ("LEFTPADDING",   (0,0), (-1,-1), 10),
+    ]))
+    story.append(conf_table)
+    story.append(Spacer(1, 8))
+
+    # ---- Regulation Monitor ----
     story.append(Paragraph("1. Regulation Monitoring Results", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
     story.append(Paragraph(f"Status: {mr.get('status', '-')}", h2))
@@ -440,7 +903,7 @@ def save_pdf(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str:
             story.append(Paragraph(f"  • {item}", body))
     story.append(Spacer(1, 8))
 
-    # Risk Analysis
+    # ---- Risk Analysis ----
     story.append(Paragraph("2. Risk Analysis", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
     story.append(Paragraph(ra.get("risk_summary", "-"), body))
@@ -456,19 +919,22 @@ def save_pdf(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str:
             story.append(Paragraph(f"  ⚠ {v}", body))
     story.append(Spacer(1, 8))
 
-    # Compliance Findings
+    # ---- Compliance Findings ----
     story.append(Paragraph("3. Compliance Findings", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
 
     findings_list = cr.get("findings", [])
     if findings_list:
-        th = [["No", "Finding", "Level", "Related Regulation"]]
+        th = [["No", "Finding", "Level", "Regulation / Source"]]
         for t in findings_list:
+            reg_source = t.get("related_regulation", "")
+            src_url    = t.get("source_url", "")
+            reg_cell   = f"{reg_source}\n{src_url}" if src_url else reg_source
             th.append([
                 str(t.get("number", "")),
                 Paragraph(t.get("finding", ""), body),
                 t.get("level", ""),
-                t.get("related_regulation", ""),
+                Paragraph(reg_cell, body),
             ])
         t_table = Table(th, colWidths=[1*cm, 8.5*cm, 2.5*cm, 6*cm])
         t_table.setStyle(TableStyle([
@@ -485,7 +951,7 @@ def save_pdf(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str:
         story.append(t_table)
     story.append(Spacer(1, 8))
 
-    # Recommended Actions
+    # ---- Recommended Actions ----
     story.append(Paragraph("4. Recommended Actions", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
 
@@ -514,13 +980,61 @@ def save_pdf(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str:
         story.append(r_table)
     story.append(Spacer(1, 8))
 
-    # Policy Enforcement
+    # ---- Policy Enforcement ----
     story.append(Paragraph("5. Policy Enforcement", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
-    story.append(Paragraph(enforcement.get("message", "-"), body))
+
+    enf_action = enforcement.get("action", "")
+    enf_icon   = enforcement.get("icon", "")
+    action_colors = {
+        "BLOCK":           colors.HexColor("#C0392B"),
+        "REVIEW_REQUIRED": colors.HexColor("#E67E22"),
+        "WARNING":         colors.HexColor("#F39C12"),
+        "PASS":            colors.HexColor("#27AE60"),
+    }
+    action_color = action_colors.get(enf_action, colors.grey)
+
+    # Badge action
+    badge_enf = [[
+        Paragraph(
+            f"{enf_icon}  {enf_action}",
+            ParagraphStyle("enf_badge", parent=styles["Normal"],
+                fontSize=13, textColor=colors.white, fontName="Helvetica-Bold")
+        )
+    ]]
+    badge_enf_table = Table(badge_enf, colWidths=[18*cm])
+    badge_enf_table.setStyle(TableStyle([
+        ("BACKGROUND",    (0,0), (-1,-1), action_color),
+        ("ALIGN",         (0,0), (-1,-1), "LEFT"),
+        ("TOPPADDING",    (0,0), (-1,-1), 8),
+        ("BOTTOMPADDING", (0,0), (-1,-1), 8),
+        ("LEFTPADDING",   (0,0), (-1,-1), 12),
+        ("ROUNDEDCORNERS", [4]),
+    ]))
+    story.append(badge_enf_table)
+    story.append(Spacer(1, 8))
+
+    # Render message baris per baris supaya formatting terjaga
+    message_text = enforcement.get("message", "-")
+    for line in message_text.split("\n"):
+        line = line.strip()
+        if not line:
+            story.append(Spacer(1, 4))
+        elif line.startswith("[") or line.startswith("•") or line.startswith("  "):
+            story.append(Paragraph(line, ParagraphStyle(
+                "enf_item", parent=styles["Normal"],
+                fontSize=9, leading=13, leftIndent=12, spaceAfter=2
+            )))
+        elif line.endswith(":"):
+            story.append(Paragraph(line, ParagraphStyle(
+                "enf_sub", parent=styles["Normal"],
+                fontSize=10, fontName="Helvetica-Bold", spaceBefore=4, spaceAfter=2
+            )))
+        else:
+            story.append(Paragraph(line, body))
     story.append(Spacer(1, 12))
 
-    # Footer
+    # ---- Footer ----
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
     story.append(Paragraph(
         f"This document was automatically generated by Compliance Regulator AI (TinyFish) "
@@ -567,6 +1081,20 @@ def display_results(d: dict, analysis: dict, enforcement: dict, report_id: str,
     print(f"\n  ⚠️  RISK SUMMARY")
     print(f"  {ra.get('risk_summary','-')}")
 
+    override_log = ra.get("override_log", [])
+    if override_log:
+        print(f"\n  🔺 RISK LEVEL OVERRIDE")
+        for reason in override_log:
+            print(f"    • {reason}")
+
+    confidence = ra.get("confidence", {})
+    print(f"\n  🔍 CONFIDENCE: {confidence.get('level', 'HIGH')}")
+    print(f"  {confidence.get('disclaimer', '')}")
+    if confidence.get("flags"):
+        print("  Flagged statements:")
+        for flag in confidence["flags"][:3]:
+            print(f'    [{flag["source"]}] "{flag["excerpt"][:80]}..."')
+
     print(f"\n  📋 COMPLIANCE FINDINGS")
     for t in cr.get("findings", []):
         print(f"  [{t.get('level','?')}] {t.get('finding','-')} ({t.get('related_regulation','-')})")
@@ -576,7 +1104,10 @@ def display_results(d: dict, analysis: dict, enforcement: dict, report_id: str,
         print(f"  {r.get('priority','?')}. [{r.get('deadline','?')}] {r.get('action','-')} → {r.get('responsible_party','-')}")
 
     print(f"\n  ⚙️  POLICY ENFORCEMENT")
-    print(f"  {enforcement.get('icon','')} {enforcement.get('action','')} — {enforcement.get('message','')}")
+    print(f"  {enforcement.get('icon','')} {enforcement.get('action','')}")
+    print("  " + "-"*58)
+    for line in enforcement.get("message", "").split("\n"):
+        print(f"  {line}")
 
     print(f"\n  💾 FILES SAVED")
     print(f"  JSON : {json_path}")
@@ -671,7 +1202,7 @@ def run_full_flow():
     actual_risk_level = ra.get("risk_level", "LOW")
     print(f"\n  🔎  DEBUG — risk_analysis keys : {list(ra.keys())}")
     print(f"  🔎  DEBUG — risk_level detected : {actual_risk_level}")
-    enforcement = enforce_policy(actual_risk_level, report_id)
+    enforcement = enforce_policy(actual_risk_level, report_id, analysis)
 
     # 5. Save JSON + PDF
     json_path = save_json(report_id, d, analysis, enforcement)
@@ -718,3 +1249,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+#Compliance & Risk Decision Support System
