@@ -40,22 +40,22 @@
 
 #     return {"result": result}
 
-# #ngetes fastapi di gabung sama tinyfish
+# # testing fastapi combined with tinyfish
 
 """
-Tutorial alur dan cara jalannya
+How it works
 ==============================================
-Alur kerjaa:
-  1. User input data regulasi (terminal)
-  2. Simpan ke in-memory DB
-  3. TinyFish: monitor regulasi terkini + deteksi risk
-  4. Generate compliance report → JSON + PDF
-  5. Policy enforcement otomatis (sistem)
-  6. Monitor & riwayat aktivitas
+Workflow:
+  1. User inputs regulation data (terminal)
+  2. Save to in-memory DB
+  3. TinyFish: monitor latest regulations + detect risk
+  4. Generate compliance report -> JSON + PDF
+  5. Automatic policy enforcement (system)
+  6. Monitor & activity history
 
-run di terminal : python main.py atau py main.py //tergantung versi
-Note : pastikan sudah terinstall semua libary dari requirements.txt dan di rekomendasikan menggunakan 
-        virtual environtment
+Run in terminal: python main.py or py main.py  // depends on version
+Note: Make sure all libraries from requirements.txt are installed.
+      Using a virtual environment is recommended.
 """
 
 from dotenv import load_dotenv
@@ -66,7 +66,7 @@ import os
 import datetime
 from tinyfish import TinyFish
 
-# Ubah jadi PDF agar menjadi lebih rapih
+# Convert output to PDF for a cleaner format
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -78,13 +78,13 @@ from reportlab.platypus import (
 
 client = TinyFish()
 
-#DB
+# DB
 DB = {
-    "regulations":          [],   # data regulasi yang diinput user
-    "risk_analyses":        [],   # hasil analisis AI
-    "compliance_reports":   [],   # laporan compliance
-    "policy_enforcements":  [],   # log enforcement
-    "activity_log":         [],   # semua riwayat aktivitas
+    "regulations":         [],   # regulation data entered by user
+    "risk_analyses":       [],   # AI analysis results
+    "compliance_reports":  [],   # compliance reports
+    "policy_enforcements": [],   # enforcement log
+    "activity_log":        [],   # all activity history
 }
 
 OUTPUT_DIR = "compliance_output"
@@ -101,7 +101,7 @@ def log_activity(action: str, detail: str, ref_id: str = ""):
     DB["activity_log"].append(entry)
 
 
-#step1
+# step 1
 def collect_input() -> dict:
     print("\n" + "="*62)
     print("  📋  BUSINESS REGULATION INPUT DATA")
@@ -110,24 +110,24 @@ def collect_input() -> dict:
     d = {}
 
     print("\n[1] Company Identity")
-    d["nama"]     = input("    Company Name         : ").strip()
-    d["industri"] = input("    Industry             : ").strip()
-    d["negara"]   = input("    Country of Operation : ").strip()
+    d["company_name"] = input("    Company Name         : ").strip()
+    d["industry"]     = input("    Industry             : ").strip()
+    d["country"]      = input("    Country of Operation : ").strip()
 
     print("\n[2] Applicable Regulations")
     print("    (comma-separated — e.g.: UU Cipta Kerja, OJK, PPATK, GDPR)")
     raw = input("    Regulations          : ").strip()
-    d["regulasi"] = [r.strip() for r in raw.split(",") if r.strip()]
+    d["regulations"] = [r.strip() for r in raw.split(",") if r.strip()]
 
     print("\n[3] Activity / Transaction Under Review")
-    d["aktivitas"]      = input("    Activity Description : ").strip()
-    d["nilai"]          = input("    Value (Rp/USD)       : ").strip()
-    d["pihak_terlibat"] = input("    Parties Involved     : ").strip()
+    d["activity"]         = input("    Activity Description : ").strip()
+    d["value"]            = input("    Value (USD)          : ").strip()
+    d["parties_involved"] = input("    Parties Involved     : ").strip()
 
     print("\n[4] Risk Factors")
-    d["lintas_batas"]  = input("    Cross-border Transaction?  (yes/no): ").strip().lower()
-    d["pihak_ketiga"]  = input("    Third Party Involved?      (yes/no): ").strip().lower()
-    d["data_sensitif"] = input("    Sensitive Data Present?    (yes/no): ").strip().lower()
+    d["cross_border"]   = input("    Cross-border Transaction?  (yes/no): ").strip().lower()
+    d["third_party"]    = input("    Third Party Involved?      (yes/no): ").strip().lower()
+    d["sensitive_data"] = input("    Sensitive Data Present?    (yes/no): ").strip().lower()
 
     print("\n[5] Regulation Reference URL  (leave blank = auto search)")
     d["url"] = input("    Reference URL        : ").strip()
@@ -139,68 +139,68 @@ def collect_input() -> dict:
 
 def save_regulation(d: dict) -> str:
     DB["regulations"].append(d)
-    log_activity("INPUT", f"Regulation data saved: {d['nama']}", d["id"])
+    log_activity("INPUT", f"Regulation data saved: {d['company_name']}", d["id"])
     print(f"\n  ✅  Saved with ID: {d['id']}")
     return d["id"]
 
 
-#step2
+# step 2
 TINYFISH_GOAL = """
-Kamu adalah AI Compliance & Regulatory Risk Analyst profesional untuk perusahaan di Indonesia.
+You are a professional AI Compliance & Regulatory Risk Analyst for companies in Indonesia.
 
-Tugasmu ada DUA sekaligus:
+You have TWO tasks simultaneously:
 
-=== TUGAS 1: MONITOR REGULASI ===
-Browse sumber regulasi yang relevan dan periksa:
-- Apakah ada perubahan / pembaruan regulasi terbaru yang mempengaruhi perusahaan ini?
-- Apakah regulasi yang disebutkan masih berlaku dan up-to-date?
-- Adakah regulasi baru yang mungkin belum diketahui perusahaan tapi relevan dengan industrinya?
+=== TASK 1: REGULATORY MONITORING ===
+Browse relevant regulatory sources and check:
+- Are there any recent regulatory changes or updates that affect this company?
+- Are the mentioned regulations still valid and up-to-date?
+- Are there any new regulations that the company may not yet be aware of but are relevant to its industry?
 
-=== TUGAS 2: DETEKSI RISK & COMPLIANCE ANALYSIS ===
-Berdasarkan data perusahaan dan aktivitasnya, analisis:
-- Apakah aktivitas yang diperiksa berpotensi melanggar regulasi yang berlaku?
-- Seberapa besar risiko compliance-nya?
-- Apa saja tindakan konkret yang harus dilakukan?
+=== TASK 2: RISK DETECTION & COMPLIANCE ANALYSIS ===
+Based on company data and its activities, analyze:
+- Do the activities being reviewed potentially violate applicable regulations?
+- How significant is the compliance risk?
+- What concrete actions should be taken?
 
-=== DATA PERUSAHAAN ===
-- Nama        : {nama}
-- Industri    : {industri}
-- Negara      : {negara}
-- Regulasi    : {regulasi}
+=== COMPANY DATA ===
+- Name        : {company_name}
+- Industry    : {industry}
+- Country     : {country}
+- Regulations : {regulations}
 
-=== AKTIVITAS YANG DIPERIKSA ===
-- Deskripsi   : {aktivitas}
-- Nilai       : {nilai}
-- Pihak       : {pihak_terlibat}
-- Lintas Batas: {lintas_batas}
-- Pihak Ketiga: {pihak_ketiga}
-- Data Sensitif: {data_sensitif}
+=== ACTIVITY UNDER REVIEW ===
+- Description     : {activity}
+- Value           : {value}
+- Parties         : {parties_involved}
+- Cross-border    : {cross_border}
+- Third Parties   : {third_party}
+- Sensitive Data  : {sensitive_data}
 
-=== FORMAT OUTPUT ===
-Jawab HANYA dengan JSON valid berikut (tanpa markdown, tanpa teks lain):
+=== OUTPUT FORMAT ===
+Respond ONLY with the following valid JSON (no markdown, no additional text):
 {{
-  "monitor_regulasi": {{
-    "status": "UP_TO_DATE | PERUBAHAN_DITEMUKAN | PERLU_REVIEW",
-    "temuan_regulasi_baru": ["<regulasi/aturan baru yang relevan>"],
-    "regulasi_berubah": ["<regulasi yang berubah>"],
-    "catatan_monitor": "<ringkasan hasil monitoring 2-3 kalimat>"
+  "regulation_monitor": {{
+    "status": "UP_TO_DATE | CHANGES_FOUND | NEEDS_REVIEW",
+    "new_regulations_found": ["<relevant new regulation/rule>"],
+    "changed_regulations": ["<changed regulations>"],
+    "monitor_notes": "<2-3 sentence monitoring summary>"
   }},
   "risk_analysis": {{
     "risk_score": <0-100>,
     "risk_level": "<LOW|MEDIUM|HIGH|CRITICAL>",
-    "pelanggaran_terdeteksi": ["<pasal/aturan spesifik yang berpotensi dilanggar>"],
-    "faktor_risiko": ["<faktor yang meningkatkan risiko>"],
-    "ringkasan_risiko": "<ringkasan 2-3 kalimat>"
+    "violations_detected": ["<specific articles/rules potentially violated>"],
+    "risk_factors": ["<factors increasing risk>"],
+    "risk_summary": "<2-3 sentence risk summary>"
   }},
   "compliance_report": {{
-    "status_kepatuhan": "<PATUH|PERLU_PERBAIKAN|TIDAK_PATUH>",
-    "temuan": [
-      {{"nomor": 1, "temuan": "<deskripsi>", "tingkat": "<LOW|MEDIUM|HIGH|CRITICAL>", "regulasi_terkait": "<nama regulasi>"}}
+    "compliance_status": "<COMPLIANT|NEEDS_IMPROVEMENT|NON_COMPLIANT>",
+    "findings": [
+      {{"number": 1, "finding": "<description>", "level": "<LOW|MEDIUM|HIGH|CRITICAL>", "related_regulation": "<regulation name>"}}
     ],
-    "rekomendasi": [
-      {{"prioritas": 1, "aksi": "<tindakan konkret>", "deadline": "<segera|30 hari|90 hari>", "penanggung_jawab": "<dept/role>"}}
+    "recommendations": [
+      {{"priority": 1, "action": "<concrete action>", "deadline": "<immediate|30 days|90 days>", "responsible_party": "<dept/role>"}}
     ],
-    "ringkasan_eksekutif": "<ringkasan untuk manajemen, 3-4 kalimat>"
+    "executive_summary": "<executive summary for management, 3-4 sentences>"
   }}
 }}
 """
@@ -211,24 +211,24 @@ def run_tinyfish(d: dict) -> dict:
     print("  🤖  TINYFISH AI — REGULATION MONITOR & RISK ANALYSIS")
     print("="*62)
 
-    # Tentukan URL target
+    # Determine target URL
     if d.get("url"):
         url = d["url"]
     else:
-        regs = "+".join(d["regulasi"][:2])
-        url = f"https://www.google.com/search?q={regs}+regulasi+terbaru+Indonesia+{d['industri']}"
+        regs = "+".join(d["regulations"][:2])
+        url = f"https://www.google.com/search?q={regs}+regulation+latest+{d['country']}+{d['industry']}"
 
     goal = TINYFISH_GOAL.format(
-        nama          = d["nama"],
-        industri      = d["industri"],
-        negara        = d["negara"],
-        regulasi      = ", ".join(d["regulasi"]),
-        aktivitas     = d["aktivitas"],
-        nilai         = d["nilai"],
-        pihak_terlibat= d["pihak_terlibat"],
-        lintas_batas  = d["lintas_batas"],
-        pihak_ketiga  = d["pihak_ketiga"],
-        data_sensitif = d["data_sensitif"],
+        company_name    = d["company_name"],
+        industry        = d["industry"],
+        country         = d["country"],
+        regulations     = ", ".join(d["regulations"]),
+        activity        = d["activity"],
+        value           = d["value"],
+        parties_involved= d["parties_involved"],
+        cross_border    = d["cross_border"],
+        third_party     = d["third_party"],
+        sensitive_data  = d["sensitive_data"],
     )
 
     print(f"\n  🔍  Browsing: {url[:70]}...")
@@ -248,7 +248,7 @@ def run_tinyfish(d: dict) -> dict:
     except Exception as e:
         print(f"\n  ⚠️  TinyFish error: {e}")
 
-    # fetch hasil dari run_id karena result_json selalu None
+    # Fetch result from run_id because result_json is always None
     if run_id:
         try:
             run_result = client.runs.get(run_id)
@@ -268,45 +268,45 @@ def run_tinyfish(d: dict) -> dict:
         result = fallback_analysis(d)
 
     print(f"\n  ✅  Analysis complete.\n")
-    log_activity("AI_ANALYSIS", f"TinyFish analysis done: {d['nama']}", d["id"])
+    log_activity("AI_ANALYSIS", f"TinyFish analysis done: {d['company_name']}", d["id"])
     return result
 
 
 def fallback_analysis(d: dict) -> dict:
     score = 20
-    faktor = []
-    if d.get("lintas_batas") == "yes":
-        score += 20; faktor.append("Cross-border transaction")
-    if d.get("pihak_ketiga") == "yes":
-        score += 15; faktor.append("Third party involved")
-    if d.get("data_sensitif") == "yes":
-        score += 25; faktor.append("Sensitive data present")
+    factors = []
+    if d.get("cross_border") == "yes":
+        score += 20; factors.append("Cross-border transaction")
+    if d.get("third_party") == "yes":
+        score += 15; factors.append("Third party involved")
+    if d.get("sensitive_data") == "yes":
+        score += 25; factors.append("Sensitive data present")
     score = min(score, 100)
     level = "LOW" if score < 40 else "MEDIUM" if score < 60 else "HIGH" if score < 80 else "CRITICAL"
     return {
-        "monitor_regulasi": {
-            "status": "PERLU_REVIEW",
-            "temuan_regulasi_baru": [],
-            "regulasi_berubah": [],
-            "catatan_monitor": "Fallback analysis — unable to access online regulation sources."
+        "regulation_monitor": {
+            "status": "NEEDS_REVIEW",
+            "new_regulations_found": [],
+            "changed_regulations": [],
+            "monitor_notes": "Fallback analysis — unable to access online regulation sources."
         },
         "risk_analysis": {
             "risk_score": score,
             "risk_level": level,
-            "pelanggaran_terdeteksi": [],
-            "faktor_risiko": faktor,
-            "ringkasan_risiko": f"Risk level {level} based on factors: {', '.join(faktor) or 'standard'}."
+            "violations_detected": [],
+            "risk_factors": factors,
+            "risk_summary": f"Risk level {level} based on factors: {', '.join(factors) or 'standard'}."
         },
         "compliance_report": {
-            "status_kepatuhan": "PERLU_PERBAIKAN",
-            "temuan": [{"nomor": 1, "temuan": "Manual review required", "tingkat": level, "regulasi_terkait": ", ".join(d["regulasi"])}],
-            "rekomendasi": [{"prioritas": 1, "aksi": "Conduct manual review with compliance officer", "deadline": "30 days", "penanggung_jawab": "Compliance Dept"}],
-            "ringkasan_eksekutif": "Automated analysis could not be completed. Manual review is recommended."
+            "compliance_status": "NEEDS_IMPROVEMENT",
+            "findings": [{"number": 1, "finding": "Manual review required", "level": level, "related_regulation": ", ".join(d["regulations"])}],
+            "recommendations": [{"priority": 1, "action": "Conduct manual review with compliance officer", "deadline": "30 days", "responsible_party": "Compliance Dept"}],
+            "executive_summary": "Automated analysis could not be completed. Manual review is recommended."
         }
     }
 
 
-#step3
+# step 3
 POLICY = {
     "CRITICAL": {"action": "BLOCK",           "icon": "🔴", "msg": "Process BLOCKED. Immediate escalation to Compliance Officer required."},
     "HIGH":     {"action": "REVIEW_REQUIRED", "icon": "🟡", "msg": "Process ON HOLD. Manual review required before proceeding."},
@@ -317,24 +317,24 @@ POLICY = {
 def enforce_policy(risk_level: str, report_id: str) -> dict:
     p = POLICY.get(risk_level, POLICY["LOW"])
     entry = {
-        "timestamp": datetime.datetime.now().isoformat(),
-        "report_id": report_id,
+        "timestamp":  datetime.datetime.now().isoformat(),
+        "report_id":  report_id,
         "risk_level": risk_level,
-        "action": p["action"],
-        "message": p["msg"],
+        "action":     p["action"],
+        "message":    p["msg"],
     }
     DB["policy_enforcements"].append(entry)
     log_activity("ENFORCEMENT", f"{p['action']} applied for {report_id}", report_id)
     return {**entry, "icon": p["icon"]}
 
 
-#step4
+# step 4
 def save_json(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str:
     payload = {
-        "report_id":   report_id,
-        "regulation":  d,
-        "analysis":    analysis,
-        "enforcement": enforcement,
+        "report_id":    report_id,
+        "regulation":   d,
+        "analysis":     analysis,
+        "enforcement":  enforcement,
         "generated_at": datetime.datetime.now().isoformat(),
     }
     path = os.path.join(OUTPUT_DIR, f"{report_id}.json")
@@ -344,7 +344,7 @@ def save_json(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str
     return path
 
 
-#step5
+# step 5
 RISK_COLORS = {
     "CRITICAL": colors.HexColor("#C0392B"),
     "HIGH":     colors.HexColor("#E67E22"),
@@ -372,32 +372,33 @@ def save_pdf(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str:
                             fontSize=9, textColor=colors.grey)
 
     ra  = analysis.get("risk_analysis", {})
-    mr  = analysis.get("monitor_regulasi", {})
+    mr  = analysis.get("regulation_monitor", {})
     cr  = analysis.get("compliance_report", {})
     rl  = ra.get("risk_level", "LOW")
     rs  = ra.get("risk_score", 0)
     risk_color = RISK_COLORS.get(rl, colors.grey)
 
     story.append(Paragraph("COMPLIANCE REPORT", title_style))
-    story.append(Paragraph(f"Powered by TinyFish AI", small))
+    story.append(Paragraph("Powered by TinyFish AI", small))
     story.append(HRFlowable(width="100%", thickness=2, color=colors.HexColor("#2C3E50")))
     story.append(Spacer(1, 6))
+
     info_data = [
-        ["Report ID",   report_id,   "Date",        datetime.datetime.now().strftime("%d %b %Y %H:%M")],
-        ["Company",     d["nama"],   "Industry",    d["industri"]],
-        ["Country",     d["negara"], "Regulations", ", ".join(d["regulasi"])],
+        ["Report ID",  report_id,           "Date",        datetime.datetime.now().strftime("%d %b %Y %H:%M")],
+        ["Company",    d["company_name"],    "Industry",    d["industry"]],
+        ["Country",    d["country"],         "Regulations", ", ".join(d["regulations"])],
     ]
     info_table = Table(info_data, colWidths=[3.5*cm, 6*cm, 3*cm, 5.5*cm])
     info_table.setStyle(TableStyle([
-        ("FONTSIZE",    (0,0), (-1,-1), 9),
-        ("FONTNAME",    (0,0), (0,-1), "Helvetica-Bold"),
-        ("FONTNAME",    (2,0), (2,-1), "Helvetica-Bold"),
-        ("BACKGROUND",  (0,0), (0,-1), colors.HexColor("#ECF0F1")),
-        ("BACKGROUND",  (2,0), (2,-1), colors.HexColor("#ECF0F1")),
-        ("GRID",        (0,0), (-1,-1), 0.5, colors.HexColor("#BDC3C7")),
+        ("FONTSIZE",       (0,0), (-1,-1), 9),
+        ("FONTNAME",       (0,0), (0,-1),  "Helvetica-Bold"),
+        ("FONTNAME",       (2,0), (2,-1),  "Helvetica-Bold"),
+        ("BACKGROUND",     (0,0), (0,-1),  colors.HexColor("#ECF0F1")),
+        ("BACKGROUND",     (2,0), (2,-1),  colors.HexColor("#ECF0F1")),
+        ("GRID",           (0,0), (-1,-1), 0.5, colors.HexColor("#BDC3C7")),
         ("ROWBACKGROUNDS", (0,0), (-1,-1), [colors.white, colors.HexColor("#F8F9FA")]),
-        ("TOPPADDING",  (0,0), (-1,-1), 5),
-        ("BOTTOMPADDING", (0,0), (-1,-1), 5),
+        ("TOPPADDING",     (0,0), (-1,-1), 5),
+        ("BOTTOMPADDING",  (0,0), (-1,-1), 5),
     ]))
     story.append(info_table)
     story.append(Spacer(1, 12))
@@ -422,94 +423,94 @@ def save_pdf(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str:
     story.append(badge_table)
     story.append(Spacer(1, 12))
 
-    # ---- Ringkasan Eksekutif ----
+    # ---- Executive Summary ----
     story.append(Paragraph("Executive Summary", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
-    story.append(Paragraph(cr.get("ringkasan_eksekutif", "-"), body))
+    story.append(Paragraph(cr.get("executive_summary", "-"), body))
     story.append(Spacer(1, 8))
 
-    # ---- Monitor Regulasi ----
+    # ---- Regulation Monitor ----
     story.append(Paragraph("1. Regulation Monitoring Results", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
     story.append(Paragraph(f"Status: {mr.get('status', '-')}", h2))
-    story.append(Paragraph(mr.get("catatan_monitor", "-"), body))
+    story.append(Paragraph(mr.get("monitor_notes", "-"), body))
 
-    if mr.get("temuan_regulasi_baru"):
+    if mr.get("new_regulations_found"):
         story.append(Paragraph("New / Changed Regulations Found:", h2))
-        for item in mr["temuan_regulasi_baru"]:
+        for item in mr["new_regulations_found"]:
             story.append(Paragraph(f"  • {item}", body))
     story.append(Spacer(1, 8))
 
     # ---- Risk Analysis ----
     story.append(Paragraph("2. Risk Analysis", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
-    story.append(Paragraph(ra.get("ringkasan_risiko", "-"), body))
+    story.append(Paragraph(ra.get("risk_summary", "-"), body))
 
-    if ra.get("faktor_risiko"):
+    if ra.get("risk_factors"):
         story.append(Paragraph("Risk Factors:", h2))
-        for f in ra["faktor_risiko"]:
+        for f in ra["risk_factors"]:
             story.append(Paragraph(f"  • {f}", body))
 
-    if ra.get("pelanggaran_terdeteksi"):
+    if ra.get("violations_detected"):
         story.append(Paragraph("Potential Violations:", h2))
-        for v in ra["pelanggaran_terdeteksi"]:
+        for v in ra["violations_detected"]:
             story.append(Paragraph(f"  ⚠ {v}", body))
     story.append(Spacer(1, 8))
 
-    # ---- Compliance Report — Temuan ----
+    # ---- Compliance Findings ----
     story.append(Paragraph("3. Compliance Findings", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
 
-    temuan_list = cr.get("temuan", [])
-    if temuan_list:
+    findings_list = cr.get("findings", [])
+    if findings_list:
         th = [["No", "Finding", "Level", "Related Regulation"]]
-        for t in temuan_list:
+        for t in findings_list:
             th.append([
-                str(t.get("nomor", "")),
-                Paragraph(t.get("temuan", ""), body),
-                t.get("tingkat", ""),
-                t.get("regulasi_terkait", ""),
+                str(t.get("number", "")),
+                Paragraph(t.get("finding", ""), body),
+                t.get("level", ""),
+                t.get("related_regulation", ""),
             ])
         t_table = Table(th, colWidths=[1*cm, 8.5*cm, 2.5*cm, 6*cm])
         t_table.setStyle(TableStyle([
-            ("BACKGROUND",    (0,0), (-1,0), colors.HexColor("#2C3E50")),
-            ("TEXTCOLOR",     (0,0), (-1,0), colors.white),
-            ("FONTNAME",      (0,0), (-1,0), "Helvetica-Bold"),
-            ("FONTSIZE",      (0,0), (-1,-1), 9),
+            ("BACKGROUND",     (0,0), (-1,0), colors.HexColor("#2C3E50")),
+            ("TEXTCOLOR",      (0,0), (-1,0), colors.white),
+            ("FONTNAME",       (0,0), (-1,0), "Helvetica-Bold"),
+            ("FONTSIZE",       (0,0), (-1,-1), 9),
             ("ROWBACKGROUNDS", (0,1), (-1,-1), [colors.white, colors.HexColor("#F8F9FA")]),
-            ("GRID",          (0,0), (-1,-1), 0.5, colors.HexColor("#BDC3C7")),
-            ("TOPPADDING",    (0,0), (-1,-1), 5),
-            ("BOTTOMPADDING", (0,0), (-1,-1), 5),
-            ("VALIGN",        (0,0), (-1,-1), "TOP"),
+            ("GRID",           (0,0), (-1,-1), 0.5, colors.HexColor("#BDC3C7")),
+            ("TOPPADDING",     (0,0), (-1,-1), 5),
+            ("BOTTOMPADDING",  (0,0), (-1,-1), 5),
+            ("VALIGN",         (0,0), (-1,-1), "TOP"),
         ]))
         story.append(t_table)
     story.append(Spacer(1, 8))
 
-    # ---- Rekomendasi ----
+    # ---- Recommended Actions ----
     story.append(Paragraph("4. Recommended Actions", h1))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#BDC3C7")))
 
-    rek_list = cr.get("rekomendasi", [])
-    if rek_list:
+    rec_list = cr.get("recommendations", [])
+    if rec_list:
         rh = [["#", "Action", "Deadline", "Responsible Party"]]
-        for r in rek_list:
+        for r in rec_list:
             rh.append([
-                str(r.get("prioritas", "")),
-                Paragraph(r.get("aksi", ""), body),
+                str(r.get("priority", "")),
+                Paragraph(r.get("action", ""), body),
                 r.get("deadline", ""),
-                r.get("penanggung_jawab", ""),
+                r.get("responsible_party", ""),
             ])
         r_table = Table(rh, colWidths=[1*cm, 9*cm, 2.5*cm, 5.5*cm])
         r_table.setStyle(TableStyle([
-            ("BACKGROUND",    (0,0), (-1,0), colors.HexColor("#27AE60")),
-            ("TEXTCOLOR",     (0,0), (-1,0), colors.white),
-            ("FONTNAME",      (0,0), (-1,0), "Helvetica-Bold"),
-            ("FONTSIZE",      (0,0), (-1,-1), 9),
+            ("BACKGROUND",     (0,0), (-1,0), colors.HexColor("#27AE60")),
+            ("TEXTCOLOR",      (0,0), (-1,0), colors.white),
+            ("FONTNAME",       (0,0), (-1,0), "Helvetica-Bold"),
+            ("FONTSIZE",       (0,0), (-1,-1), 9),
             ("ROWBACKGROUNDS", (0,1), (-1,-1), [colors.white, colors.HexColor("#F8F9FA")]),
-            ("GRID",          (0,0), (-1,-1), 0.5, colors.HexColor("#BDC3C7")),
-            ("TOPPADDING",    (0,0), (-1,-1), 5),
-            ("BOTTOMPADDING", (0,0), (-1,-1), 5),
-            ("VALIGN",        (0,0), (-1,-1), "TOP"),
+            ("GRID",           (0,0), (-1,-1), 0.5, colors.HexColor("#BDC3C7")),
+            ("TOPPADDING",     (0,0), (-1,-1), 5),
+            ("BOTTOMPADDING",  (0,0), (-1,-1), 5),
+            ("VALIGN",         (0,0), (-1,-1), "TOP"),
         ]))
         story.append(r_table)
     story.append(Spacer(1, 8))
@@ -534,11 +535,10 @@ def save_pdf(report_id: str, d: dict, analysis: dict, enforcement: dict) -> str:
     return path
 
 
-
 def display_results(d: dict, analysis: dict, enforcement: dict, report_id: str,
                     json_path: str, pdf_path: str):
     ra = analysis.get("risk_analysis", {})
-    mr = analysis.get("monitor_regulasi", {})
+    mr = analysis.get("regulation_monitor", {})
     cr = analysis.get("compliance_report", {})
     rl = ra.get("risk_level", "LOW")
 
@@ -549,32 +549,32 @@ def display_results(d: dict, analysis: dict, enforcement: dict, report_id: str,
     print("="*62)
 
     print(f"""
-  Company     : {d['nama']}
-  Industry    : {d['industri']}
-  Regulations : {', '.join(d['regulasi'])}
+  Company     : {d['company_name']}
+  Industry    : {d['industry']}
+  Regulations : {', '.join(d['regulations'])}
 
   ┌──────────────────────────────────────────────┐
   │  RISK SCORE  :  {str(ra.get('risk_score','?')).ljust(6)} / 100                    
   │  RISK LEVEL  :  {icons.get(rl,'⚪')} {rl.ljust(10)}                 
-  │  STATUS      :  {cr.get('status_kepatuhan','-').ljust(20)}           
+  │  STATUS      :  {cr.get('compliance_status','-').ljust(20)}           
   └──────────────────────────────────────────────┘""")
 
     print(f"\n  📡 REGULATION MONITOR  [{mr.get('status','-')}]")
-    print(f"  {mr.get('catatan_monitor','-')}")
-    if mr.get("temuan_regulasi_baru"):
-        for t in mr["temuan_regulasi_baru"]:
+    print(f"  {mr.get('monitor_notes','-')}")
+    if mr.get("new_regulations_found"):
+        for t in mr["new_regulations_found"]:
             print(f"    • {t}")
 
     print(f"\n  ⚠️  RISK SUMMARY")
-    print(f"  {ra.get('ringkasan_risiko','-')}")
+    print(f"  {ra.get('risk_summary','-')}")
 
     print(f"\n  📋 COMPLIANCE FINDINGS")
-    for t in cr.get("temuan", []):
-        print(f"  [{t.get('tingkat','?')}] {t.get('temuan','-')} ({t.get('regulasi_terkait','-')})")
+    for t in cr.get("findings", []):
+        print(f"  [{t.get('level','?')}] {t.get('finding','-')} ({t.get('related_regulation','-')})")
 
     print(f"\n  💡 RECOMMENDATIONS")
-    for r in cr.get("rekomendasi", []):
-        print(f"  {r.get('prioritas','?')}. [{r.get('deadline','?')}] {r.get('aksi','-')} → {r.get('penanggung_jawab','-')}")
+    for r in cr.get("recommendations", []):
+        print(f"  {r.get('priority','?')}. [{r.get('deadline','?')}] {r.get('action','-')} → {r.get('responsible_party','-')}")
 
     print(f"\n  ⚙️  POLICY ENFORCEMENT")
     print(f"  {enforcement.get('icon','')} {enforcement.get('action','')} — {enforcement.get('message','')}")
@@ -583,7 +583,6 @@ def display_results(d: dict, analysis: dict, enforcement: dict, report_id: str,
     print(f"  JSON : {json_path}")
     print(f"  PDF  : {pdf_path}")
     print("="*62)
-
 
 
 def show_monitor():
@@ -610,11 +609,11 @@ def show_monitor():
     🔴 CRITICAL : {risk_count['CRITICAL']}
     """)
 
-    high = [r for r in DB["compliance_reports"] if r.get("risk_level") in ("HIGH","CRITICAL")]
+    high = [r for r in DB["compliance_reports"] if r.get("risk_level") in ("HIGH", "CRITICAL")]
     if high:
         print("  ⚠️  REQUIRES ATTENTION:")
         for r in high:
-            print(f"    • [{r['report_id']}] {r['nama']} → {r['risk_level']}")
+            print(f"    • [{r['report_id']}] {r['company_name']} → {r['risk_level']}")
     else:
         print("  ✅  No high-risk entities at this time.")
 
@@ -626,7 +625,7 @@ def show_activity_log():
     if not DB["activity_log"]:
         print("\n  No activity yet.\n")
         return
-    for entry in DB["activity_log"][-20:]:    
+    for entry in DB["activity_log"][-20:]:
         ts = entry["timestamp"][11:19]
         print(f"  {ts}  [{entry['action']:<14}]  {entry['detail']}")
 
@@ -639,10 +638,9 @@ def show_all_reports():
         print("\n  No reports yet.\n")
         return
     for r in DB["compliance_reports"]:
-        icons = {"CRITICAL":"🔴","HIGH":"🟡","MEDIUM":"🟠","LOW":"🟢"}
-        rl = r.get("risk_level","LOW")
-        print(f"  {icons.get(rl,'⚪')} [{r['report_id']}]  {r['nama']:<25}  {rl:<10}  Score:{r.get('risk_score','?')}")
-
+        icons = {"CRITICAL": "🔴", "HIGH": "🟡", "MEDIUM": "🟠", "LOW": "🟢"}
+        rl = r.get("risk_level", "LOW")
+        print(f"  {icons.get(rl,'⚪')} [{r['report_id']}]  {r['company_name']:<25}  {rl:<10}  Score:{r.get('risk_score','?')}")
 
 
 def run_full_flow():
@@ -650,32 +648,37 @@ def run_full_flow():
     d = collect_input()
     save_regulation(d)
 
-    # 2. TinyFish analisis
+    # 2. TinyFish analysis
     analysis = run_tinyfish(d)
+    print(f"\n  🔎  DEBUG — analysis top-level keys: {list(analysis.keys())}")
+    print(f"  🔎  DEBUG — risk_analysis raw: {analysis.get('risk_analysis', 'KEY MISSING')}")
 
     # IDs
     report_id = f"RPT-{len(DB['compliance_reports'])+1:04d}"
     ra = analysis.get("risk_analysis", {})
 
-    # 3. Simpan ke DB
+    # 3. Save to DB
     DB["compliance_reports"].append({
-        "report_id":  report_id,
-        "nama":       d["nama"],
-        "risk_level": ra.get("risk_level","LOW"),
-        "risk_score": ra.get("risk_score", 0),
-        "timestamp":  datetime.datetime.now().isoformat(),
+        "report_id":    report_id,
+        "company_name": d["company_name"],
+        "risk_level":   ra.get("risk_level", "LOW"),
+        "risk_score":   ra.get("risk_score", 0),
+        "timestamp":    datetime.datetime.now().isoformat(),
     })
     DB["risk_analyses"].append({"report_id": report_id, **analysis})
     log_activity("REPORT", f"Compliance report created: {report_id}", report_id)
 
     # 4. Policy enforcement
-    enforcement = enforce_policy(ra.get("risk_level","LOW"), report_id)
+    actual_risk_level = ra.get("risk_level", "LOW")
+    print(f"\n  🔎  DEBUG — risk_analysis keys : {list(ra.keys())}")
+    print(f"  🔎  DEBUG — risk_level detected : {actual_risk_level}")
+    enforcement = enforce_policy(actual_risk_level, report_id)
 
-    # 5. Simpan JSON + PDF
+    # 5. Save JSON + PDF
     json_path = save_json(report_id, d, analysis, enforcement)
     pdf_path  = save_pdf(report_id, d, analysis, enforcement)
 
-    # 6. Tampilkan ke terminal
+    # 6. Display to terminal
     display_results(d, analysis, enforcement, report_id, json_path, pdf_path)
 
 
@@ -693,21 +696,21 @@ def main():
   [4]  Activity Log
   [5]  Exit
 """)
-        pilihan = input("  Choose (1-5): ").strip()
+        choice = input("  Choose (1-5): ").strip()
 
-        if pilihan == "1":
+        if choice == "1":
             run_full_flow()
             input("\n  Press Enter to return to menu...")
-        elif pilihan == "2":
+        elif choice == "2":
             show_monitor()
             input("\n  Press Enter to return to menu...")
-        elif pilihan == "3":
+        elif choice == "3":
             show_all_reports()
             input("\n  Press Enter to return to menu...")
-        elif pilihan == "4":
+        elif choice == "4":
             show_activity_log()
             input("\n  Press Enter to return to menu...")
-        elif pilihan == "5":
+        elif choice == "5":
             print("\n  👋  Goodbye!\n")
             break
         else:

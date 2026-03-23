@@ -1,0 +1,106 @@
+{
+  "report_id": "RPT-0002",
+  "regulation": {
+    "company_name": "Indofood",
+    "industry": "F & B",
+    "country": "Indonesia",
+    "regulations": [
+      "PP",
+      "CPPBO",
+      "BPOM",
+      "OJK",
+      "UU"
+    ],
+    "activity": "creating a new frozen food product",
+    "value": "300000",
+    "parties_involved": "Goverments, Indofood",
+    "cross_border": "no",
+    "third_party": "no",
+    "sensitive_data": "no",
+    "url": "",
+    "id": "REG-0002",
+    "timestamp": "2026-03-23T11:49:23.529540"
+  },
+  "analysis": {
+    "risk_analysis": {
+      "risk_level": "LOW",
+      "risk_score": 25,
+      "risk_factors": [
+        "Sensitive cold-chain requirements for frozen food safety",
+        "Strict enforcement of the post-2024 mandatory halal certification deadline",
+        "Compliance with new 2025 reporting standards for unsafe products"
+      ],
+      "risk_summary": "The risk is categorized as low assuming Indofood follows its established professional regulatory processes. However, the launch of a new frozen food product in 2026 must specifically address the 2025 updates to recall mechanisms and ensure full halal compliance, as enforcement has intensified following the 2024 deadline.",
+      "violations_detected": [
+        "Potential violation of BPOM Reg No. 27 of 2017 if the product is commercialized without a Distribution Permit (MD)",
+        "Non-compliance with BPOM Reg No. 12 of 2025 if internal recall SOPs are not updated"
+      ]
+    },
+    "compliance_report": {
+      "findings": [
+        {
+          "level": "MEDIUM",
+          "number": 1,
+          "finding": "Internal recall and destruction protocols may not yet align with the specific reporting requirements of the new BPOM Reg No. 12/2025.",
+          "related_regulation": "BPOM Regulation No. 12 of 2025"
+        },
+        {
+          "level": "CRITICAL",
+          "number": 2,
+          "finding": "Mandatory Halal certification is now a legal requirement for all F&B products following the October 2024 deadline.",
+          "related_regulation": "UU No. 33 of 2014"
+        },
+        {
+          "level": "HIGH",
+          "number": 3,
+          "finding": "New frozen products require a Distribution Permit (MD) registration through the Risk-Based Approach (RBA) OSS system.",
+          "related_regulation": "PP No. 5 of 2021"
+        }
+      ],
+      "recommendations": [
+        {
+          "action": "Ensure the product is registered and obtains a BPOM Distribution Permit (MD) before any commercial activity.",
+          "deadline": "immediate",
+          "priority": 1,
+          "responsible_party": "Regulatory Affairs Department"
+        },
+        {
+          "action": "Audit and update internal Product Recall SOPs to comply with the reporting timelines in BPOM Reg No. 12/2025.",
+          "deadline": "30 days",
+          "priority": 2,
+          "responsible_party": "Quality Assurance Team"
+        },
+        {
+          "action": "Verify the Halal status and complete certification through BPJPH before the product launch.",
+          "deadline": "immediate",
+          "priority": 3,
+          "responsible_party": "Halal Management Committee"
+        }
+      ],
+      "compliance_status": "NEEDS_IMPROVEMENT",
+      "executive_summary": "Indofood's development of a new frozen food product is compliant with its core industry activity, but it must adapt to recent regulatory shifts. The implementation of BPOM Regulation No. 12 of 2025 necessitates an update to safety recall procedures, and the expiration of the halal transition period in late 2024 makes halal certification non-negotiable. Management should prioritize securing the BPOM MD permit and ensuring all 2025 safety standards are met to prevent distribution delays or legal penalties."
+    },
+    "regulation_monitor": {
+      "status": "CHANGES_FOUND",
+      "monitor_notes": "BPOM has introduced Regulation No. 12 of 2025, which tightens the protocols for product recall and destruction, shifting more responsibility to the producer. Furthermore, the mandatory halal certification deadline for F&B products passed in late 2024, making it a prerequisite for any new product distributed in Indonesia by 2026.",
+      "changed_regulations": [
+        "Stricter recall reporting and management procedures under BPOM Reg No. 12/2025",
+        "Enhanced labeling requirements for Sugar, Salt, and Fat (GGL) content"
+      ],
+      "new_regulations_found": [
+        "BPOM Regulation No. 12 of 2025 on Recall and Destruction of Processed Food",
+        "Mandatory Halal Certification (UU 33/2014 & PP 39/2021) fully effective since October 17, 2024",
+        "BPOM Regulation No. 7 of 2024 regarding Food Additives and Safety Standards"
+      ]
+    }
+  },
+  "enforcement": {
+    "timestamp": "2026-03-23T11:50:54.154201",
+    "report_id": "RPT-0002",
+    "risk_level": "LOW",
+    "action": "PASS",
+    "message": "Process APPROVED. No additional action required.",
+    "icon": "🟢"
+  },
+  "generated_at": "2026-03-23T11:50:54.154226"
+}
