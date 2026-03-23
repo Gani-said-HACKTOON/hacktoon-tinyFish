@@ -5,7 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { loginStrategy } from './local.strategy';
-import { refreshToken } from './jwt.strategy';
+import { accessTokenStrategy, refreshTokenStrategy } from './jwt.strategy';
 
 @Module({
     imports: [JwtModule.registerAsync({
@@ -17,7 +17,7 @@ import { refreshToken } from './jwt.strategy';
     }
     ),PassportModule],
     controllers: [AuthController],
-    providers: [AuthService, loginStrategy, refreshToken],
+    providers: [AuthService, loginStrategy, refreshTokenStrategy, accessTokenStrategy ],
 
 })
 export class AuthModule {}

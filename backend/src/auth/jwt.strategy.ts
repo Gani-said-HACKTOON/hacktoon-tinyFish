@@ -9,8 +9,13 @@ interface refreshTokenType{
     sub: number
 }
 
+interface accessTokenType{
+    email: string,
+    sub: number  
+}
+
 @Injectable()
-class accessToken extends PassportStrategy(Strategy, "access_token"){
+class accessTokenStrategy extends PassportStrategy(Strategy, "access_token"){
     constructor(private authService: AuthService, config: ConfigService){
         super({ 
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -18,14 +23,15 @@ class accessToken extends PassportStrategy(Strategy, "access_token"){
             secretOrKey: config.get<string>("SECRET_JWT_KEY") || "whatever_fallback"
         })
     }
-    async validate(payload: any){
-        console.log(payload)
+    async validate(payload: accessTokenType){
+        return payload
     }
 }
 
 @Injectable()
-class refreshToken extends PassportStrategy(Strategy, "refresh_token"){
+class refreshTokenStrategy extends PassportStrategy(Strategy, "refresh_token"){
     constructor(private authService: AuthService, config: ConfigService){
+        console.log(config.get("SECRET_JWT_KEY"))
         super({
             jwtFromRequest: ExtractJwt.fromExtractors([
                 (req: Request) => (req.headers.cookie ?? "").split('=')[1]
@@ -39,4 +45,4 @@ class refreshToken extends PassportStrategy(Strategy, "refresh_token"){
     }
 }
 
-export { accessToken, refreshToken }
+export { accessTokenStrategy, refreshTokenStrategy }
