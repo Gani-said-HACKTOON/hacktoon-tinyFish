@@ -1,6 +1,7 @@
 import TryButton from "@/components/tryButton";
 import CustomButton from "@/components/customButton";
 import AnimatedText from "@/components/landingPage/animatedText";
+import Link from "next/link";
 
 export default function Home() {
   return (
