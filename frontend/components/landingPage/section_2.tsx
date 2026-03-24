@@ -33,7 +33,7 @@ export default function Section_2() {
   }, []);
 
   return (
-    <section className="px-8 pb-32 flex justify-center bg-linear-to-b from-[#d4ccc8] to-[#e8eef5]">
+    <section className="px-8 pb-32 flex justify-center">
       <div ref={wrapRef} className="w-full max-w-225 perspective-distant">
         <div
           ref={mockupRef}
