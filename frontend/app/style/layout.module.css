@@ -1,11 +1,13 @@
 .body {
   min-height: 700vh;
 
-  background-image: 
-    linear-gradient(to bottom, #8FAAC4, #E2E2E2),
-    linear-gradient(to bottom, #E2E2E2, #8FAAC4);
+  background: linear-gradient(
+    to bottom,
+    #8FAAC4 0vh,
+    #E2E2E2 100vh,
+    #8FAAC4 200vh
+  );
 
-  background-size: 100% 100vh;
-  background-position: 0 0, 0 100vh;
+  background-size: 100% 200vh;
   background-repeat: repeat-y;
 }
