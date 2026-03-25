@@ -163,7 +163,7 @@ export default function Navbar() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="font-normal text-lg text-white whitespace-nowrap rounded-[45px] hover:bg-white/40 pt-1.5 pb-2.5 px-2"
+                    className="font-normal text-lg text-[#ffffff] whitespace-nowrap rounded-[45px] hover:bg-white/40 pt-1.5 pb-2.5 px-2"
                   >
                     {link.label}
                   </Link>
