@@ -1,6 +1,4 @@
-.body {
-  min-height: 700vh;
-
+body{
   background: linear-gradient(
     to bottom,
     #8FAAC4 0vh,

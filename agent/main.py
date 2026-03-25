@@ -1250,4 +1250,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-#Compliance & Risk Decision Support System
+#ini adalah sistem Compliance & Risk Decision Support System
