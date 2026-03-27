@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface TryButtonProps {
   className?: string;
 }
@@ -5,6 +7,7 @@ interface TryButtonProps {
 export default function TryButton({ className = ""}: TryButtonProps) {
   return (
     <div className={`flex justify-center items-center w-full lg:w-auto`}> 
+
       <button
         className={`group relative inline-flex items-center justify-center
           px-2 py-3 h-14 rounded-[45px]
@@ -20,6 +23,7 @@ export default function TryButton({ className = ""}: TryButtonProps) {
           >
             Try Dreelio free
           </span>
+
           <span
             className="absolute inset-x-0 flex items-center justify-center
               text-[16px] font-bold tracking-wide text-black
