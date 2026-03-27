@@ -5,105 +5,115 @@
     "industry": "Medical",
     "country": "USA",
     "regulations": [
-      "HIPAA",
-      "HITECH Act",
+      "HIPPA",
+      "HITECH ACT",
       "FDA Regulations",
       "CMS Regulations",
       "OSHA",
-      "Stark Law",
-      "Anti-Kickback Statute"
+      "Stratk Law",
+      "Anti-Kickbatute"
     ],
     "activity": "Build a hospital on arizona",
     "value": "2000000",
-    "parties_involved": "Goverments, Constructor",
+    "parties_involved": "Goverments,Constructor",
     "cross_border": "no",
     "third_party": "yes",
-    "sensitive_data": "no",
+    "sensitive_data": "yes",
     "url": "",
     "id": "REG-0002",
-    "timestamp": "2026-03-23T13:08:46.182453"
+    "timestamp": "2026-03-27T12:14:03.415516"
   },
   "analysis": {
     "risk_analysis": {
-      "risk_level": "MEDIUM",
-      "risk_score": 45,
+      "risk_level": "CRITICAL",
+      "risk_score": 75,
       "risk_factors": [
-        "Low project value ($2M) for a 'hospital' construction suggests potential under-capitalization or misclassification of the facility type.",
-        "Engagement with government parties and third-party constructors increases scrutiny under the Anti-Kickback Statute and Stark Law.",
-        "High environmental risk for workers due to Arizona heat, requiring compliance with evolving OSHA standards."
+        "Financial risk associated with $2,000,000 capital expenditure involving third-party constructors and government parties.",
+        "High probability of non-compliance with state-specific licensing if architectural plans were not pre-approved by ADHS.",
+        "Significant regulatory knowledge gap as evidenced by misspelling of 43% of primary regulations in company records (HIPPA, Stratk, Anti-Kickbatute)."
       ],
-      "risk_summary": "The construction of a hospital in Arizona involves significant state-level licensing risks and federal safety compliance. The $2,000,000 valuation is remarkably low for a full-scale hospital, raising concerns about project scope and adherence to complex architectural and medical facility standards.",
+      "risk_summary": "The project faces high compliance risk due to the intersection of federal fraud laws (Stark/AKS) and mandatory Arizona state licensing for health care construction. The use of third-party contractors for a $2M project without explicit mention of a compliance review increases the risk of 'knowing and willful' violations of the Anti-Kickback Statute.",
       "violations_detected": [
-        "Potential Violation of ARS 36-421 (Unverified Plan Submission) — source: https://www.azleg.gov/ars/36/00421.htm"
-      ]
+        "Arizona Revised Statutes § 36-421 (Building plan approval) — source: https://www.azleg.gov/ars/36/00421.htm",
+        "Anti-Kickback Statute 42 U.S.C. § 1320a-7b(b) (Potential vendor kickbacks) — source: https://oig.hhs.gov/compliance/safe-harbor-regulations/"
+      ],
+      "override_log": [
+        "Finding level CRITICAL detected — risk level upgraded from HIGH to CRITICAL."
+      ],
+      "confidence": {
+        "level": "HIGH",
+        "flags": [],
+        "disclaimer": "✅  No assumption-based statements detected. Analysis references verified regulatory sources."
+      }
     },
     "compliance_report": {
       "findings": [
         {
-          "level": "CRITICAL",
+          "level": "MEDIUM",
           "number": 1,
-          "finding": "Mandatory architectural plan approval by the Director of ADHS is required before construction begins per state law.",
+          "finding": "Unverified Status: Regulations listed as 'HIPPA', 'Stratk Law', and 'Anti-Kickbatute' cannot be verified as stated due to critical spelling errors; the actual regulations (HIPAA, Stark, AKS) require immediate update in internal systems.",
+          "source_url": "https://www.hhs.gov/hipaa/index.html",
+          "related_regulation": "Corporate Compliance Standards"
+        },
+        {
+          "level": "CRITICAL",
+          "number": 2,
+          "finding": "Mandatory architectural and building plan approval from the Arizona Department of Health Services (ADHS) per ARS 36-421 is unconfirmed for this project.",
           "source_url": "https://www.azleg.gov/ars/36/00421.htm",
           "related_regulation": "ARS 36-421"
         },
         {
           "level": "HIGH",
-          "number": 2,
-          "finding": "Proposed OSHA Heat Rule requires specific hydration, rest, and shade protocols that must be integrated into the constructor's safety plan.",
-          "source_url": "https://www.osha.gov/heat-exposure/rulemaking",
-          "related_regulation": "OSHA 29 CFR 1926"
-        },
-        {
-          "level": "MEDIUM",
           "number": 3,
-          "finding": "Anti-Kickback and Stark Law compliance must be verified for all financial arrangements with 'Governments' and 'Constructors' to avoid referral-related violations.",
-          "source_url": "https://www.cms.gov/medicare/fraud-and-abuse/physicianselfreferral",
-          "related_regulation": "Stark Law / Anti-Kickback Statute"
+          "finding": "Potential gap in third-party risk management for the construction firm, not aligned with March 2026 BIS international standards.",
+          "source_url": "https://www.bis.org/fsi/fsisummaries/exsum_23911.htm",
+          "related_regulation": "BIS Third-Party Risk Management Guidance"
         }
       ],
       "recommendations": [
         {
-          "action": "Submit comprehensive architectural plans to the Arizona Department of Health Services for approval before proceeding further.",
+          "action": "Submit architectural and construction plans to ADHS for formal approval prior to further ground-breaking activities.",
           "deadline": "immediate",
           "priority": 1,
-          "responsible_party": "Architectural/Compliance Team"
+          "responsible_party": "Project Director"
         },
         {
-          "action": "Conduct a formal valuation and project scope audit to ensure the $2M budget aligns with 'Hospital' licensing requirements.",
+          "action": "Execute a formal 'Stark and Anti-Kickback' contract review for all construction and third-party vendor agreements.",
           "deadline": "30 days",
           "priority": 2,
-          "responsible_party": "Finance/Project Management"
+          "responsible_party": "Chief Compliance Officer"
         },
         {
-          "action": "Implement an OSHA-compliant Heat Illness Prevention Plan specifically for the Arizona site.",
-          "deadline": "immediate",
+          "action": "Update internal regulatory databases and provide staff training to correct misidentification of HIPAA and Stark Law requirements.",
+          "deadline": "90 days",
           "priority": 3,
-          "responsible_party": "Safety Officer"
+          "responsible_party": "HR / Compliance Dept"
         }
       ],
       "compliance_status": "NEEDS_IMPROVEMENT",
-      "executive_summary": "Hermina Hospital's construction project in Arizona is currently at a 'Needs Improvement' status due to critical licensing requirements and evolving federal safety rules. Key risks include the mandatory submission of architectural plans to ADHS and the need for rigorous vetting of third-party contracts to ensure compliance with the Anti-Kickback Statute. Management must address the discrepancy between the project's $2M value and the high costs typically associated with hospital-grade construction to ensure long-term viability and regulatory approval."
+      "executive_summary": "Hermina Hospital's Arizona construction project requires immediate regulatory alignment to avoid state licensing blocks and federal oversight penalties. While the core medical regulations remain valid, recent 2025/2026 updates and state-specific building requirements are currently not fully addressed. Addressing the identified licensing gaps and third-party risks is essential to protect the $2M investment and ensure future Medicare/CMS certification."
     },
     "regulation_monitor": {
       "status": "CHANGES_FOUND",
-      "monitor_notes": "Recent updates to the Arizona Administrative Code (A.A.C. Title 9, Ch 10) introduce new licensing standards for health care institutions effective 2025. Additionally, OSHA's proposed heat safety rule is highly relevant for construction activities in Arizona's climate, and CMS has updated its interoperability requirements for new facilities.",
+      "monitor_notes": "Official monitoring confirms significant updates to HIPAA and Stark Law penalties in late 2025 and 2026. International standards from BIS (March 2026) now emphasize stricter third-party risk management which is critical for large-scale construction projects involving multiple vendors.",
       "changed_regulations": [
-        "Arizona Administrative Code (A.A.C.) Title 9, Chapter 10 (Updated 2025) — source: https://azsos.gov/rules/arizona-administrative-code",
-        "FATF Recommendation 24: Beneficial Ownership of Legal Persons (2023/2024 Update) — source: https://www.fatf-gafi.org/en/publications/fatfrecommendations/fatf-recommendations.html"
+        "Stark Law CPI-U Annual Update 2026 — source: https://www.cms.gov/medicare/regulations-guidance/physician-self-referral/cpi-u-updates",
+        "OIG Solicitation for New Safe Harbors (Dec 2025) — source: https://oig.hhs.gov/compliance/safe-harbor-regulations/",
+        "Health IT Disincentives for Information Blocking (2024 Final Rule) — source: https://www.healthit.gov/topic/information-blocking"
       ],
       "new_regulations_found": [
-        "OSHA Proposed Rule: Heat Injury and Illness Prevention in Outdoor and Indoor Work Settings (2024) — source: https://www.osha.gov/heat-exposure/rulemaking",
-        "CMS Interoperability and Patient Access Final Rule (CMS-0057-F) — source: https://www.cms.gov/medicare/health-safety-standards/conditions-coverage-participation/hospitals"
+        "Administrative Simplification: HIPAA Modifications 2025 — source: https://www.federalregister.gov/documents/2025/08/21/2025-15958/administrative-simplification-modifications-of-health-insurance-portability-and-accountability-act",
+        "FSI Summary: Sound management of third-party risk (March 2026) — source: https://www.bis.org/fsi/fsisummaries/exsum_23911.htm"
       ]
     }
   },
   "enforcement": {
-    "timestamp": "2026-03-23T13:12:17.407950",
+    "timestamp": "2026-03-27T12:17:54.773810",
     "report_id": "RPT-0002",
-    "risk_level": "MEDIUM",
-    "action": "WARNING",
-    "message": "WARNING recorded. Process may continue under close monitoring.",
-    "icon": "🟠"
+    "risk_level": "CRITICAL",
+    "action": "BLOCK",
+    "message": "Process BLOCKED. Immediate escalation to Compliance Officer required.\n\nRisk Score: 75/100  |  Risk Level: CRITICAL  |  Action: BLOCK\n\nThis process has been BLOCKED due to critical compliance violations. No further action may be taken until all critical findings are resolved. The Compliance Officer must be notified immediately and a formal remediation plan must be approved before the process can resume.\n\nKey Findings Driving This Decision:\n  [CRITICAL] Mandatory architectural and building plan approval from the Arizona Department of Health Services (ADHS) per ARS 36-421 is unconfirmed for this project. (ARS 36-421)\n  [HIGH] Potential gap in third-party risk management for the construction firm, not aligned with March 2026 BIS international standards. (BIS Third-Party Risk Management Guidance)\n\nRegulatory Changes Detected (5):\n  • Stark Law CPI-U Annual Update 2026 — source: https://www.cms.gov/medicare/regulations-guidance/physician-self-referral/cpi-u-updates\n  • OIG Solicitation for New Safe Harbors (Dec 2025) — source: https://oig.hhs.gov/compliance/safe-harbor-regulations/\n  • Health IT Disincentives for Information Blocking (2024 Final Rule) — source: https://www.healthit.gov/topic/information-blocking\n\nActive Risk Factors:\n  • Financial risk associated with $2,000,000 capital expenditure involving third-party constructors and government parties.\n  • High probability of non-compliance with state-specific licensing if architectural plans were not pre-approved by ADHS.\n  • Significant regulatory knowledge gap as evidenced by misspelling of 43% of primary regulations in company records (HIPPA, Stratk, Anti-Kickbatute).\n\nImmediate Actions Required:\n  1. [immediate] Submit architectural and construction plans to ADHS for formal approval prior to further ground-breaking activities. — Project Director\n  2. [30 days] Execute a formal 'Stark and Anti-Kickback' contract review for all construction and third-party vendor agreements. — Chief Compliance Officer",
+    "icon": "🔴"
   },
-  "generated_at": "2026-03-23T13:12:17.409523"
+  "generated_at": "2026-03-27T12:17:54.773863"
 }

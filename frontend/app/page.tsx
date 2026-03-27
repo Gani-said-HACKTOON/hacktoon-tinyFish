@@ -5,6 +5,7 @@ import AnimatedText from "@/components/landingPage/animatedText";
 import Link from "next/link";
 import Section_2 from "@/components/landingPage/section_2-1";
 
+
 export default function Home() {
   return (
     <>
@@ -21,12 +22,11 @@ export default function Home() {
 
           <div className="w-full flex flex-col items-center gap-2 mt-7 -mb-21 opacity-0 translate-y-2.5 animate-[fadeInBlur_0.6s_ease_0.7s_forwards]">
             <TryButton className="w-full lg:w-45" />
-            <Link href="/" className="text-white underline font-bold">Sign In</Link>
+            <Link href="/chatBot" className="text-white underline font-bold">Sign In</Link>
           </div>
 
         </div>
       </section>
-
       <Section_2/>
     </>
   );
