@@ -83,6 +83,20 @@ class AuthService{
         }
     }
 
+    async verifyRefreshToken(token: string, userId: number): Promise<boolean>{
+        const dbToken = await prisma.refresh_token.findUnique({
+            where:{
+                user_id: userId
+            }
+        })
+
+        if (!dbToken){
+            throw new NotFoundException()
+        }
+
+        return await bcrypt.compare(token, dbToken.token)
+    }
+
     async generateToken(userData: userTypeDB): Promise<HttpAuth>{
         return {
             access_token: await this.generateAccessToken(userData),
@@ -146,7 +160,7 @@ class AuthService{
         })
 
         updateRefreshTokenDb(userId, {
-            refresh_token: refresh_token,
+            refresh_token: await bcrypt.hash(refresh_token,10),
             expiredAt: new Date(expiredAt),
             createdAt: new Date(createdAt)
         })

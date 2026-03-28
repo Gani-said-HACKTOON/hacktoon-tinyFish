@@ -20,6 +20,13 @@ export class AuthController{
         })
     }
     
+    @UseGuards(AuthGuard("google"))
+    @Post("google")
+    @HttpCode(200)
+    loginWithGoogle(@Req() req: Request){
+        return ""
+    }
+
     @UseGuards(AuthGuard('login'))
     @Post("loginwithemail")
     @HttpCode(200)

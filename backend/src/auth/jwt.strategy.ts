@@ -1,11 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from "@nestjs/config";
 import { AuthService } from "./auth.service";
 import { type Request } from 'express'
 
-interface refreshTokenType{
+interface refreshTokenType{x
     sub: number
 }
 
@@ -16,7 +16,7 @@ interface accessTokenType{
 
 @Injectable()
 class accessTokenStrategy extends PassportStrategy(Strategy, "access_token"){
-    constructor(private authService: AuthService, config: ConfigService){
+    constructor(config: ConfigService){
         super({ 
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
@@ -34,14 +34,19 @@ class refreshTokenStrategy extends PassportStrategy(Strategy, "refresh_token"){
         console.log(config.get("SECRET_JWT_KEY"))
         super({
             jwtFromRequest: ExtractJwt.fromExtractors([
-                (req: Request) => (req.headers.cookie ?? "").split('=')[1]
+                (req: Request) => (req.headers.cookie ?? "").split('=')[1] 
             ]),
             ignoreExpiration: false,
-            secretOrKey: config.get<string>("SECRET_JWT_KEY") || "whatever_fallback"
+            secretOrKey: config.get<string>("SECRET_JWT_KEY") || "whatever_fallback",
+            passReqToCallback: true
         })
     }
-    async validate(payload: refreshTokenType){
+    async validate(req: Request, payload: refreshTokenType){
+        if(!await this.authService.verifyRefreshToken((req.headers.cookie ?? "").split('=')[1], payload.sub)){
+            throw new UnauthorizedException("not match in db")
+        }
         return this.authService.refresh(payload.sub)
+        
     }
 }
 
