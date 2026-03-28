@@ -20,3 +20,5 @@ export const prisma = new PrismaClient({
 });
 
 export * from './lib/refresh_token.ts'
+export * from './lib/user_data.ts'
+export * from './lib/user.ts'

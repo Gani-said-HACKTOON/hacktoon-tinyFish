@@ -1,4 +1,5 @@
 import { prisma } from "../index.ts";
+import { refreshToken } from "../generated/prisma/client/index.js";
 
 interface refreshTokenType{
     id: number,
@@ -7,8 +8,16 @@ interface refreshTokenType{
     expiredAt: Date
 } 
 
+async function readRefreshTokenByUserId(userId: number): Promise<refreshToken | null>{
+    return await prisma.refreshToken.findUnique({
+        where:{
+            user_id: userId
+        }
+    })
+}
+
 async function createRefreshTokenDb(dbData: refreshTokenType){
-        await prisma.refresh_token.create({
+        await prisma.refreshToken.create({
         data: {
             user_id: dbData.id,
             token: dbData.refresh_token,
@@ -19,16 +28,15 @@ async function createRefreshTokenDb(dbData: refreshTokenType){
 }
 
 async function updateRefreshTokenDb(userId: number, data: {refresh_token: string, expiredAt: Date, createdAt: Date}){
-    await prisma.refresh_token.update({
+    await prisma.refreshToken.update({
         where:{
             user_id: userId
         },
         data:{
             token: data.refresh_token,
             expired_at: data.expiredAt,
-            created_at: data.createdAt
         }
     })
-}
+}                                                                                                                                   
 
-export { updateRefreshTokenDb, createRefreshTokenDb }
+export { updateRefreshTokenDb, createRefreshTokenDb, readRefreshTokenByUserId }

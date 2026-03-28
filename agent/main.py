@@ -59,6 +59,7 @@ Note: Make sure all libraries from requirements.txt are installed.
 """
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # ─── FastAPI ──────────────────────────────────────────────────────────────────
