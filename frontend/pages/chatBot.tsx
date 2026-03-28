@@ -602,7 +602,7 @@ const handleSend = async () => {
   const showProgress = step !== "idle" && step !== "done";
 
   return (
-    <div className="flex flex-col h-screen bg-slate-950 text-white overflow-hidden">
+    <div className="flex flex-col min-h-screen bg-slate-950 text-white overflow-hidden">
       <Navbar/>
 
       <header className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-slate-900 border-b border-slate-800">
