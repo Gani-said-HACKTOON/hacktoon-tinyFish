@@ -14,16 +14,15 @@ export default function Footer() {
     <footer className="px-4 pb-6">
       <div className="
         max-w-6xl mx-auto
-        bg-white/30
+        bg-[rgba(255,255,255,0.3)]
         backdrop-blur-[6px]
         rounded-[45px]
         px-8 py-8
-        border border-white/40
+        border border-[rgba(255,255,255,0.4)]
         shadow-[0_10px_30px_rgba(0,0,0,0.1)]
       ">
         
         <div className="flex justify-between items-start">
-          {/* Logo */}
           <Image
             src="/gslogo.png"
             alt="Logo"
@@ -31,9 +30,8 @@ export default function Footer() {
             height={32}
           />
 
-          {/* Pages */}
           <div className="flex flex-col gap-1.5">
-            <span className="text-sm font-semibold text-white mb-1">
+            <span className="text-sm font-semibold text-[rgba(255,255,255,0.9)] mb-1">
               Pages
             </span>
 
@@ -41,7 +39,7 @@ export default function Footer() {
               <Link
                 key={page.label}
                 href={page.href}
-                className="text-sm text-white/90 hover:text-white transition"
+                className="text-sm text-[rgba(255,255,255,0.8)] hover:text-white transition"
               >
                 {page.label}
               </Link>
@@ -49,12 +47,11 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="mt-8 pt-4 border-t border-white/30">
+        <div className="mt-8 pt-4 border-t border-[rgba(255,255,255,0.3)]">
           <p className="text-sm font-semibold text-white">
             © 2026 GainSaid
           </p>
-          <p className="text-xs text-white/80">
+          <p className="text-xs text-[rgba(255,255,255,0.7)]">
             Inspired by Leon Hike Projects
           </p>
         </div>
