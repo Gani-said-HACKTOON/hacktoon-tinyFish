@@ -1,10 +1,15 @@
-.body{
-    min-height: 100vh;
-    
-    background: linear-gradient(
-        to bottom,
-        #8FAAC4 ,
-        #E2E2E2 
-    );
-}
+.body {
+  min-height: 700vh;
 
+  background: linear-gradient(
+    to bottom,
+    #8FAAC4 0vh,
+    #E2E2E2 100vh,
+    #E2E2E2 150vh,
+    #8FAAC4 200vh,
+    #8FAAC4 250vh
+  );
+
+  background-size: 100% 250vh;
+  background-repeat: repeat-y;
+}

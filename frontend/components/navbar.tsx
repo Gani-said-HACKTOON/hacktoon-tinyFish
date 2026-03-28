@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import TryButton from "./tryButton";
+import Link from "next/link";
 
 // list yg keluar pas hamburger di pencet
 const navLinks = [
@@ -9,7 +10,7 @@ const navLinks = [
   { label: "Benefits", href: "#benefits" },
   { label: "Pricing", href: "#pricing" },
   { label: "Blog", href: "#blog" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 // variabel buat animasi dekstop
@@ -101,42 +102,43 @@ export default function Navbar() {
           <ul className="py-2">
             {navLinks.map((link) => (
               <li key={link.label}>
-                <a
+                <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block text-center py-2.25 text-gray-800 text-base font-medium mx-2 my-1 rounded-[45px] border border-transparent bg-transparent backdrop-blur-0 transition-all duration-200 hover:border-gray-400/30 hover:backdrop-opacity-40">
+                  className="block text-center py-2.25 text-gray-800 text-base font-medium mx-2 my-1 rounded-[45px] border border-transparent bg-transparent backdrop-blur-0 transition-all duration-200 hover:border-gray-400/30 hover:backdrop-opacity-40"
+                >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
-            <a
-              href="#try"
-              onClick={() => setMenuOpen(false)}>
-              <TryButton className="w-full mx-3"/>
-            </a>
+          <a
+            href="#try"
+            onClick={() => setMenuOpen(false)}>
+            <TryButton className="w-full mx-3" />
+          </a>
         </div>
       </nav>
       {/* ── DESKTOP (hidden below lg) ── */}
       <nav className="hidden lg:flex fixed top-0 left-0 right-0 z-50 justify-center pointer-events-none">
 
-      {/*animasi dekstop*/}
+        {/*animasi dekstop*/}
         <div
           className="pointer-events-auto w-full"
           style={{
-            maxWidth:        scrolled ? "830px"                        : "73%",
-            marginTop:       scrolled ? "12px"                         : "16px",
-            marginLeft:      "auto",
-            marginRight:     "auto",
-            paddingLeft:     scrolled ? "20px"                         : "30px",
-            paddingRight:    scrolled ? "20px"                         : "30px",
-            paddingTop:      "10px",
-            paddingBottom:   "10px",
-            backgroundColor: scrolled ? "rgba(255,255,255,0.3)"       : "rgba(255,255,255,0)",
-            backdropFilter:  scrolled ? "blur(6px)"                   : "blur(0px)",
-            WebkitBackdropFilter: scrolled ? "blur(6px)"              : "blur(0px)",
-            borderRadius:    scrolled ? "45px"                         : "45px",
-            boxShadow:       scrolled ? "0 4px 28px rgba(0,0,0,0.11)"  : "0 0 0 rgba(0,0,0,0)",
+            maxWidth: scrolled ? "830px" : "73%",
+            marginTop: scrolled ? "12px" : "16px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            paddingLeft: scrolled ? "20px" : "30px",
+            paddingRight: scrolled ? "20px" : "30px",
+            paddingTop: "10px",
+            paddingBottom: "10px",
+            backgroundColor: scrolled ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0)",
+            backdropFilter: scrolled ? "blur(6px)" : "blur(0px)",
+            WebkitBackdropFilter: scrolled ? "blur(6px)" : "blur(0px)",
+            borderRadius: scrolled ? "45px" : "45px",
+            boxShadow: scrolled ? "0 4px 28px rgba(0,0,0,0.11)" : "0 0 0 rgba(0,0,0,0)",
             transition: scrolled ? TRANS_SHRINK : TRANS_EXPAND
           }}
         >
@@ -153,25 +155,25 @@ export default function Navbar() {
             <ul
               className="flex items-center mx-auto list-none"
               style={{
-                gap: scrolled? "10px" : "15px",
+                gap: scrolled ? "10px" : "15px",
                 transition: "gap 360ms cubic-bezier(0.34,1.2,0.64,1)"
               }}
             >
               {navLinks.map((link) => (
-                <li key={link.label} className="">
-                  <a
+                <li key={link.label}>
+                  <Link
                     href={link.href}
-                    className="font-normal text-lg text-white whitespace-nowrap rounded-[45px] hover:bg-white/40 pt-1.5 pb-2.5 px-2"
+                    className="font-normal text-lg text-[#ffffff] whitespace-nowrap rounded-[45px] hover:bg-white/40 pt-1.5 pb-2.5 px-2"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
             <a
               href="#try"
               onClick={() => setMenuOpen(false)}>
-              <TryButton className="min-w-40"/>
+              <TryButton className="min-w-40" />
             </a>
           </div>
         </div>

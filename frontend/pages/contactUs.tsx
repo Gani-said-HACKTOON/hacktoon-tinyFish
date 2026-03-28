@@ -14,13 +14,6 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     <section className="min-h-screen flex items-center justify-center px-4 py-20">
       <div className="w-full max-w-lg">
 
-        {/* Badge */}
-        <div className="flex justify-center mb-6">
-          <span className="text-xs font-semibold tracking-widest uppercase bg-gray-100 text-gray-500 rounded-full px-4 py-1.5 border border-gray-200">
-            Contact Us
-          </span>
-        </div>
-
         {/* Heading */}
         <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-3 leading-tight">
           Let's connect

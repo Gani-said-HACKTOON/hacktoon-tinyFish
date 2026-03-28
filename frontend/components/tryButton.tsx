@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface TryButtonProps {
   className?: string;
 }
@@ -5,10 +7,11 @@ interface TryButtonProps {
 export default function TryButton({ className = ""}: TryButtonProps) {
   return (
     <div className={`flex justify-center items-center w-full lg:w-auto`}> 
+
       <button
         className={`group relative inline-flex items-center justify-center
           px-2 py-3 h-14 rounded-[45px]
-          overflow-hidden cursor-pointer bg-white ${className} hover:bg-[#1a1615d9] duration-250 ease-out`}
+          overflow-hidden cursor-pointer bg-white ${className} duration-250 ease-out`}
       >
         <div className="relative w-full h-[1.4em] overflow-hidden flex items-center justify-center">
           <span
@@ -20,9 +23,10 @@ export default function TryButton({ className = ""}: TryButtonProps) {
           >
             Try Dreelio free
           </span>
+
           <span
             className="absolute inset-x-0 flex items-center justify-center
-              text-[16px] font-bold tracking-wide text-white
+              text-[16px] font-bold tracking-wide text-black
               transition-all duration-200 ease-[cubic-bezier(0.65,0,0.35,1)]
               translate-y-full opacity-0
               group-hover:translate-y-0 group-hover:opacity-100"
