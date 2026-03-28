@@ -31,7 +31,6 @@ class accessTokenStrategy extends PassportStrategy(Strategy, "access_token"){
 @Injectable()
 class refreshTokenStrategy extends PassportStrategy(Strategy, "refresh_token"){
     constructor(private authService: AuthService, config: ConfigService){
-        console.log(config.get("SECRET_JWT_KEY"))
         super({
             jwtFromRequest: ExtractJwt.fromExtractors([
                 (req: Request) => (req.headers.cookie ?? "").split('=')[1] 
@@ -50,4 +49,4 @@ class refreshTokenStrategy extends PassportStrategy(Strategy, "refresh_token"){
     }
 }
 
-export { accessTokenStrategy, refreshTokenStrategy }
+export { accessTokenStrategy, refreshTokenStrategy , type accessTokenType, type refreshTokenType }
