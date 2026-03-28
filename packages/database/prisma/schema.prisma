@@ -7,14 +7,14 @@ datasource db {
   provider = "postgresql"
 }
 
-model Account {
+model User{
   id       Int    @id @default(autoincrement())
   username String 
   email    String @unique
   password String
 }
 
-model refresh_token{
+model refreshToken{
   id Int @id @default(autoincrement())
   user_id Int @unique
   token String
@@ -22,7 +22,13 @@ model refresh_token{
   created_at DateTime
 }
 
-model User{
+model userData{
   id Int @id @default(autoincrement())
-  data String
+  email String @unique
+  regulations String
+  risk_analysis String
+  compliance_reports String
+  policy_enforcements String
+  activity_log String
+
 }

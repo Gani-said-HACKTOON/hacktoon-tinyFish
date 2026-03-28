@@ -8,7 +8,7 @@ interface refreshTokenType{
 } 
 
 async function createRefreshTokenDb(dbData: refreshTokenType){
-        await prisma.refresh_token.create({
+        await prisma.refreshToken.create({
         data: {
             user_id: dbData.id,
             token: dbData.refresh_token,
@@ -19,16 +19,15 @@ async function createRefreshTokenDb(dbData: refreshTokenType){
 }
 
 async function updateRefreshTokenDb(userId: number, data: {refresh_token: string, expiredAt: Date, createdAt: Date}){
-    await prisma.refresh_token.update({
+    await prisma.refreshToken.update({
         where:{
             user_id: userId
         },
         data:{
             token: data.refresh_token,
             expired_at: data.expiredAt,
-            created_at: data.createdAt
         }
     })
-}
+}                                                                                                                                   
 
 export { updateRefreshTokenDb, createRefreshTokenDb }
