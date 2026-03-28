@@ -11,7 +11,7 @@ export default function Section_3() {
         {/* Left — Image */}
         <div className="w-full lg:w-1/2 flex justify-center">
           <Image
-            src="/dashboard-preview.png"
+            src="/section3.png"
             alt="AI Agent Regulatory Dashboard"
             width={480}
             height={520}
@@ -34,7 +34,9 @@ export default function Section_3() {
             Monitor regulations, detect policy violations, and ensure your operations follow industry rules in real time. Our AI agent helps companies reduce legal risk, automate compliance checks, and stay ahead of changing regulations.
           </p>
 
-          <TryButton className="w-44 mt-1" />
+          <div className="mt-1">
+          <TryButton className="" />
+          </div>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mt-1">

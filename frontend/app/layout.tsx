@@ -1,10 +1,7 @@
-"use client";
-
 import type { Metadata } from "next";
-import Navbar from "@/components/navbar";
 import style from "./style/layout.module.css";
 import "./globals.css";
-import { usePathname } from "next/navigation";
+import NavbarWrapper from "@/components/navbarWrapper";
 
 export const metadata: Metadata = {
   title: "Dreelio",
@@ -16,18 +13,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
-  const hideNavbarRoutes = ["/chatbot", "/contact"];
-  const hideNavbar = hideNavbarRoutes.includes(pathname || "");
-
   return (
     <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </head>
       <body className={style.body}>
-        {!hideNavbar && <Navbar />}
+        <NavbarWrapper />
         <main>{children}</main>
       </body>
     </html>
