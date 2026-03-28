@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import TryButton from "@/components/tryButton";
 
@@ -15,7 +17,7 @@ export default function Section_3() {
             alt="AI Agent Regulatory Dashboard"
             width={480}
             height={520}
-            className="w-full max-w-sm lg:max-w-md h-auto rounded-2xl"
+            className="w-full h-auto rounded-2xl"
             priority
           />
         </div>
@@ -34,20 +36,16 @@ export default function Section_3() {
             Monitor regulations, detect policy violations, and ensure your operations follow industry rules in real time. Our AI agent helps companies reduce legal risk, automate compliance checks, and stay ahead of changing regulations.
           </p>
 
-          <div className="mt-1">
-          <TryButton className="" />
-          </div>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mt-1">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-4 py-2 rounded-full border border-gray-300 text-sm text-gray-700 bg-transparent"
-              >
-                {tag}
-              </span>
-            ))}
+          {/* Tags — 2 per baris */}
+          <div className="flex flex-col gap-2 mt-1">
+            <div className="flex gap-2">
+              <span className="px-4 py-2 rounded-full border border-gray-300 text-sm text-gray-700">Tasks</span>
+              <span className="px-4 py-2 rounded-full border border-gray-300 text-sm text-gray-700">Time Tracking</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="px-4 py-2 rounded-full border border-gray-300 text-sm text-gray-700">Timesheets</span>
+              <span className="px-4 py-2 rounded-full border border-gray-300 text-sm text-gray-700">Reports</span>
+            </div>
           </div>
         </div>
 

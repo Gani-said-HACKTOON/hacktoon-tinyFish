@@ -5,7 +5,7 @@ import AnimatedText from "@/components/landingPage/animatedText";
 import Link from "next/link";
 import Section_2 from "@/components/landingPage/section_2-1";
 import Section_3 from "@/components/landingPage/section_3";
-
+import Footer from "@/components/landingPage/footer";
 
 export default function Home() {
   return (
@@ -30,6 +30,7 @@ export default function Home() {
       </section>
       <Section_2/>
     <Section_3/>
+    <Footer/>
     </>
   );
 }
