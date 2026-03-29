@@ -41,11 +41,20 @@ export default function Section_2() {
       ref={cardRef}
       onMouseMove={handleMove}
       onMouseLeave={reset}
-      className="mt-[5%] flex justify-center"
+      style={{
+        marginTop: "5%",
+        scrollMarginTop: "80px",
+        display: "flex",
+        justifyContent: "center",
+      }}
     >
       <div
         ref={imgWrapperRef}
-        className="transition-transform duration-100 rounded-xl overflow-hidden"
+        style={{
+          transition: "transform 100ms",
+          borderRadius: "12px",
+          overflow: "hidden",
+        }}
       >
         <Image
           src={gambar}
