@@ -49,9 +49,8 @@ export default function Home() {
               <p className="text-sm font-semibold mb-2" style={{ color: "rgba(255,255,255,0.60)" }}>
                 Pages
               </p>
-              <a href="#" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Features</a>
-              <a href="#" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Benefits</a>
-              <a href="#" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Pricing</a>
+              <a href="#features" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Features</a>
+              <a href="#benefits" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Benefits</a>
               <Link href="/contact" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Contact Us</Link>
             </div>
           </div>

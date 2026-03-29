@@ -37,6 +37,7 @@ export default function Section_2() {
 
   return (
     <div
+      id="features"
       ref={cardRef}
       onMouseMove={handleMove}
       onMouseLeave={reset}
