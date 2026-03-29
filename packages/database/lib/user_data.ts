@@ -1,20 +1,47 @@
 import { prisma } from "../index.ts"
-import { userData } from "../generated/prisma/client/index.js"
+import { type userData } from "../generated/prisma/client/index.js"
 
-async function readUserDataByEmail(email: string): Promise<userData | null>{
+interface agentDBType{
+    regulations: string,
+    risk_analysis: string,
+    compliance_reports: string,
+    policy_enforcements: string,
+    activity_log: string
+}
+
+async function readUserDataById(userId: number): Promise<userData | null>{
     return await prisma.userData.findUnique({
         where:{
-            email: email
+            user_id: userId
         }
     })
 }
 
-async function readComplianceReports(email: string): Promise<string | undefined>{
-    return (await readUserDataByEmail(email))?.compliance_reports
+async function createUserDataTable(userId: number){
+    await prisma.userData.create({
+        data:{
+            user_id: userId,
+            regulations: "",
+            risk_analysis: "",
+            compliance_reports: "",
+            policy_enforcements: "",
+            activity_log: "",
+            report_data: ""
+        }
+    })
 }
 
-async function readActivityLog(email: string): Promise<string | undefined>{
-    return(await readUserDataByEmail(email))?.activity_log
+
+async function readComplianceReports(userId: number): Promise<string | undefined>{
+    return (await readUserDataById(userId))?.compliance_reports
 }
 
-export { readComplianceReports, readActivityLog }
+async function readActivityLog(userId: number): Promise<string | undefined>{
+    return(await readUserDataById(userId))?.activity_log
+}
+
+async function readDBFromAgent(userId: number): Promise<agentDBType | null>{
+    return await readUserDataById(userId)
+}
+
+export { readComplianceReports, readActivityLog, createUserDataTable, readDBFromAgent}

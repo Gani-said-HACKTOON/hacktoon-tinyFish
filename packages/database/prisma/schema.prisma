@@ -9,7 +9,9 @@ datasource db {
 
 model User{
   id       Int    @id @default(autoincrement())
-  username String 
+  first_name String 
+  last_name String
+  company_name String
   email    String @unique
   password String
 }
@@ -24,11 +26,12 @@ model refreshToken{
 
 model userData{
   id Int @id @default(autoincrement())
-  email String @unique
+  user_id Int @unique
   regulations String
   risk_analysis String
   compliance_reports String
   policy_enforcements String
   activity_log String
+  report_data String
 
 }

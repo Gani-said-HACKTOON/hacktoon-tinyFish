@@ -14,7 +14,9 @@ export class AuthController{
     @HttpCode(201)
     Registration(@Body() createUser: CreateUserDto){
         return this.authService.createUser({
-            username: createUser.username,
+            first_name: createUser.first_name,
+            last_name: createUser.last_name,
+            company_name: createUser.company_name,
             email: createUser.email,
             password: createUser.password
         })

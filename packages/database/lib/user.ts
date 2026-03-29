@@ -1,5 +1,13 @@
 import { prisma } from '../index.ts'
-import { User } from '../generated/prisma/client/index.js'
+import { type User } from '../generated/prisma/client/index.js'
+
+interface userType{
+    first_name: string,
+    last_name: string,
+    company_name: string,
+    email: string,
+    password: string
+}
 
 async function readUserByEmail(email: string):  Promise<User | null>{
     return await prisma.user.findUnique({
@@ -18,14 +26,10 @@ async function readUserById(userId: number): Promise<User | null>{
 }
 
 
-async function createUserTable(data: {
-    username: string,
-    email: string,
-    password: string
-}){
-    await prisma.user.create({
+async function createUserTable(data: userType): Promise<User>{
+    return await prisma.user.create({
         data: data
     })
 }
 
-export { createUserTable, readUserByEmail, readUserById }
+export { createUserTable, readUserByEmail, readUserById , type userType}
