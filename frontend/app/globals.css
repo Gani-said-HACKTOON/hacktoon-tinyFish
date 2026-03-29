@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+html{
+  scroll-behavior: smooth;
+}
 @keyframes wordReveal {
   0% {
     opacity: 0;

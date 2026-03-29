@@ -88,7 +88,7 @@ export default function SignUpPage() {
             </label>
             <input
               type="email"
-              placeholder="Work Email Address"
+              placeholder="jane@ganisaid.com"
               style={{
                 width: "100%",
                 border: "none",
@@ -110,7 +110,7 @@ export default function SignUpPage() {
             </label>
             <input
               type="password"
-              placeholder="Create Password"
+              placeholder=""
               style={{
                 width: "100%",
                 border: "none",

@@ -243,7 +243,7 @@ function AnalysisCard({ result, data }: { result: AnalysisResult; data?: Regulat
   return (
     <div className="w-full max-w-2xl bg-slate-900 border border-slate-700/60 rounded-2xl overflow-hidden font-mono mt-2 shadow-2xl">
 
-      <div className="bg-gradient-to-r from-slate-800 to-slate-900 border-b border-slate-700/60 px-5 py-4 flex justify-between items-start">
+      <div className="bg-linear-to-r from-slate-800 to-slate-900 border-b border-slate-700/60 px-5 py-4 flex justify-between items-start">
         <div>
           <p className="text-[10px] text-sky-500 tracking-[0.15em] mb-1 uppercase">Compliance Analysis Report</p>
           <p className="text-base font-bold text-white">{data?.company_name}</p>
@@ -256,7 +256,7 @@ function AnalysisCard({ result, data }: { result: AnalysisResult; data?: Regulat
             </div>
           )}
         </div>
-        <span className={`text-[10px] font-bold tracking-widest px-2.5 py-1 rounded border flex-shrink-0 ml-3 ${csStyle[cr.compliance_status]}`}>
+        <span className={`text-[10px] font-bold tracking-widest px-2.5 py-1 rounded border shrink-0 ml-3 ${csStyle[cr.compliance_status]}`}>
           {cr.compliance_status.replace(/_/g, " ")}
         </span>
       </div>
@@ -283,7 +283,7 @@ function AnalysisCard({ result, data }: { result: AnalysisResult; data?: Regulat
 
 
       <div className="flex items-start gap-3 px-5 py-3 border-b border-slate-700/60 bg-slate-800/30">
-        <span className={`w-2 h-2 rounded-full mt-1 flex-shrink-0 ${msStyle[mr.status].dot}`} />
+        <span className={`w-2 h-2 rounded-full mt-1 shrink-0 ${msStyle[mr.status].dot}`} />
         <div>
           <span className={`text-[10px] font-bold tracking-widest uppercase ${msStyle[mr.status].text}`}>
             Regulation Monitor — {mr.status.replace(/_/g, " ")}
@@ -322,7 +322,7 @@ function AnalysisCard({ result, data }: { result: AnalysisResult; data?: Regulat
                 <p className="text-[10px] text-red-400 tracking-widest uppercase mb-2">Violations Detected</p>
                 {ra.violations_detected.map((v, i) => (
                   <div key={i} className="flex gap-2 mb-1.5">
-                    <span className="text-red-500 text-xs mt-0.5 flex-shrink-0">⚠</span>
+                    <span className="text-red-500 text-xs mt-0.5 shrink-0">⚠</span>
                     <span className="text-[11px] text-red-300/80 leading-relaxed">{v}</span>
                   </div>
                 ))}
@@ -396,7 +396,7 @@ function MessageBubble({ msg }: { msg: Message }) {
   return (
     <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : "flex-row"} items-end`}>
       {!isUser && (
-        <div className="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 flex items-center justify-center flex-shrink-0 mb-0.5">
+        <div className="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 flex items-center justify-center shrink-0 mb-0.5">
           <svg className="w-4 h-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
               d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.955 11.955 0 01.75 12c0 6.627 5.373 12 12 12s12-5.373 12-12A11.955 11.955 0 0120.402 6a11.959 11.959 0 01-2.648-3.286" />
@@ -604,7 +604,7 @@ const handleSend = async () => {
     <div className="flex flex-col min-h-screen bg-slate-950 text-white overflow-hidden">
 
 
-      <header className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-slate-900 border-b border-slate-800">
+      <header className="shrink-0 flex items-center justify-between px-5 py-3 bg-slate-900 border-b border-slate-800">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center">
             <svg className="w-5 h-5 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -624,7 +624,7 @@ const handleSend = async () => {
       </header>
 
       {showProgress && (
-        <div className="flex-shrink-0 px-5 py-2.5 bg-slate-900/50 border-b border-slate-800/50">
+        <div className="shrink-0 px-5 py-2.5 bg-slate-900/50 border-b border-slate-800/50">
           <div className="flex items-center justify-between mb-1.5">
             <span className="text-[10px] text-slate-500 font-mono uppercase tracking-widest">Input Data Perusahaan</span>
             <span className="text-[10px] text-sky-400 font-mono">
@@ -633,7 +633,7 @@ const handleSend = async () => {
           </div>
           <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-sky-500 to-blue-500 rounded-full transition-all duration-500"
+              className="h-full bg-linear-to-r from-sky-500 to-blue-500 rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -645,7 +645,7 @@ const handleSend = async () => {
 
         {isLoading && (
           <div className="flex gap-3 items-end">
-            <div className="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-500/30 flex items-center justify-center shrink-0">
               <svg className="w-4 h-4 text-sky-400 animate-spin" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -660,7 +660,7 @@ const handleSend = async () => {
       </main>
 
       {step === "idle" && (
-        <div className="flex-shrink-0 flex gap-2 px-4 pb-2">
+        <div className="shrink-0 flex gap-2 px-4 pb-2">
           {[
             { label: "🚀 Mulai Analisis", val: "mulai" },
           ].map(({ label, val }) => (
@@ -675,7 +675,7 @@ const handleSend = async () => {
         </div>
       )}
 
-      <div className="flex-shrink-0 px-4 pb-4">
+      <div className="shrink-0 px-4 pb-4">
         <div className="flex gap-2 bg-slate-800/80 border border-slate-700/60 rounded-xl p-2 focus-within:border-sky-500/50 transition-colors">
           <input
             type="text"
@@ -694,7 +694,7 @@ const handleSend = async () => {
           <button
             onClick={handleSend}
             disabled={!input.trim() || step === "analyzing" || isLoading}
-            className="w-9 h-9 rounded-lg bg-sky-600 hover:bg-sky-500 disabled:bg-slate-700 disabled:opacity-40 flex items-center justify-center transition-all flex-shrink-0"
+            className="w-9 h-9 rounded-lg bg-sky-600 hover:bg-sky-500 disabled:bg-slate-700 disabled:opacity-40 flex items-center justify-center transition-all shrink-0"
           >
             <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}

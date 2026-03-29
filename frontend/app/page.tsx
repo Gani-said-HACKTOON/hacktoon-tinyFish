@@ -5,6 +5,7 @@ import AnimatedText from "@/components/landingPage/animatedText";
 import Link from "next/link";
 import Section_2 from "@/components/landingPage/section_2-1";
 import Section_3 from "@/components/landingPage/section_3";
+import Section_4 from "@/components/landingPage/section_4";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
 
       <Section_2 />
       <Section_3 />
+      <Section_4/>
 
       {/* Footer */}
       <div className="flex flex-col items-center px-6 pb-10 mb-10">
@@ -49,9 +51,9 @@ export default function Home() {
               <p className="text-sm font-semibold mb-2" style={{ color: "rgba(255,255,255,0.60)" }}>
                 Pages
               </p>
-              <a href="#" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Features</a>
-              <a href="#" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Benefits</a>
-              <a href="#" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Pricing</a>
+              <a href="#features" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Features</a>
+              <a href="#benefits" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Benefits</a>
+              <a href="#pricing" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>pricing</a>
               <Link href="/contact" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Contact Us</Link>
             </div>
           </div>

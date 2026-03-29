@@ -1,13 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import TryButton from "@/components/tryButton";
-
-const tags = ["Tasks", "Time Tracking", "Timesheets", "Reports"];
 
 export default function Section_3() {
   return (
-    <section className="flex justify-center px-6 py-20 md:py-28">
+    <section id="benefits" className="flex justify-center px-6 py-20 md:py-28">
       <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
         {/* Left — Image */}

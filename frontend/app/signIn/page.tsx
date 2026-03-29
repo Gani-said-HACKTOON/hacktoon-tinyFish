@@ -44,7 +44,7 @@ export default function SignInPage() {
           <div style={{ marginBottom: "28px" }}>
             <input
               type="email"
-              placeholder="Work Email Address"
+              placeholder="jane@ganisaid.com"
               style={{
                 width: "100%",
                 border: "none",
