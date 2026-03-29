@@ -44,4 +44,5 @@ async def read_from_db(key: str, token: str) -> dict:
 
     with httpx.Client() as client:
         response = client.get(url, headers=headers ,params=payload)
+        print(response)
         return response.text

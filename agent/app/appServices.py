@@ -301,7 +301,7 @@ class appService():
             "ref_id":    ref_id,
         }
 
-        db.write_to_db("activity_log", entry, self.token)
+        await db.write_to_db("activity_log", entry, self.token)
 
     async def getDbByKey(self, key: str) -> any:
         jsonData: str = await db.read_from_db(key, self.token)
@@ -341,7 +341,7 @@ class appService():
         return sources
 
 
-    def run_tinyfish(self,d: dict) -> dict:
+    async def run_tinyfish(self,d: dict) -> dict:
         print("\n" + "="*62)
         print("  🤖  Dreelio AI")
         print("="*62)
@@ -428,7 +428,7 @@ class appService():
 
         final_level = result["risk_analysis"].get("risk_level")
         print(f"\n  ✅  Analysis complete. Risk Level: {final_level}\n")
-        self.add_log_activity("AI_ANALYSIS", f"Dreelio analysis done: {d['company_name']}", d["id"])
+        await self.add_log_activity("AI_ANALYSIS", f"Dreelio analysis done: {d['company_name']}", d["id"])
         return result
 
     def override_risk_level(self,result: dict) -> dict:
@@ -632,7 +632,7 @@ class appService():
         return "\n".join(lines)
 
 
-    def enforce_policy(self, risk_level: str, report_id: str, analysis: dict = None) -> dict:
+    async def enforce_policy(self, risk_level: str, report_id: str, analysis: dict = None) -> dict:
         p       = self.POLICY.get(risk_level, self.POLICY["LOW"])
         message = self.build_enforcement_message(risk_level, analysis or {})
         entry = {
@@ -643,13 +643,13 @@ class appService():
             "message":    message,
         }
 
-        db.write_to_db("policy_enforcements",entry, self.token)
-        self.add_log_activity("ENFORCEMENT", f"{p['action']} applied for {report_id}", report_id)
+        await db.write_to_db("policy_enforcements",entry, self.token)
+        await self.add_log_activity("ENFORCEMENT", f"{p['action']} applied for {report_id}", report_id)
         return {**entry, "icon": p["icon"]}
 
 
     # step 4
-    def save_json(self,report_id: str, d: dict, analysis: dict, enforcement: dict):
+    async def save_json(self,report_id: str, d: dict, analysis: dict, enforcement: dict):
         payload = {
             "report_id":    report_id,
             "regulation":   d,
@@ -657,13 +657,13 @@ class appService():
             "enforcement":  enforcement,
             "generated_at": datetime.datetime.now().isoformat(),
         }
-        self.add_log_activity("SAVE_JSON", f"JSON saved on database", report_id)
+        await self.add_log_activity("SAVE_JSON", f"JSON saved on database", report_id)
 
-        db.write_to_db("report_data",payload, self.token)
+        await db.write_to_db("report_data",payload, self.token)
 
 
-    def save_pdf(self,report_id: str, d: dict, analysis: dict, enforcement: dict):
-        path = os.path.join("../compliance", f"{report_id}.pdf")
+    async def save_pdf(self,report_id: str, d: dict, analysis: dict, enforcement: dict):
+        path = os.path.join("compliance_output", f"{report_id}.pdf")
         doc  = SimpleDocTemplate(path, pagesize=A4,
                                 leftMargin=2*cm, rightMargin=2*cm,
                                 topMargin=2*cm, bottomMargin=2*cm)
@@ -950,7 +950,7 @@ class appService():
         ))
 
         doc.build(story)
-        self.add_log_activity("SAVE_PDF", f"PDF saved: {path}", report_id)
+        await self.add_log_activity("SAVE_PDF", f"PDF saved: {path}", report_id)
         return path
 
     async def analyze_report(self, data: RegulationInput):
@@ -958,22 +958,22 @@ class appService():
         d["id"]        = f"REG-{len(await self.getDbByKey('regulations'))+1:04d}"
         d["timestamp"] = datetime.datetime.now().isoformat()
 
-        db.write_to_db("regulations" , d, self.token)
-        self.add_log_activity("INPUT", f"Data received from frontend: {d['company_name']}", d["id"])
+        await db.write_to_db("regulations" , d, self.token)
+        await self.add_log_activity("INPUT", f"Data received from frontend: {d['company_name']}", d["id"])
 
-        analysis  = self.run_tinyfish(d)
+        analysis  = await self.run_tinyfish(d)
         report_id = f"RPT-{len(await self.getDbByKey('compliance_reports'))+1:04d}"
         ra        = analysis.get("risk_analysis", {})
 
-        db.write_to_db("compliance_reports", {
+        await db.write_to_db("compliance_reports", {
             "report_id":    report_id,
             "company_name": d["company_name"],
             "risk_level":   ra.get("risk_level", "LOW"),
             "risk_score":   ra.get("risk_score", 0),
             "timestamp":    datetime.datetime.now().isoformat(),
         }, self.token)
-        db.write_to_db("risk_analyses", {"report_id": report_id, **analysis}, self.token)
-        self.add_log_activity("REPORT", f"Compliance report created: {report_id}", report_id)
+        await db.write_to_db("risk_analyses", {"report_id": report_id, **analysis}, self.token)
+        await self.add_log_activity("REPORT", f"Compliance report created: {report_id}", report_id)
 
         actual_risk_level = ra.get("risk_level", "LOW")
         enforcement = self.enforce_policy(actual_risk_level, report_id, analysis)
