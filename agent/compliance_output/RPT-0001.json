@@ -17,89 +17,98 @@
     "sensitive_data": "yes",
     "url": "https://ojk.go.id/id/kanal/iknb/regulasi/Pages/default.aspx",
     "id": "REG-0001",
-    "timestamp": "2026-03-28T23:52:22.507001"
+    "timestamp": "2026-03-29T23:52:24.235563"
   },
   "analysis": {
     "risk_analysis": {
-      "risk_level": "HIGH",
-      "risk_score": 75,
+      "risk_level": "CRITICAL",
+      "risk_score": 78,
       "risk_factors": [
-        "Keterlibatan pihak ketiga (Payment Processor di Singapura) meningkatkan risiko keamanan data dan kepatuhan vendor.",
-        "Transaksi lintas negara (Malaysia-Indonesia-Singapura) memiliki profil risiko tinggi terhadap pencucian uang (APU PPT).",
-        "Pemrosesan data sensitif pelanggan memerlukan kepatuhan terhadap standar keamanan siber OJK terbaru."
+        "Cross-border sensitive data transfer to Singapore without verified protection adequacy",
+        "Transaction processing involving foreign parties (Malaysia) requiring Enhanced Due Diligence (EDD)",
+        "New governance and risk management requirements for ITSK under POJK 30/2025"
       ],
-      "risk_summary": "The cross-border transaction flow involving three distinct jurisdictions and sensitive data processing presents a high regulatory risk profile. The primary concerns are the lack of verifiable ITSK registration and potential gaps in Enhanced Due Diligence (EDD) as required by OJK and PPATK standards.",
+      "risk_summary": "The company's cross-border transaction processing involves significant compliance risks regarding international data transfers and anti-money laundering (APU PPT) protocols. The involvement of foreign third parties and sensitive data requires strict adherence to the now-enforceable UU PDP and updated OJK governance rules.",
       "violations_detected": [
-        "Potensi Pelanggaran POJK Nomor 30 Tahun 2025 Pasal terkait Manajemen Risiko dan Tata Kelola Data Lintas Negara — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx",
-        "Kewajiban Enhanced Due Diligence (EDD) untuk Transaksi Lintas Negara berdasarkan POJK Nomor 8 Tahun 2023 — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-8-Tahun-2023.aspx"
+        "Article 56 UU 27/2022 (PDP) — source: https://ojk.go.id/id/Regulasi/Default.aspx",
+        "Article 18 POJK 8/2023 (APU PPT) — source: https://ojk.go.id/id/Regulasi/Default.aspx"
       ],
-      "override_log": [],
+      "override_log": [
+        "Finding level CRITICAL detected — risk level upgraded from HIGH to CRITICAL."
+      ],
       "confidence": {
-        "level": "LOW",
-        "flags": [
-          {
-            "source": "finding #2",
-            "excerpt": "Cross-border transaction monitoring protocols may not meet the updated APU PPT reporting standards for digital platforms...",
-            "trigger": "may"
-          }
-        ],
-        "disclaimer": "⚠️  1 statement(s) in this report are based on AI assumptions rather than verified regulatory text. Please cross-check with official sources before making compliance decisions."
+        "level": "HIGH",
+        "flags": [],
+        "disclaimer": "✅  No assumption-based statements detected. Analysis references verified regulatory sources."
       }
     },
     "compliance_report": {
       "findings": [
         {
-          "level": "HIGH",
+          "level": "CRITICAL",
           "number": 1,
-          "finding": "Lack of evidence for ITSK compliance framework as mandated by the new 2025 regulations.",
-          "source_url": "https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx",
-          "related_regulation": "POJK Nomor 30 Tahun 2025"
+          "finding": "Cross-border sensitive data transfer to Singapore processor lacks verified data protection adequacy documentation.",
+          "source_url": "https://ojk.go.id/id/Regulasi/Default.aspx",
+          "related_regulation": "UU 27/2022 (PDP)"
+        },
+        {
+          "level": "HIGH",
+          "number": 2,
+          "finding": "Incomplete Enhanced Due Diligence (EDD) for the Malaysian seller as required for high-risk cross-border payments.",
+          "source_url": "https://ojk.go.id/id/Regulasi/Default.aspx",
+          "related_regulation": "POJK 8/2023"
         },
         {
           "level": "MEDIUM",
-          "number": 2,
-          "finding": "Cross-border transaction monitoring protocols may not meet the updated APU PPT reporting standards for digital platforms.",
-          "source_url": "https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-8-Tahun-2023.aspx",
-          "related_regulation": "POJK Nomor 8 Tahun 2023"
+          "number": 3,
+          "finding": "Necessity for alignment with the new POJK 30/2025 governance and risk management framework for ITSK.",
+          "source_url": "https://ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx",
+          "related_regulation": "POJK 30/2025"
         }
       ],
       "recommendations": [
         {
-          "action": "Conduct a comprehensive compliance audit against POJK 30/2025 and ensure ITSK registration is active.",
+          "action": "Conduct a formal Data Protection Impact Assessment (DPIA) for international data flows to Singapore.",
           "deadline": "immediate",
           "priority": 1,
-          "responsible_party": "Legal & Compliance Department"
+          "responsible_party": "Data Protection Officer / Legal"
         },
         {
-          "action": "Implement Enhanced Due Diligence (EDD) for all cross-border transactions regardless of value due to the jurisdiction mix.",
+          "action": "Update APU PPT framework to include specific EDD protocols for onboarding cross-border marketplace merchants.",
           "deadline": "30 days",
           "priority": 2,
-          "responsible_party": "AML/CFT Officer"
+          "responsible_party": "Compliance Department"
+        },
+        {
+          "action": "Implement the governance and risk management structure mandated by POJK 30/2025.",
+          "deadline": "90 days",
+          "priority": 3,
+          "responsible_party": "Board of Directors"
         }
       ],
       "compliance_status": "NEEDS_IMPROVEMENT",
-      "executive_summary": "PT E-Commerce Nusantara faces high regulatory risks due to new OJK regulations in the ITSK sector (POJK 30/2025) and its involvement in cross-border marketplace activities. Current activities involving Indonesian buyers and Malaysian sellers with a Singaporean processor trigger strict OJK and APU PPT requirements. Immediate action is required to align governance structures with the 2025-2026 regulatory updates to avoid potential sanctions."
+      "executive_summary": "PT E-Commerce Nusantara faces high regulatory risks due to cross-border operational complexities and new 2025-2026 OJK regulations. Immediate attention is required for UU PDP compliance regarding sensitive data transfers and enhanced merchant due diligence under APU PPT rules. Adopting the POJK 30/2025 framework is essential for maintaining regulatory standing."
     },
     "regulation_monitor": {
       "status": "CHANGES_FOUND",
-      "monitor_notes": "Significant updates were found in the ITSK sector with the issuance of POJK 30/2025, which mandates stricter governance and risk management for technology-driven financial activities. The cross-border nature of the company's transactions necessitates strict adherence to POJK 8/2023 and the framework established by POJK 3/2024.",
+      "monitor_notes": "Regulatory monitoring reveals that OJK has modernized governance standards for ITSK through POJK 30/2025 and enhanced APU PPT reporting in 2025. Additionally, UU ITE (Amended 2024) and UU PDP (2022) are now fully enforceable, significantly impacting cross-border e-commerce and data handling.",
       "changed_regulations": [
-        "POJK Nomor 8 Tahun 2023 tentang Penerapan Program Anti Pencucian Uang, Pencegahan Pendanaan Terorisme, dan Pencegahan Pendanaan Proliferasi Senjata Pemusnah Massal di Sektor Jasa Keuangan — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-8-Tahun-2023.aspx"
+        "UU ITE (Second Amendment via UU 1/2024) — source: https://ojk.go.id/id/Regulasi/Default.aspx",
+        "SEOJK 16/SEOJK.07/2025 (APU PPT for Digital Assets) — source: https://ojk.go.id/id/regulasi/Pages/SEOJK-16-SEOJK07-2025-Penerapan-Program-APU-PPT-dan-Pencegahan-Pendanaan-Proliferasi-Senjata-Pemusnah-Massal-Pedagang-AKD.aspx"
       ],
       "new_regulations_found": [
-        "POJK Nomor 30 Tahun 2025 tentang Penerapan Tata Kelola dan Manajemen Risiko Bagi Penyelenggara Inovasi Teknologi Sektor Keuangan (ITSK) — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx",
-        "PADK Nomor 1 Tahun 2026 tentang Penyelenggaraan Teknologi Informasi oleh Bank Umum — source: https://www.ojk.go.id/id/regulasi/Pages/PADK-1-Tahun-2026-Penyelenggaraan-Teknologi-Informasi-oleh-Bank-Umum.aspx",
-        "POJK Nomor 3 Tahun 2024 tentang Penyelenggaraan Inovasi Teknologi Sektor Keuangan — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-3-Tahun-2024-Penyelenggaraan-Inovasi-Teknologi-Sektor-Keuangan.aspx"
+        "POJK Nomor 30 Tahun 2025 (Penerapan Tata Kelola dan Manajemen Risiko ITSK) — source: https://ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx",
+        "POJK 4 Tahun 2025 (Penyelenggara Agregasi Jasa Keuangan) — source: https://ojk.go.id/id/regulasi/Pages/POJK-4-2025-Penyelenggara-Agregasi-Jasa-Keuangan.aspx"
       ]
     }
   },
   "enforcement": {
-    "timestamp": "2026-03-28T23:54:48.325886",
+    "timestamp": "2026-03-29T23:56:59.491264",
     "report_id": "RPT-0001",
-    "risk_level": "HIGH",
-    "action": "REVIEW_REQUIRED",
-    "message": "Process ON HOLD. Manual review required before proceeding.\n\nRisk Score: 75/100  |  Risk Level: HIGH  |  Action: REVIEW_REQUIRED\n\nThis process is ON HOLD pending manual review by the Compliance team. High-risk findings have been detected that require direct sign-off before the process may continue. All identified violations must be reviewed and a mitigation plan submitted within the deadlines stated in the recommendations.\n\nKey Findings Driving This Decision:\n  [HIGH] Lack of evidence for ITSK compliance framework as mandated by the new 2025 regulations. (POJK Nomor 30 Tahun 2025)\n\nRegulatory Changes Detected (4):\n  • POJK Nomor 8 Tahun 2023 tentang Penerapan Program Anti Pencucian Uang, Pencegahan Pendanaan Terorisme, dan Pencegahan Pendanaan Proliferasi Senjata Pemusnah Massal di Sektor Jasa Keuangan — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-8-Tahun-2023.aspx\n  • POJK Nomor 30 Tahun 2025 tentang Penerapan Tata Kelola dan Manajemen Risiko Bagi Penyelenggara Inovasi Teknologi Sektor Keuangan (ITSK) — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx\n  • PADK Nomor 1 Tahun 2026 tentang Penyelenggaraan Teknologi Informasi oleh Bank Umum — source: https://www.ojk.go.id/id/regulasi/Pages/PADK-1-Tahun-2026-Penyelenggaraan-Teknologi-Informasi-oleh-Bank-Umum.aspx\n\nActive Risk Factors:\n  • Keterlibatan pihak ketiga (Payment Processor di Singapura) meningkatkan risiko keamanan data dan kepatuhan vendor.\n  • Transaksi lintas negara (Malaysia-Indonesia-Singapura) memiliki profil risiko tinggi terhadap pencucian uang (APU PPT).\n  • Pemrosesan data sensitif pelanggan memerlukan kepatuhan terhadap standar keamanan siber OJK terbaru.\n\nImmediate Actions Required:\n  1. [immediate] Conduct a comprehensive compliance audit against POJK 30/2025 and ensure ITSK registration is active. — Legal & Compliance Department\n  2. [30 days] Implement Enhanced Due Diligence (EDD) for all cross-border transactions regardless of value due to the jurisdiction mix. — AML/CFT Officer",
-    "icon": "🟡"
+    "risk_level": "CRITICAL",
+    "action": "BLOCK",
+    "message": "Process BLOCKED. Immediate escalation to Compliance Officer required.\n\nRisk Score: 78/100  |  Risk Level: CRITICAL  |  Action: BLOCK\n\nThis process has been BLOCKED due to critical compliance violations. No further action may be taken until all critical findings are resolved. The Compliance Officer must be notified immediately and a formal remediation plan must be approved before the process can resume.\n\nKey Findings Driving This Decision:\n  [CRITICAL] Cross-border sensitive data transfer to Singapore processor lacks verified data protection adequacy documentation. (UU 27/2022 (PDP))\n  [HIGH] Incomplete Enhanced Due Diligence (EDD) for the Malaysian seller as required for high-risk cross-border payments. (POJK 8/2023)\n\nRegulatory Changes Detected (4):\n  • UU ITE (Second Amendment via UU 1/2024) — source: https://ojk.go.id/id/Regulasi/Default.aspx\n  • SEOJK 16/SEOJK.07/2025 (APU PPT for Digital Assets) — source: https://ojk.go.id/id/regulasi/Pages/SEOJK-16-SEOJK07-2025-Penerapan-Program-APU-PPT-dan-Pencegahan-Pendanaan-Proliferasi-Senjata-Pemusnah-Massal-Pedagang-AKD.aspx\n  • POJK Nomor 30 Tahun 2025 (Penerapan Tata Kelola dan Manajemen Risiko ITSK) — source: https://ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx\n\nActive Risk Factors:\n  • Cross-border sensitive data transfer to Singapore without verified protection adequacy\n  • Transaction processing involving foreign parties (Malaysia) requiring Enhanced Due Diligence (EDD)\n  • New governance and risk management requirements for ITSK under POJK 30/2025\n\nImmediate Actions Required:\n  1. [immediate] Conduct a formal Data Protection Impact Assessment (DPIA) for international data flows to Singapore. — Data Protection Officer / Legal\n  2. [30 days] Update APU PPT framework to include specific EDD protocols for onboarding cross-border marketplace merchants. — Compliance Department",
+    "icon": "🔴"
   },
-  "generated_at": "2026-03-28T23:54:48.325923"
+  "generated_at": "2026-03-29T23:56:59.491270"
 }

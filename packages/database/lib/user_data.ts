@@ -40,8 +40,22 @@ async function readActivityLog(userId: number): Promise<string | undefined>{
     return(await readUserDataById(userId))?.activity_log
 }
 
-async function readDBFromAgent(userId: number): Promise<agentDBType | null>{
-    return await readUserDataById(userId)
+async function readDBFromAgent(userId: number, key: keyof userData ): Promise<any | null>{
+    const data = await readUserDataById(userId)
+    if (!data ) return null
+    return data[key]
 }
 
-export { readComplianceReports, readActivityLog, createUserDataTable, readDBFromAgent}
+async function writeDBFromAgent(userId: number, key: keyof userData, data: string){
+
+    await prisma.userData.update({
+        where: {
+            user_id: userId
+        },
+        data:{
+            [key] : data
+        }
+    })
+}
+
+export { readComplianceReports, readActivityLog, createUserDataTable, readDBFromAgent, writeDBFromAgent}

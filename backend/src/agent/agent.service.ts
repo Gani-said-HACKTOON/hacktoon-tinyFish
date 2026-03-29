@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { readComplianceReports, readActivityLog } from '@hackathon/database'
+import { readComplianceReports, readActivityLog, readDBFromAgent, writeDBFromAgent } from '@hackathon/database'
+import { type userData } from '@hackathon/database/generated/prisma/client/client'
 
 @Injectable()
 export class AgentService{
@@ -15,7 +16,12 @@ export class AgentService{
         return await readActivityLog(userId)
     }
 
-    async readFromAgent(){
-        
+    async readFromAgent(userId: number, key: keyof userData ){
+        return await readDBFromAgent(userId, key )
+    }
+
+    async writeFromAgent(userId: number, key: keyof userData, data: any){
+        const strdata = JSON.stringify(data);
+        await writeDBFromAgent(userId, key, strdata);
     }
 }

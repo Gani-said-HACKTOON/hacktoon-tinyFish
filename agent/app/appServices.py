@@ -20,7 +20,7 @@ import json
 import os
 import datetime
 from tinyfish import TinyFish
-import appDatabase as db
+from app import appDatabase as db
 
 # Convert output to PDF for a cleaner format
 from reportlab.lib.pagesizes import A4
@@ -34,8 +34,11 @@ from reportlab.platypus import (
 
 client = TinyFish()
 
-class appService(BaseModel):
+class appService():
     token: str 
+
+    def __init__(self, token):
+        self.token = token
 
     TINYFISH_GOAL = """
     You are a professional AI Compliance & Regulatory Risk Analyst with global expertise.
@@ -301,8 +304,8 @@ class appService(BaseModel):
         db.write_to_db("activity_log", entry, self.token)
 
     async def getDbByKey(self, key: str) -> any:
-        json: str = await db.read_from_db(key, self.token)
-        dataObj = json.loads(json)
+        jsonData: str = await db.read_from_db(key, self.token)
+        dataObj = json.loads(jsonData)
         return dataObj
 
 
@@ -660,7 +663,7 @@ class appService(BaseModel):
 
 
     def save_pdf(self,report_id: str, d: dict, analysis: dict, enforcement: dict):
-        path = os.path.join(self.OUTPUT_DIR, f"{report_id}.pdf")
+        path = os.path.join("../compliance", f"{report_id}.pdf")
         doc  = SimpleDocTemplate(path, pagesize=A4,
                                 leftMargin=2*cm, rightMargin=2*cm,
                                 topMargin=2*cm, bottomMargin=2*cm)
