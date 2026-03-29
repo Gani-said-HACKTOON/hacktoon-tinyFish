@@ -5,7 +5,6 @@ import AnimatedText from "@/components/landingPage/animatedText";
 import Link from "next/link";
 import Section_2 from "@/components/landingPage/section_2-1";
 import Section_3 from "@/components/landingPage/section_3";
-import Footer from "@/components/landingPage/footer";
 
 export default function Home() {
   return (
@@ -28,9 +27,52 @@ export default function Home() {
 
         </div>
       </section>
-      <Section_2/>
-    <Section_3/>
-    <Footer/>
+
+      <Section_2 />
+      <Section_3 />
+
+      {/* Footer */}
+      <div className="flex flex-col items-center px-4 pb-6">
+        <div
+          className="w-full max-w-2xl rounded-2xl px-6 pt-6 pb-6 py-10"
+          style={{ background: "rgba(255,255,255,0.20)", backdropFilter: "blur(12px)" }}
+        >
+
+          {/* Top: logo + nav */}
+          <div className="flex items-start justify-between mb-6">
+
+            {/* Logo */}
+            <div>
+              <img src="/gslogo.png" alt="GainSaid logo" className="w-9 h-9 object-contain" />
+            </div>
+
+            {/* Pages nav */}
+            <div className="flex flex-col gap-1 text-right">
+              <p className="text-xs font-medium mb-1" style={{ color: "rgba(255,255,255,0.60)" }}>
+                Pages
+              </p>
+              <a href="#" className="text-sm hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Features</a>
+              <a href="#" className="text-sm hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Benefits</a>
+              <a href="#" className="text-sm hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Pricing</a>
+              <a href="#" className="text-sm hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Contact Us</a>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="mb-4" style={{ borderTop: "1px solid rgba(255,255,255,0.30)" }} />
+
+          {/* Copyright */}
+          <div>
+            <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.80)" }}>
+              © 2026  GainSaid
+            </p>
+            <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.50)" }}>
+              Inspired by Lean Hike Projects
+            </p>
+          </div>
+
+        </div>
+      </div>
     </>
   );
 }
