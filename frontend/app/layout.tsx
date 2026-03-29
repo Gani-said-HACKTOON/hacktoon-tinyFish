@@ -4,7 +4,7 @@ import "./globals.css";
 import NavbarWrapper from "@/components/navbarWrapper";
 
 export const metadata: Metadata = {
-  title: "Dreelio",
+  title: "GaniSaid",
   description: "For Your Needed",
 };
 

@@ -3,87 +3,174 @@ import Link from "next/link";
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-5">
+      <nav style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "20px 32px",
+      }}>
         <Image src="/gslogo.png" alt="Logo" width={36} height={36} />
-        <Link
-          href="/signIn"
-          className="text-white text-sm font-medium hover:opacity-80 transition-opacity"
-        >
+        <Link href="/signIn" style={{
+          color: "white",
+          fontSize: "14px",
+          fontWeight: 500,
+          textDecoration: "none",
+        }}>
           Sign In
         </Link>
       </nav>
 
       {/* Card */}
-      <div className="flex flex-1 items-center justify-center px-4">
-        <div className="bg-white rounded-2xl shadow-xl w-full max-w-md px-10 py-10 flex flex-col gap-5">
-          {/* Logo inside card */}
-          <div className="flex justify-center">
-            <Image src="/gslogo.png" alt="Logo" width={40} height={40} className="opacity-30" />
-          </div>
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 16px" }}>
+        <div style={{
+          background: "white",
+          borderRadius: "24px",
+          boxShadow: "0 8px 40px rgba(0,0,0,0.10)",
+          width: "100%",
+          maxWidth: "500px",
+          padding: "48px 56px",
+          display: "flex",
+          flexDirection: "column",
+        }}>
 
-          <h1 className="text-2xl font-bold text-gray-900 text-center -mt-1">Sign Up</h1>
+          {/* Logo */}
 
-          <div className="flex flex-col gap-4">
-            {/* Full Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1">Full Name</label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  className="w-1/2 rounded-lg border border-gray-200 px-3 py-2.5 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-300 transition"
-                />
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  className="w-1/2 rounded-lg border border-gray-200 px-3 py-2.5 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-300 transition"
-                />
-              </div>
-            </div>
+          <h1 style={{ fontSize: "26px", fontWeight: 700, color: "#111827", textAlign: "center", marginTop: 0, marginBottom: "32px" }}>
+            Sign Up
+          </h1>
 
-            {/* Work Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1">Work Email Address</label>
-              <input
-                type="email"
-                placeholder="Work Email Address"
-                className="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1">Create Password</label>
-              <input
-                type="password"
-                placeholder="Create Password"
-                className="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-300 transition"
-              />
-            </div>
-
-            {/* Company */}
-            <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1">Company Name</label>
+          {/* Full Name */}
+          <div style={{ marginBottom: "24px" }}>
+            <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#111827", marginBottom: "10px" }}>
+              Full Name
+            </label>
+            <div style={{ display: "flex", gap: "12px" }}>
               <input
                 type="text"
-                placeholder="Company Name"
-                className="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-gray-300 transition"
+                placeholder="First Name"
+                style={{
+                  width: "50%",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "8px",
+                  padding: "10px 14px",
+                  fontSize: "13px",
+                  color: "#374151",
+                  background: "transparent",
+                  outline: "none",
+                  boxSizing: "border-box",
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                style={{
+                  width: "50%",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "8px",
+                  padding: "10px 14px",
+                  fontSize: "13px",
+                  color: "#374151",
+                  background: "transparent",
+                  outline: "none",
+                  boxSizing: "border-box",
+                }}
               />
             </div>
           </div>
 
-          <button className="w-full bg-gray-800 hover:bg-gray-700 active:bg-gray-900 text-white font-semibold py-3 rounded-lg transition-colors text-sm mt-1">
+          {/* Work Email */}
+          <div style={{ marginBottom: "24px" }}>
+            <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#111827", marginBottom: "10px" }}>
+              Work Email Address
+            </label>
+            <input
+              type="email"
+              placeholder="Work Email Address"
+              style={{
+                width: "100%",
+                border: "none",
+                borderBottom: "1px solid #d1d5db",
+                paddingBottom: "10px",
+                fontSize: "13px",
+                color: "#374151",
+                background: "transparent",
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+          </div>
+
+          {/* Password */}
+          <div style={{ marginBottom: "24px" }}>
+            <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#111827", marginBottom: "10px" }}>
+              Create Password
+            </label>
+            <input
+              type="password"
+              placeholder="Create Password"
+              style={{
+                width: "100%",
+                border: "none",
+                borderBottom: "1px solid #d1d5db",
+                paddingBottom: "10px",
+                fontSize: "13px",
+                color: "#374151",
+                background: "transparent",
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+          </div>
+
+          {/* Company */}
+          <div style={{ marginBottom: "36px" }}>
+            <label style={{ display: "block", fontSize: "13px", fontWeight: 600, color: "#111827", marginBottom: "10px" }}>
+              Company Name
+            </label>
+            <input
+              type="text"
+              placeholder="Company Name"
+              style={{
+                width: "100%",
+                border: "none",
+                borderBottom: "1px solid #d1d5db",
+                paddingBottom: "10px",
+                fontSize: "13px",
+                color: "#374151",
+                background: "transparent",
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+          </div>
+
+          {/* Button */}
+          <button style={{
+            width: "100%",
+            background: "#1f2937",
+            color: "white",
+            fontWeight: 600,
+            fontSize: "14px",
+            padding: "14px 0",
+            borderRadius: "12px",
+            border: "none",
+            cursor: "pointer",
+            marginBottom: "24px",
+          }}>
             Create Account
           </button>
 
-          <p className="text-center text-xs text-gray-400">
+          {/* Footer */}
+          <p style={{ textAlign: "center", fontSize: "13px", color: "#9ca3af", margin: 0 }}>
             Already have an account?{" "}
-            <Link href="/signIn" className="text-gray-700 font-medium hover:underline">
+            <Link href="/signIn" style={{ color: "#111827", fontWeight: 700, textDecoration: "none" }}>
               Sign In
             </Link>
           </p>
+
         </div>
       </div>
     </div>

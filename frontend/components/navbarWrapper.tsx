@@ -6,7 +6,7 @@ import Navbar from "@/components/navbar";
 export default function NavbarWrapper() {
   const pathname = usePathname()?.toLowerCase() || "";
 
-  const hideNavbarRoutes = ["/chatbot", "/contact"];
+  const hideNavbarRoutes = ["/chatbot", "/contact", "/signin", "/signup"];
   const hideNavbar = hideNavbarRoutes.includes(pathname);
 
   if (hideNavbar) return null;
