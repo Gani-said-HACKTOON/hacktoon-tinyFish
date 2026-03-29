@@ -59,7 +59,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 <label className="text-sm font-semibold text-gray-700">Email</label>
                 <input
                   type="email"
-                  placeholder="jane@framer.com"
+                  placeholder="jane@ganisaid.com"
                   required
                   className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"
                 />

@@ -32,41 +32,39 @@ export default function Home() {
       <Section_3 />
 
       {/* Footer */}
-      <div className="flex flex-col items-center px-4 pb-6">
+      <div className="flex flex-col items-center px-6 pb-10 mb-10">
         <div
-          className="w-full max-w-2xl rounded-2xl px-6 pt-6 pb-6 py-10"
-          style={{ background: "rgba(255,255,255,0.20)", backdropFilter: "blur(12px)" }}
+          className="w-full max-w-4xl rounded-3xl"
+          style={{ padding: "40px 60px", background: "rgba(255,255,255,0.20)", backdropFilter: "blur(12px)" }}
         >
 
           {/* Top: logo + nav */}
-          <div className="flex items-start justify-between mb-6">
+          <div className="flex items-start justify-between mb-10">
 
             {/* Logo */}
-            <div>
-              <img src="/gslogo.png" alt="GainSaid logo" className="w-9 h-9 object-contain" />
-            </div>
+            <img src="/gslogo.png" alt="GainSaid logo" className="w-14 h-14 object-contain" />
 
             {/* Pages nav */}
-            <div className="flex flex-col gap-1 text-right">
-              <p className="text-xs font-medium mb-1" style={{ color: "rgba(255,255,255,0.60)" }}>
+            <div className="flex flex-col gap-2 text-right">
+              <p className="text-sm font-semibold mb-2" style={{ color: "rgba(255,255,255,0.60)" }}>
                 Pages
               </p>
-              <a href="#" className="text-sm hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Features</a>
-              <a href="#" className="text-sm hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Benefits</a>
-              <a href="#" className="text-sm hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Pricing</a>
-              <a href="#" className="text-sm hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Contact Us</a>
+              <a href="#" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Features</a>
+              <a href="#" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Benefits</a>
+              <a href="#" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Pricing</a>
+              <Link href="/contact" className="text-base hover:text-white transition-colors" style={{ color: "rgba(255,255,255,0.80)" }}>Contact Us</Link>
             </div>
           </div>
 
           {/* Divider */}
-          <div className="mb-4" style={{ borderTop: "1px solid rgba(255,255,255,0.30)" }} />
+          <div className="mb-6" style={{ borderTop: "1px solid rgba(255,255,255,0.30)" }} />
 
           {/* Copyright */}
           <div>
-            <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.80)" }}>
+            <p className="text-base font-semibold" style={{ color: "rgba(255,255,255,0.80)" }}>
               © 2026  GainSaid
             </p>
-            <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.50)" }}>
+            <p className="text-sm mt-1" style={{ color: "rgba(255,255,255,0.50)" }}>
               Inspired by Lean Hike Projects
             </p>
           </div>
