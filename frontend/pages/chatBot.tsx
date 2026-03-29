@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "@/components/navbar";
 import { useState, useRef, useEffect } from "react";
 
 type RiskLevel = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
@@ -603,7 +602,7 @@ const handleSend = async () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-950 text-white overflow-hidden">
-      <Navbar/>
+
 
       <header className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-slate-900 border-b border-slate-800">
         <div className="flex items-center gap-3">
