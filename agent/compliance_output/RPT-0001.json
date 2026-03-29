@@ -1,101 +1,105 @@
 {
   "report_id": "RPT-0001",
   "regulation": {
-    "company_name": "ADVAN",
-    "industry": "Electronic",
-    "country": "indonesia",
+    "company_name": "PT E-Commerce Nusantara",
+    "industry": "E-commerce",
+    "country": "Indonesia",
     "regulations": [
-      "UU",
+      "UU ITE",
       "OJK",
       "PPATK"
     ],
-    "activity": "membuat produk laptop",
-    "value": "3000000",
-    "parties_involved": "snapdragon",
+    "activity": "Online marketplace transaction processing",
+    "value": "25000",
+    "parties_involved": "Buyer (Indonesia), Seller (Malaysia), Payment Processor (Singapore)",
     "cross_border": "yes",
     "third_party": "yes",
-    "sensitive_data": "no",
-    "url": "",
+    "sensitive_data": "yes",
+    "url": "https://ojk.go.id/id/kanal/iknb/regulasi/Pages/default.aspx",
     "id": "REG-0001",
-    "timestamp": "2026-03-27T12:40:34.958915"
+    "timestamp": "2026-03-28T23:52:22.507001"
   },
   "analysis": {
     "risk_analysis": {
       "risk_level": "HIGH",
-      "risk_score": 35,
+      "risk_score": 75,
       "risk_factors": [
-        "Ketergantungan tinggi pada komponen impor (Snapdragon) yang memerlukan Persetujuan Impor (PI)",
-        "Kewajiban pelaporan transaksi lintas negara jika nilai akumulasi melebihi ambang batas PPATK",
-        "Kepatuhan terhadap standar teknis perangkat telekomunikasi (Sertifikasi SDPPI)"
+        "Keterlibatan pihak ketiga (Payment Processor di Singapura) meningkatkan risiko keamanan data dan kepatuhan vendor.",
+        "Transaksi lintas negara (Malaysia-Indonesia-Singapura) memiliki profil risiko tinggi terhadap pencucian uang (APU PPT).",
+        "Pemrosesan data sensitif pelanggan memerlukan kepatuhan terhadap standar keamanan siber OJK terbaru."
       ],
-      "risk_summary": "The primary risk involves the calculation of TKDN for laptops using imported high-value components. While the unit value is manageable, cross-border activities and third-party involvement increase the scrutiny on import quotas and AML reporting requirements under FATF standards.",
+      "risk_summary": "The cross-border transaction flow involving three distinct jurisdictions and sensitive data processing presents a high regulatory risk profile. The primary concerns are the lack of verifiable ITSK registration and potential gaps in Enhanced Due Diligence (EDD) as required by OJK and PPATK standards.",
       "violations_detected": [
-        "Potensi pelanggaran ambang batas minimum TKDN jika komponen Snapdragon tidak diimbangi riset lokal — source: https://peraturan.go.id/id/permenperin-no-22-tahun-2020"
+        "Potensi Pelanggaran POJK Nomor 30 Tahun 2025 Pasal terkait Manajemen Risiko dan Tata Kelola Data Lintas Negara — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx",
+        "Kewajiban Enhanced Due Diligence (EDD) untuk Transaksi Lintas Negara berdasarkan POJK Nomor 8 Tahun 2023 — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-8-Tahun-2023.aspx"
       ],
-      "override_log": [
-        "Finding level HIGH detected — risk level upgraded from MEDIUM to HIGH."
-      ],
+      "override_log": [],
       "confidence": {
-        "level": "HIGH",
-        "flags": [],
-        "disclaimer": "✅  No assumption-based statements detected. Analysis references verified regulatory sources."
+        "level": "LOW",
+        "flags": [
+          {
+            "source": "finding #2",
+            "excerpt": "Cross-border transaction monitoring protocols may not meet the updated APU PPT reporting standards for digital platforms...",
+            "trigger": "may"
+          }
+        ],
+        "disclaimer": "⚠️  1 statement(s) in this report are based on AI assumptions rather than verified regulatory text. Please cross-check with official sources before making compliance decisions."
       }
     },
     "compliance_report": {
       "findings": [
         {
-          "level": "MEDIUM",
+          "level": "HIGH",
           "number": 1,
-          "finding": "Sertifikasi TKDN perlu diperbarui sesuai tata cara terbaru tahun 2025.",
-          "source_url": "https://peraturan.go.id/id/permenperin-no-35-tahun-2025",
-          "related_regulation": "Permenperin No. 35 Tahun 2025"
+          "finding": "Lack of evidence for ITSK compliance framework as mandated by the new 2025 regulations.",
+          "source_url": "https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx",
+          "related_regulation": "POJK Nomor 30 Tahun 2025"
         },
         {
-          "level": "HIGH",
+          "level": "MEDIUM",
           "number": 2,
-          "finding": "Verifikasi dokumen impor untuk komponen Snapdragon guna memastikan kesesuaian dengan kuota impor terbaru.",
-          "source_url": "https://www.kemenkeu.go.id",
-          "related_regulation": "Permendag No. 8 Tahun 2024"
+          "finding": "Cross-border transaction monitoring protocols may not meet the updated APU PPT reporting standards for digital platforms.",
+          "source_url": "https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-8-Tahun-2023.aspx",
+          "related_regulation": "POJK Nomor 8 Tahun 2023"
         }
       ],
       "recommendations": [
         {
-          "action": "Melakukan audit internal terhadap komposisi biaya produksi untuk memenuhi target TKDN laptop.",
-          "deadline": "30 days",
+          "action": "Conduct a comprehensive compliance audit against POJK 30/2025 and ensure ITSK registration is active.",
+          "deadline": "immediate",
           "priority": 1,
-          "responsible_party": "Production & Legal Dept"
+          "responsible_party": "Legal & Compliance Department"
         },
         {
-          "action": "Memastikan pelaporan Laporan Surveyor (LS) untuk setiap batch komponen Snapdragon yang diimpor.",
-          "deadline": "immediate",
+          "action": "Implement Enhanced Due Diligence (EDD) for all cross-border transactions regardless of value due to the jurisdiction mix.",
+          "deadline": "30 days",
           "priority": 2,
-          "responsible_party": "Procurement Dept"
+          "responsible_party": "AML/CFT Officer"
         }
       ],
       "compliance_status": "NEEDS_IMPROVEMENT",
-      "executive_summary": "ADVAN's laptop manufacturing activities are generally compliant but face increasing regulatory pressure regarding Domestic Component Levels (TKDN) and import restrictions. The recent Permenperin 35/2025 introduces new certification procedures that must be adopted immediately. Management should prioritize local R&D to offset the high value of imported Snapdragon components and maintain a 'Compliant' status for government procurement eligibility."
+      "executive_summary": "PT E-Commerce Nusantara faces high regulatory risks due to new OJK regulations in the ITSK sector (POJK 30/2025) and its involvement in cross-border marketplace activities. Current activities involving Indonesian buyers and Malaysian sellers with a Singaporean processor trigger strict OJK and APU PPT requirements. Immediate action is required to align governance structures with the 2025-2026 regulatory updates to avoid potential sanctions."
     },
     "regulation_monitor": {
       "status": "CHANGES_FOUND",
-      "monitor_notes": "Recent updates focus on the simplification of TKDN certification (Permenperin 35/2025) and resolution of import bottlenecks for electronic components as discussed in the Kemenkeu Debottlenecking session in March 2026. Companies must ensure compliance with the new ITE law amendments regarding electronic systems.",
+      "monitor_notes": "Significant updates were found in the ITSK sector with the issuance of POJK 30/2025, which mandates stricter governance and risk management for technology-driven financial activities. The cross-border nature of the company's transactions necessitates strict adherence to POJK 8/2023 and the framework established by POJK 3/2024.",
       "changed_regulations": [
-        "Peraturan Menteri Perindustrian Nomor 22 Tahun 2020 tentang Penghitungan TKDN Produk Elektronika — source: https://peraturan.go.id/id/permenperin-no-22-tahun-2020",
-        "Peraturan Menteri Perdagangan Nomor 8 Tahun 2024 tentang Kebijakan dan Pengaturan Impor — source: https://www.kemenkeu.go.id"
+        "POJK Nomor 8 Tahun 2023 tentang Penerapan Program Anti Pencucian Uang, Pencegahan Pendanaan Terorisme, dan Pencegahan Pendanaan Proliferasi Senjata Pemusnah Massal di Sektor Jasa Keuangan — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-8-Tahun-2023.aspx"
       ],
       "new_regulations_found": [
-        "Peraturan Menteri Perindustrian Nomor 35 Tahun 2025 tentang Ketentuan dan Tata Cara Sertifikasi Tingkat Komponen Dalam Negeri — source: https://peraturan.go.id/id/permenperin-no-35-tahun-2025",
-        "Peraturan Menteri Keuangan Nomor 102 Tahun 2025 tentang Kebijakan Fiskal Adaptif — source: https://www.kemenkeu.go.id",
-        "Undang-Undang Nomor 1 Tahun 2024 tentang Perubahan Kedua Atas UU ITE — source: https://peraturan.go.id/id/uu-no-1-tahun-2024"
+        "POJK Nomor 30 Tahun 2025 tentang Penerapan Tata Kelola dan Manajemen Risiko Bagi Penyelenggara Inovasi Teknologi Sektor Keuangan (ITSK) — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx",
+        "PADK Nomor 1 Tahun 2026 tentang Penyelenggaraan Teknologi Informasi oleh Bank Umum — source: https://www.ojk.go.id/id/regulasi/Pages/PADK-1-Tahun-2026-Penyelenggaraan-Teknologi-Informasi-oleh-Bank-Umum.aspx",
+        "POJK Nomor 3 Tahun 2024 tentang Penyelenggaraan Inovasi Teknologi Sektor Keuangan — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-3-Tahun-2024-Penyelenggaraan-Inovasi-Teknologi-Sektor-Keuangan.aspx"
       ]
     }
   },
   "enforcement": {
-    "timestamp": "2026-03-27T12:43:47.124704",
+    "timestamp": "2026-03-28T23:54:48.325886",
     "report_id": "RPT-0001",
     "risk_level": "HIGH",
     "action": "REVIEW_REQUIRED",
-    "message": "Process ON HOLD. Manual review required before proceeding.\n\nRisk Score: 35/100  |  Risk Level: HIGH  |  Action: REVIEW_REQUIRED\n\nThis process is ON HOLD pending manual review by the Compliance team. High-risk findings have been detected that require direct sign-off before the process may continue. All identified violations must be reviewed and a mitigation plan submitted within the deadlines stated in the recommendations.\n\nKey Findings Driving This Decision:\n  [HIGH] Verifikasi dokumen impor untuk komponen Snapdragon guna memastikan kesesuaian dengan kuota impor terbaru. (Permendag No. 8 Tahun 2024)\n\nRegulatory Changes Detected (5):\n  • Peraturan Menteri Perindustrian Nomor 22 Tahun 2020 tentang Penghitungan TKDN Produk Elektronika — source: https://peraturan.go.id/id/permenperin-no-22-tahun-2020\n  • Peraturan Menteri Perdagangan Nomor 8 Tahun 2024 tentang Kebijakan dan Pengaturan Impor — source: https://www.kemenkeu.go.id\n  • Peraturan Menteri Perindustrian Nomor 35 Tahun 2025 tentang Ketentuan dan Tata Cara Sertifikasi Tingkat Komponen Dalam Negeri — source: https://peraturan.go.id/id/permenperin-no-35-tahun-2025\n\nActive Risk Factors:\n  • Ketergantungan tinggi pada komponen impor (Snapdragon) yang memerlukan Persetujuan Impor (PI)\n  • Kewajiban pelaporan transaksi lintas negara jika nilai akumulasi melebihi ambang batas PPATK\n  • Kepatuhan terhadap standar teknis perangkat telekomunikasi (Sertifikasi SDPPI)\n\nImmediate Actions Required:\n  1. [30 days] Melakukan audit internal terhadap komposisi biaya produksi untuk memenuhi target TKDN laptop. — Production & Legal Dept\n  2. [immediate] Memastikan pelaporan Laporan Surveyor (LS) untuk setiap batch komponen Snapdragon yang diimpor. — Procurement Dept",
+    "message": "Process ON HOLD. Manual review required before proceeding.\n\nRisk Score: 75/100  |  Risk Level: HIGH  |  Action: REVIEW_REQUIRED\n\nThis process is ON HOLD pending manual review by the Compliance team. High-risk findings have been detected that require direct sign-off before the process may continue. All identified violations must be reviewed and a mitigation plan submitted within the deadlines stated in the recommendations.\n\nKey Findings Driving This Decision:\n  [HIGH] Lack of evidence for ITSK compliance framework as mandated by the new 2025 regulations. (POJK Nomor 30 Tahun 2025)\n\nRegulatory Changes Detected (4):\n  • POJK Nomor 8 Tahun 2023 tentang Penerapan Program Anti Pencucian Uang, Pencegahan Pendanaan Terorisme, dan Pencegahan Pendanaan Proliferasi Senjata Pemusnah Massal di Sektor Jasa Keuangan — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-8-Tahun-2023.aspx\n  • POJK Nomor 30 Tahun 2025 tentang Penerapan Tata Kelola dan Manajemen Risiko Bagi Penyelenggara Inovasi Teknologi Sektor Keuangan (ITSK) — source: https://www.ojk.go.id/id/regulasi/Pages/POJK-Nomor-30-Tahun-2025-Penerapan-Tata-Kelola-dan-Manajemen-Risiko-Bagi-Penyelenggara-Inovasi-Teknologi-Sektor-Keuangan.aspx\n  • PADK Nomor 1 Tahun 2026 tentang Penyelenggaraan Teknologi Informasi oleh Bank Umum — source: https://www.ojk.go.id/id/regulasi/Pages/PADK-1-Tahun-2026-Penyelenggaraan-Teknologi-Informasi-oleh-Bank-Umum.aspx\n\nActive Risk Factors:\n  • Keterlibatan pihak ketiga (Payment Processor di Singapura) meningkatkan risiko keamanan data dan kepatuhan vendor.\n  • Transaksi lintas negara (Malaysia-Indonesia-Singapura) memiliki profil risiko tinggi terhadap pencucian uang (APU PPT).\n  • Pemrosesan data sensitif pelanggan memerlukan kepatuhan terhadap standar keamanan siber OJK terbaru.\n\nImmediate Actions Required:\n  1. [immediate] Conduct a comprehensive compliance audit against POJK 30/2025 and ensure ITSK registration is active. — Legal & Compliance Department\n  2. [30 days] Implement Enhanced Due Diligence (EDD) for all cross-border transactions regardless of value due to the jurisdiction mix. — AML/CFT Officer",
     "icon": "🟡"
   },
-  "generated_at": "2026-03-27T12:43:47.124738"
+  "generated_at": "2026-03-28T23:54:48.325923"
 }
