@@ -8,14 +8,13 @@ interface TryButtonProps {
   onClick?: () => void;
 }
 
-
 export default function TryButton({
   className = "",
   href = "/chatbot",
 }: TryButtonProps) {
   return (
     <div className="flex justify-center items-center w-full lg:w-auto">
-      <Link href={href} className="w-full lg:w-auto">
+      <Link href={href} target="_blank" rel="noopener noreferrer" className="w-full lg:w-auto">
         <button
           className={`group relative inline-flex items-center justify-center
           px-2 py-3 h-14 rounded-[45px]
