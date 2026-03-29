@@ -1,5 +1,5 @@
 import { prisma } from "../index.ts";
-import { refreshToken } from "../generated/prisma/client/index.js";
+import { type refreshToken } from "../generated/prisma/client/index.js";
 
 interface refreshTokenType{
     id: number,

@@ -3,7 +3,13 @@ import { IsString, IsEmail } from 'class-validator'
 export class CreateUserDto{
 
     @IsString()
-    username!: string;
+    first_name!: string;
+
+    @IsString()
+    last_name!: string;
+
+    @IsString()
+    company_name!: string
     
     @IsEmail()
     email!: string;

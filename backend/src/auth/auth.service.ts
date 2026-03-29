@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException, NotFoundException, ConflictException, InternalServerErrorException } from "@nestjs/common"
-import { createRefreshTokenDb, updateRefreshTokenDb, readUserByEmail, readUserById, readRefreshTokenByUserId } from "@hackathon/database"
-import { Prisma, User as userTypeDB } from "@hackathon/database/generated/prisma/client";
-import { createUserTable } from "@hackathon/database"
+import { createRefreshTokenDb, updateRefreshTokenDb, readUserByEmail, readUserById, readRefreshTokenByUserId, createUserDataTable } from "@hackathon/database"
+import { Prisma,type User as userTypeDB } from "@hackathon/database/generated/prisma/client";
+import { createUserTable , type userType} from "@hackathon/database"
 import bcrypt from 'bcrypt';
 import ms  from 'ms';
 import { JwtService } from "@nestjs/jwt";
@@ -19,17 +19,14 @@ interface HttpAuth{
 class AuthService{
     constructor(private JwtServ: JwtService){}
 
-    async createUser(data: {
-        username: string,
-        email: string,
-        password: string
-    }): Promise<HttpRes>{
+    async createUser(data: userType): Promise<HttpRes>{
         const hashpass = await bcrypt.hash(data.password, 10);
 
         data.password = hashpass;
         
         try{
-            await createUserTable(data)
+            const userData = await createUserTable(data);
+            await createUserDataTable(userData.id)
             return {
                 message: "create account has been succesful"
             };
